@@ -7,6 +7,7 @@ import QuestionListPage from "./pages/QuestionListPage";
 import QuestionPage from "./pages/QuestionPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 function Main() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function Main() {
             <Route path=":courseSlug" element={<CoursePage />} />
           </Route>
           <Route path="wishlist" element={<WishlistPage />} />
+          <Route path="login" element={<LoginPage />} />
           <Route path="questions">
             <Route index element={<QuestionListPage />} />
             <Route path=":id" element={<QuestionPage />} />
