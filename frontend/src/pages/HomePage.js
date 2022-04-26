@@ -3,7 +3,6 @@ import Container from "../components/Container";
 import Lined from "../components/Lined";
 import styles from "./HomePage.module.css";
 import landingImg from "../assets/landing.svg";
-
 function HomePage() {
   return (
     <>

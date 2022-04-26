@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import personIcon from "../assets/person.png";
 import styles from "./UserMenu.module.css";
-
+import { Link } from "react-router-dom";
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,7 +28,9 @@ function UserMenu() {
       </button>
       {isOpen && (
         <ul className={styles.popup}>
-          <li>위시리스트</li>
+          <li>
+            <Link to="/wishlist">위시리스트</Link>
+          </li>
           <li className={styles.disabled}>회원가입</li>
           <li className={styles.disabled}>로그인</li>
         </ul>
