@@ -1,5 +1,7 @@
-import { courses, questions } from "./mock.json";
-console.log(courses);
+//import { courses, questions } from "./mock.json";
+import mock from "./mock.json";
+const { courses, questions } = mock;
+
 function filterByKeyword(items, keyword) {
   const lowered = keyword.toLowerCase();
   return items.filter(({ title }) => title.toLowerCase().includes(lowered));
