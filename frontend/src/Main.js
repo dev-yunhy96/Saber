@@ -6,7 +6,10 @@ import WishlistPage from "./pages/WishlistPage";
 import QuestionListPage from "./pages/QuestionListPage";
 import QuestionPage from "./pages/QuestionPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignUpPage from "./pages/SignUpPage";
+
 function Main() {
   return (
     <BrowserRouter>
@@ -18,10 +21,14 @@ function Main() {
             <Route path=":courseSlug" element={<CoursePage />} />
           </Route>
           <Route path="wishlist" element={<WishlistPage />} />
+          <Route path="signup" element={<SignUpPage />} />
           <Route path="questions">
             <Route index element={<QuestionListPage />} />
             <Route path=":id" element={<QuestionPage />} />
           </Route>
+          {/* <Route path="login">
+            <Route index element={<LoginPage />} />
+          </Route> */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
