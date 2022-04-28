@@ -32,7 +32,7 @@ function UserMenu() {
             <Link to="/wishlist">위시리스트</Link>
           </li>
           <li>
-            <Link to="/signup">회원회원회원도커도커도커8번째시도가입</Link>
+            <Link to="/signup">회원회원회원도커도커도커10번째시도가입</Link>
           </li>
           <li>
             <Link to="/login">로그인</Link>
