@@ -32,15 +32,11 @@ function UserMenu() {
             <Link to="/wishlist">위시리스트</Link>
           </li>
           <li>
-            <Link to="/signup">회원가입</Link>
+            <Link to="/signup">회원회원회원가입</Link>
           </li>
-<<<<<<< HEAD
-          <li className={styles.disabled}>로그인</li>
-=======
           <li>
             <Link to="/login">로그인</Link>
           </li>
->>>>>>> d347f2eec9d0953c3f1a3cb5dd5e5158e0ecc2b8
         </ul>
       )}
     </div>
