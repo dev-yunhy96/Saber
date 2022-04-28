@@ -16,6 +16,10 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
+<<<<<<< HEAD
+=======
+    "sweetalert2": "^11.4.9",
+>>>>>>> d347f2eec9d0953c3f1a3cb5dd5e5158e0ecc2b8
     "web-vitals": "^2.1.4"
   },
   "scripts": {
