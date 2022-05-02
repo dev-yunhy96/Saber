@@ -16,6 +16,7 @@ import validate from "../components/Validate";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import NaverLogin from "../components/NaverLogin";
 
 const theme = createTheme();
 export default function LoginPage() {
@@ -157,6 +158,7 @@ export default function LoginPage() {
             </Grid>
           </Box>
         </Box>
+        <NaverLogin></NaverLogin>
       </Container>
     </ThemeProvider>
   );
