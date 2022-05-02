@@ -26,9 +26,9 @@ function Main() {
             <Route index element={<QuestionListPage />} />
             <Route path=":id" element={<QuestionPage />} />
           </Route>
-          {/* <Route path="login">
+          <Route path="login">
             <Route index element={<LoginPage />} />
-          </Route> */}
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
