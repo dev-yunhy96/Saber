@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import personIcon from "../assets/person.png";
 import styles from "./UserMenu.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleButtonClick = useCallback((e) => {
     e.stopPropagation();
@@ -28,15 +29,9 @@ function UserMenu() {
       </button>
       {isOpen && (
         <ul className={styles.popup}>
-          <li>
-            <Link to="/wishlist">위시리스트</Link>
-          </li>
-          <li>
-            <Link to="/signup">회원가입</Link>
-          </li>
-          <li>
-            <Link to="/login">로그인</Link>
-          </li>
+          <li onClick={() => navigate("/wishlist")}>위시리스트</li>
+          <li onClick={() => navigate("/signup")}>회원가입</li>
+          <li onClick={() => navigate("/login")}>로그인</li>
         </ul>
       )}
     </div>
