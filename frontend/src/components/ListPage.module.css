@@ -6,7 +6,11 @@
 }
 
 .bg.catalog {
-  background-color: #ebebeb;
+  /* background-color: #ebebeb; */
+  height: 300px;
+  background-image: url("https://www.motorgraph.com/news/photo/202102/27140_86146_5436.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .bg.community {
@@ -20,7 +24,9 @@
 
 .heading {
   margin: 0 0 5px;
-  font-size: 22px;
+  /* position: 200px; */
+
+  font-size: 50px;
   font-weight: bold;
 }
 
@@ -31,7 +37,8 @@
 }
 
 .catalog .heading {
-  color: #545454;
+  /* color: #545454; */
+  color: #fff;
 }
 
 .catalog .description {
