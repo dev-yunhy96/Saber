@@ -29,21 +29,9 @@ function UserMenu() {
       </button>
       {isOpen && (
         <ul className={styles.popup}>
-<<<<<<< HEAD
-          <li>
-            <Link to="/wishlist">위시리스트</Link>
-          </li>
-          <li>
-            <Link to="/signup">회원회원회원도커도커도커11번째시도가입</Link>
-          </li>
-          <li>
-            <Link to="/login">로그인</Link>
-          </li>
-=======
           <li onClick={() => navigate("/wishlist")}>위시리스트</li>
           <li onClick={() => navigate("/signup")}>회원가입</li>
           <li onClick={() => navigate("/login")}>로그인</li>
->>>>>>> c1a7865fc8d2d9a475ef773442b290afbff1ba84
         </ul>
       )}
     </div>
