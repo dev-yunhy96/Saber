@@ -14,6 +14,9 @@ function Nav() {
   return (
     <div className={styles.nav}>
       <Container className={styles.container}>
+        <Link to="/">
+          <img src={logoImg} alt="Codethat Logo" />
+        </Link>
         <ul className={styles.menu}>
           <li>
             <NavLink to="/courses" style={getLinkStyle}>
@@ -34,6 +37,9 @@ function Nav() {
             <NavLink to="/questions" style={getLinkStyle}>
               오늘의 운세
             </NavLink>
+          </li>
+          <li>
+            <UserMenu />
           </li>
         </ul>
       </Container>
