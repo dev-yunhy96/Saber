@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   padding: 15px 0;
-  background-color: #fff;
+  background-color: #f9f9f9;
   box-shadow: var(--box-shadow);
 }
 
@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 30px;
 }
 
 ul.menu {
@@ -20,8 +21,12 @@ ul.menu {
   list-style: none;
 }
 
-ul.menu > li:not(:last-child) {
+/* ul.menu > li:not(:last-child) {
   margin-right: 30px;
+} */
+
+ul.menu > li {
+  margin-right: 20px;
 }
 
 ul.menu a:hover,
