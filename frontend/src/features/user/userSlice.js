@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import userapi from "../../api/userapi";
 import serverApi from "../../common/api/serverApi";
 
 export const fetchAsyncUsers = createAsyncThunk(
@@ -11,21 +10,19 @@ export const fetchAsyncUsers = createAsyncThunk(
 );
 export const fetchAsyncLogin = createAsyncThunk(
   "user/fetchAsyncLogin",
-  async ({ email, password }) => {
-    const url = `/api/login`;
+  async ({ username, password }) => {
+    const url = `/login`;
     const data = {
-      username: email,
-      password: password,
+      username,
+      password,
     };
     const headers = { "Content-type": "application/json" };
-    const response = await userapi.post(url, data, { headers });
-    console.log(response.data);
+    const response = await serverApi.post(url, data, { headers });
     return response.data;
   }
 );
 
 const initialState = {
-  test: ["a", "b"],
   user: {},
 };
 
@@ -51,7 +48,6 @@ const userSlice = createSlice({
     },
     [fetchAsyncLogin.fulfilled]: (state, { payload }) => {
       console.log("로그인 Successfully!");
-      console.log("data :");
       return { ...state, user: payload };
     },
     [fetchAsyncLogin.rejected]: () => {
