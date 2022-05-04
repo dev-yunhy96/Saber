@@ -12,62 +12,75 @@ import LoginIcon from "@mui/icons-material/Login";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUser } from "../features/user/userSlice";
+import { store } from "../features/store";
 import validate from "../components/Validate";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import NaverLogin from "../components/NaverLogin";
+import { fetchAsyncLogin } from "../features/user/userSlice";
 
-const theme = createTheme();
 export default function LoginPage() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const [data, setData] = useState(null);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+  const theme = createTheme();
+
+  const [user, setUser] = useState(store.getState());
+  //const [data, setData] = useState(null);
+  //const [errors, setErrors] = useState({});
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
   };
   const onPasswordHandler = (event) => {
     setPassword(event.currentTarget.value);
   };
-  async function loginUser(credentials) {
-    const url = "https://www.mecallapi.com/api/login";
-    const headers = { "Content-type": "application/json" };
-    const data = {
-      username: credentials.email,
-      password: credentials.password,
-    };
-    return axios.post(url, data, { headers }).then((res) => res.data);
-  }
+  // async function loginUser(credentials) {
+  //   const url = "https://www.mecallapi.com/api/login";
+  //   const headers = { "Content-type": "application/json" };
+  //   const data = {
+  //     username: credentials.email,
+  //     password: credentials.password,
+  //   };
+  //   return axios.post(url, data, { headers }).then((res) => res.data);
+  // }
   //karn.yong@mecallapi.com
   //mecallapi
+
   const handleSubmit = async (event) => {
     setSubmitting(true);
     event.preventDefault();
-    setErrors(validate({ email: email, password: password }));
+    await dispatch(fetchAsyncLogin({ email, password }));
+    console.log(store.getState());
+    setUser((user) => (user = store.getState()));
+    setEmail("");
+    setPassword("");
+    // setErrors(validate({ email: email, password: password }));
 
-    const response = await loginUser({ email, password });
+    // const response = await loginUser({ email, password });
 
-    if (response) {
-      Swal.fire("로그인 성공", {
-        buttons: false,
-        timer: 2000,
-      }).then(() => {
-        // Vue store도 localstore ->
-        localStorage.setItem("token", response.accessToken);
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + response.jwt_token;
-        setData(response);
-        navigate("/");
-      });
-    } else {
-      Swal.fire("이메일, 비밀번호를 다시 확인해주세요");
-      console.log("에러");
-      console.log("respnose ", response.status);
-    }
+    // if (response) {
+    //   Swal.fire("로그인 성공", {
+    //     buttons: false,
+    //     timer: 2000,
+    //   }).then(() => {
+    //     // Vue store도 localstore ->
+    //     localStorage.setItem("token", response.accessToken);
+    //     axios.defaults.headers.common["Authorization"] =
+    //       "Bearer " + response.jwt_token;
+    //     setData(response);
+    //     navigate("/");
+    //   });
+    // } else {
+    //   Swal.fire("이메일, 비밀번호를 다시 확인해주세요");
+    //   console.log("에러");
+    //   console.log("respnose ", response.status);
+    // }
   };
 
   // useEffect(() => {
@@ -78,7 +91,19 @@ export default function LoginPage() {
   //     console.log("useEffect", data);
   //   }
   // }, [errors]);
+  useEffect(() => {
+    console.log("useEffect", user.user.user);
+    if (Object.keys(user.user.user).length !== 0) {
+      Swal.fire("로그인 성공", {
+        buttons: false,
+        timer: 2000,
+      }).then(() => {
+        console.log(user.user);
 
+        navigate("/");
+      });
+    }
+  }, [user]);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -114,9 +139,9 @@ export default function LoginPage() {
               autoFocus
               onChange={onEmailHandler}
             />
-            {errors.email && (
+            {/* {errors.email && (
               <span className="errorMessage">{errors.email}</span>
-            )}
+            )} */}
             <TextField
               margin="normal"
               required
@@ -128,9 +153,9 @@ export default function LoginPage() {
               autoComplete="current-password"
               onChange={onPasswordHandler}
             />
-            {errors.password && (
+            {/* {errors.password && (
               <span className="errorMessage">{errors.password}</span>
-            )}
+            )} */}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
