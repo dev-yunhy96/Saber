@@ -5,6 +5,12 @@
   margin-top: 20px;
 }
 
+.content {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
 @media (max-width: 840px) {
   .courseList {
     grid-template-columns: repeat(2, 1fr);
