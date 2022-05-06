@@ -1,0 +1,28 @@
+.bg {
+  width: 200px;
+
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0 18px;
+}
+.wrapper {
+  width: 400px;
+
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+}
+.stats {
+  display: flex;
+  width: 400px;
+  box-shadow: var(--box-shadow);
+}
+
+.statcomponent {
+  width: 80px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+  box-shadow: var(--box-shadow);
+}
