@@ -7,6 +7,8 @@ import styles from "./HomePage.module.css";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
 import { useSearchParams } from "react-router-dom";
+import Ranking from "../components/Ranking";
+import Statics from "../components/Statics";
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -37,22 +39,10 @@ function HomePage() {
           <img src={searchIcon} alt="검색" />
         </button>
       </form>
-
-      <p className={styles.count}>총 {courses.length}개 코스</p>
-
-      {initKeyword && courses.length === 0 ? (
-        <Warn
-          className={styles.emptyList}
-          title="조건에 맞는 코스가 없어요."
-          description="올바른 검색어가 맞는지 다시 한 번 확인해 주세요."
-        />
-      ) : (
-        <div className={styles.courseList}>
-          {courses.map((course) => (
-            <CourseItem key={course.id} course={course} />
-          ))}
-        </div>
-      )}
+      <div className={styles.content}>
+        <Ranking />
+        <Statics />
+      </div>
     </ListPage>
   );
 }

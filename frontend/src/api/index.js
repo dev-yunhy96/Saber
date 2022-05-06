@@ -1,10 +1,22 @@
 //import { courses, questions } from "./mock.json";
 import mock from "./mock.json";
-const { courses, questions } = mock;
+const { courses, questions, Ranker, Statics } = mock;
 
 function filterByKeyword(items, keyword) {
   const lowered = keyword.toLowerCase();
   return items.filter(({ title }) => title.toLowerCase().includes(lowered));
+}
+
+export function getRanker() {
+  return Ranker;
+}
+
+export function getStaticsspeed(keyword) {
+  return Statics.speed;
+}
+
+export function getStaticsitem(keyword) {
+  return Statics.item;
 }
 
 export function getCourses(keyword) {
