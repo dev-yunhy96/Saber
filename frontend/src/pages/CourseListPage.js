@@ -23,7 +23,7 @@ function CourseListPage() {
   return (
     <ListPage
       variant="catalog"
-      title="모든 코스"
+      title="SABER.GG"
       description="자체 제작된 코스들로 기초를 쌓으세요."
     >
       <form className={searchBarStyles.form} onSubmit={handleSubmit}>
@@ -31,7 +31,7 @@ function CourseListPage() {
           name="keyword"
           value={keyword}
           onChange={handleKeywordChange}
-          placeholder="검색으로 코스 찾기"
+          placeholder="유저 검색"
         ></input>
         <button type="submit">
           <img src={searchIcon} alt="검색" />
