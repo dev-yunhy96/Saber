@@ -1,34 +1,59 @@
-import Button from "../components/Button";
-import Container from "../components/Container";
-import Lined from "../components/Lined";
+import { useState } from "react";
+import ListPage from "../components/ListPage";
+import Warn from "../components/Warn";
+import CourseItem from "../components/CourseItem";
+import { getCourses } from "../api";
 import styles from "./HomePage.module.css";
-import landingImg from "../assets/landing.svg";
+import searchBarStyles from "../components/SearchBar.module.css";
+import searchIcon from "../assets/search.svg";
+import { useSearchParams } from "react-router-dom";
+
 function HomePage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initKeyword = searchParams.get("keyword");
+  const [keyword, setKeyword] = useState(initKeyword || "");
+  const courses = getCourses(initKeyword);
+
+  const handleKeywordChange = (e) => setKeyword(e.target.value);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearchParams(keyword ? { keyword } : {});
+  };
   return (
-    <>
-      <div className={styles.bg} />
-      <Container className={styles.container}>
-        <div className={styles.texts}>
-          <h1 className={styles.heading}>
-            <Lined>코딩이 처음이라면,</Lined>
-            <br />
-            <strong>코드댓</strong>
-          </h1>
-          <p className={styles.description}>
-            11만 명이 넘는 비전공자, 코딩 입문자가 코드댓 무제한 멤버십을
-            선택했어요.
-            <br />
-            지금 함께 시작해보실래요?
-          </p>
-          <div>
-            <Button>지금 시작하기</Button>
-          </div>
+    <ListPage
+      variant="catalog"
+      title="SABER.GG"
+      description="자체 제작된 코스들로 기초를 쌓으세요."
+    >
+      <form className={searchBarStyles.form} onSubmit={handleSubmit}>
+        <input
+          name="keyword"
+          value={keyword}
+          onChange={handleKeywordChange}
+          placeholder="유저 검색"
+        ></input>
+        <button type="submit">
+          <img src={searchIcon} alt="검색" />
+        </button>
+      </form>
+
+      <p className={styles.count}>총 {courses.length}개 코스</p>
+
+      {initKeyword && courses.length === 0 ? (
+        <Warn
+          className={styles.emptyList}
+          title="조건에 맞는 코스가 없어요."
+          description="올바른 검색어가 맞는지 다시 한 번 확인해 주세요."
+        />
+      ) : (
+        <div className={styles.courseList}>
+          {courses.map((course) => (
+            <CourseItem key={course.id} course={course} />
+          ))}
         </div>
-        <div className={styles.figure}>
-          <img src={landingImg} alt="그래프, 모니터, 윈도우, 자물쇠, 키보드" />
-        </div>
-      </Container>
-    </>
+      )}
+    </ListPage>
   );
 }
 
