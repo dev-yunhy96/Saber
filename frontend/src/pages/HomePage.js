@@ -1,26 +1,19 @@
 import { useState } from "react";
 import ListPage from "../components/ListPage";
-import Warn from "../components/Warn";
-import CourseItem from "../components/CourseItem";
-import { getCourses } from "../api";
 import styles from "./HomePage.module.css";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
-import { useSearchParams } from "react-router-dom";
 import Ranking from "../components/Ranking";
 import Statics from "../components/Statics";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initKeyword = searchParams.get("keyword");
-  const [keyword, setKeyword] = useState(initKeyword || "");
-  const courses = getCourses(initKeyword);
-
-  const handleKeywordChange = (e) => setKeyword(e.target.value);
+  const [userNick, setUserNick] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchParams(keyword ? { keyword } : {});
+    navigate(`/record/${userNick}`);
   };
   return (
     <ListPage
@@ -31,8 +24,8 @@ function HomePage() {
       <form className={searchBarStyles.form} onSubmit={handleSubmit}>
         <input
           name="keyword"
-          value={keyword}
-          onChange={handleKeywordChange}
+          value={userNick}
+          onChange={(e) => setUserNick(e.target.value)}
           placeholder="유저 검색"
         ></input>
         <button type="submit">
