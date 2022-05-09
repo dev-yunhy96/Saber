@@ -13,7 +13,7 @@ function Ranking() {
       <div className={classNames(styles.title)}>RP랭킹</div>
       {Ranking.map((Ranker, i) => {
         return (
-          <div className={classNames(styles.ranker)}>
+          <div key={i} className={classNames(styles.ranker)}>
             {i + 1}.{Ranker}
           </div>
         );

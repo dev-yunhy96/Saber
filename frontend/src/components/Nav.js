@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 
 function getLinkStyle({ isActive }) {
   return {
-    "font-size": "1.2em",
+    fontSize: "1.2em",
     textDecoration: isActive ? "underline" : undefined,
   };
 }
@@ -25,13 +25,8 @@ function Nav() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/questions" style={getLinkStyle}>
+            <NavLink to="/community" style={getLinkStyle}>
               커뮤니티
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/sample" style={getLinkStyle}>
-              샘플
             </NavLink>
           </li>
           <li>

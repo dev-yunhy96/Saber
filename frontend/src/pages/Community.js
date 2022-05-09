@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Board from "../components/Board";
+import Board from "../components/community/Board";
 export default function SamplePage() {
   return (
     <Box

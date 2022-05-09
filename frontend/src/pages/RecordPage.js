@@ -5,14 +5,14 @@ import ListPage from "../components/ListPage";
 import Warn from "../components/Warn";
 import Card from "../components/Card";
 import Avatar from "../components/Avatar";
-import styles from "./QuestionListPage.module.css";
+import styles from "./RecordPage.module.css";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
-import { Link, useSearchParams } from "react-router-dom";
-import { QuestionPage, Answer } from "./QuestionPage";
+import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Answer } from "./QuestionPage";
 import Container from "../components/Container";
-import Lined from "../components/Lined";
-//import Answer from "./QuestionPage";
+// import Lined from "../components/Lined";
 function QuestionItem({ question }) {
   const [state, setstate] = useState(0);
 
@@ -72,15 +72,15 @@ function QuestionItem({ question }) {
 }
 
 function QuestionListPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initKeyword = searchParams.get("keyword");
-  const [keyword, setKeyword] = useState(initKeyword || "");
-  const questions = getQuestions(initKeyword);
+  const { userNick } = useParams();
+  const [keyword, setKeyword] = useState(userNick);
+  const navigate = useNavigate();
+  const questions = getQuestions(keyword);
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchParams(keyword ? { keyword } : {});
+    navigate(`/record/${keyword}`);
   };
   return (
     <ListPage
@@ -91,7 +91,7 @@ function QuestionListPage() {
       <form className={searchBarStyles.form} onSubmit={handleSubmit}>
         <input
           name="keyword"
-          value={keyword}
+          // value={keyword}
           placeholder="검색으로 질문 찾기"
           onChange={handleKeywordChange}
         />
@@ -102,7 +102,7 @@ function QuestionListPage() {
 
       <p className={styles.count}>총 {questions.length}개 질문</p>
 
-      {initKeyword && questions.length === 0 ? (
+      {keyword && questions.length === 0 ? (
         <Warn
           className={styles.emptyList}
           title="조건에 맞는 질문이 없어요."

@@ -1,6 +1,13 @@
 //import { courses, questions } from "./mock.json";
 import mock from "./mock.json";
+import kart from "./kart.json";
 const { courses, questions, Ranker, Statics } = mock;
+
+export function kartById(keywords) {
+  return kart.filter(function (e) {
+    return e.id === keywords;
+  })[0].name;
+}
 
 function filterByKeyword(items, keyword) {
   const lowered = keyword.toLowerCase();
