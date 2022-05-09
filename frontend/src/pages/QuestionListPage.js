@@ -9,30 +9,65 @@ import styles from "./QuestionListPage.module.css";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
 import { Link, useSearchParams } from "react-router-dom";
+import { QuestionPage, Answer } from "./QuestionPage";
+import Container from "../components/Container";
+import Lined from "../components/Lined";
+//import Answer from "./QuestionPage";
 function QuestionItem({ question }) {
-  return (
-    <Card className={styles.questionItem} key={question.title}>
-      <div className={styles.info}>
-        <Link to={`/questions/${question.id}`}>
-          <p className={styles.title}>
-            {question.title}
-            {question.answers.length > 0 && (
-              <span className={styles.count}>[{question.answers.length}]</span>
-            )}
-          </p>
+  const [state, setstate] = useState(0);
 
-          <p className={styles.date}>
-            <DateText value={question.createdAt} />
-          </p>
-        </Link>
-      </div>
-      <div className={styles.writer}>
-        <Avatar
-          photo={question.writer.profile.photo}
-          name={question.writer.name}
-        />
-      </div>
-    </Card>
+  return (
+    <div>
+      <Card className={styles.questionItem} key={question.title}>
+        <div className={styles.info}>
+          <Link to={`/questions/${question.id}`}>
+            <p className={styles.title}>
+              {question.title}
+              {question.answers.length > 0 && (
+                <span className={styles.count}>
+                  [{question.answers.length}]
+                </span>
+              )}
+            </p>
+
+            <p className={styles.date}>
+              <DateText value={question.createdAt} />
+            </p>
+          </Link>
+        </div>
+        <div className={styles.writer}>
+          <Avatar
+            photo={question.writer.profile.photo}
+            name={question.writer.name}
+          />
+        </div>
+        <button
+          onClick={() => {
+            setstate(!state);
+          }}
+        >
+          V
+        </button>
+      </Card>
+      {!state ? null : (
+        <Container className={styles.answers}>
+          {question.answers.length > 0 ? (
+            question.answers.map((answer) => (
+              <Answer
+                key={answer.id}
+                className={styles.answerItem}
+                answer={answer}
+              />
+            ))
+          ) : (
+            <Warn
+              title="답변을 기다리고 있어요."
+              description="이 질문의 첫 번째 답변을 달아주시겠어요?"
+            />
+          )}
+        </Container>
+      )}
+    </div>
   );
 }
 
@@ -50,7 +85,7 @@ function QuestionListPage() {
   return (
     <ListPage
       variant="community"
-      title="커뮤니티"
+      // title="커뮤니티"
       description="코드댓의 2만 수강생들과 함께 공부해봐요."
     >
       <form className={searchBarStyles.form} onSubmit={handleSubmit}>
