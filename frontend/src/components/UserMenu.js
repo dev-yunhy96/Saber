@@ -2,25 +2,24 @@ import { useCallback, useEffect, useState } from "react";
 import personIcon from "../assets/person.png";
 import styles from "./UserMenu.module.css";
 import { useNavigate } from "react-router-dom";
-import { store } from "../features/store";
+import { useSelector } from "react-redux";
+import { getUser } from "../features/user/userSlice";
+
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const [login, setLogin] = useState(store.getState().user.user);
-  const [check, setCheck] = useState(false);
-  useEffect(() => {
-    if (Object.keys(login).length !== 0 && check === false) {
-      setCheck(true);
-      return;
-    } else if (Object.keys(login).length === 0 && check === true) {
-      setCheck(false);
-      return;
+  const user = useSelector(getUser);
+
+  const isEmptyObj = (obj) => {
+    if (obj.constructor === Object && Object.keys(obj).length === 0) {
+      return true;
     }
-  }, [login, check]);
+    return false;
+  };
+
   const handleButtonClick = useCallback((e) => {
     e.stopPropagation();
     setIsOpen((nextIsOpen) => !nextIsOpen);
-    setLogin(store.getState().user.user);
   }, []);
 
   useEffect(() => {
@@ -42,10 +41,15 @@ function UserMenu() {
       {isOpen && (
         <ul className={styles.popup}>
           <li onClick={() => navigate("/wishlist")}>위시리스트</li>
-          {!check && (
+
+          {isEmptyObj(user) ? (
             <>
               <li onClick={() => navigate("/signup")}>회원가입</li>
               <li onClick={() => navigate("/login")}>로그인</li>
+            </>
+          ) : (
+            <>
+              <li onClick={() => navigate("/mypage")}>마이페이지</li>
             </>
           )}
         </ul>

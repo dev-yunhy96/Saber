@@ -20,12 +20,22 @@ function Nav() {
         <ul className={styles.menu}>
           <li>
             <NavLink to="/courses" style={getLinkStyle}>
-              카탈로그
+              홈
             </NavLink>
           </li>
           <li>
             <NavLink to="/questions" style={getLinkStyle}>
-              커뮤니티
+              통계
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/questions" style={getLinkStyle}>
+              내 주변 PC방
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/questions" style={getLinkStyle}>
+              오늘의 운세
             </NavLink>
           </li>
           <li>
