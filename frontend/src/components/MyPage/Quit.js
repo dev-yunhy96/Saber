@@ -4,12 +4,38 @@ import styles from "./Quit.module.css";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+import { fetchAsyncQuit, logout } from "../../features/user/userSlice";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function Quit({ values = [] }) {
-  const [checked, setChecked] = React.useState(true);
-
+  const [checked, setChecked] = React.useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setChecked(event.target.checked);
+  };
+
+  const eventHandler = (event) => {
+    event.preventDefault();
+    dispatch(fetchAsyncQuit())
+      .unwrap()
+      .then((response) => {
+        Swal.fire("삭제 성공", {
+          buttons: false,
+          timer: 2000,
+        });
+        return response;
+      })
+      .then((response) => {
+        console.log("데이터삭제");
+        dispatch(logout());
+        navigate("/");
+      })
+      .catch((err) => {
+        Swal.fire("삭제 실패");
+      });
   };
   return (
     <Container>
@@ -66,6 +92,9 @@ function Quit({ values = [] }) {
                 height: "50px",
               }}
               size="large"
+              onClick={() => {
+                navigate("/");
+              }}
             >
               비동의
             </Button>
@@ -73,10 +102,12 @@ function Quit({ values = [] }) {
               variant="contained"
               size="large"
               color="success"
+              disabled={!checked}
               style={{
                 width: "150px",
                 height: "50px",
               }}
+              onClick={eventHandler}
             >
               동의
             </Button>
