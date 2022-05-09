@@ -1,9 +1,9 @@
 import * as React from "react";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListSubheader from "@mui/material/ListSubheader";
 import Pagination from "@mui/material/Pagination";
 import Sample from "./Sample";
+import Typography from "@mui/material/Typography";
 
 export default function Board({ title }) {
   const articles = [
@@ -25,11 +25,9 @@ export default function Board({ title }) {
         m: 2,
       }}
     >
-      <ListSubheader
-        sx={{ textAlign: "center", fontSize: 20, fontWeight: 600 }}
-      >
+      <Typography align="center" variant="h4" component="div">
         {title}
-      </ListSubheader>
+      </Typography>
       {articles.map((article, index) => (
         <>
           <Sample key={index} title={article.title} content={article.content} />
