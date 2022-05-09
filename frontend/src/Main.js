@@ -10,6 +10,9 @@ import LoginPage from "./pages/LoginPage";
 import SamplePage from "./pages/SamplePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import MyPageDemo2 from "./pages/MyPageDemo2";
+import MyPage from "./pages/MyPage";
+
 function Main() {
   return (
     <BrowserRouter>
@@ -26,8 +29,10 @@ function Main() {
           </Route>
           <Route path="signup" element={<SignUpPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="mypage" element={<MyPage />} />
           <Route path="sample" element={<SamplePage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="mypage2" element={<MyPageDemo2 />} />
         </Route>
       </Routes>
     </BrowserRouter>
