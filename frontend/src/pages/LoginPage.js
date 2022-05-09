@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { fetchAsyncLogin } from "../features/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import validate from "../components/Validate";
 import Swal from "sweetalert2";
 import NaverLogin from "../components/NaverLogin";
 
