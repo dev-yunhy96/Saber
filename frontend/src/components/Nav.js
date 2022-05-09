@@ -29,16 +29,11 @@ function Nav() {
               커뮤니티
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink to="/questions" style={getLinkStyle}>
-              내 주변 PC방
+          <li>
+            <NavLink to="/sample" style={getLinkStyle}>
+              샘플
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/questions" style={getLinkStyle}>
-              오늘의 운세
-            </NavLink>
-          </li> */}
           <li>
             <UserMenu />
           </li>
