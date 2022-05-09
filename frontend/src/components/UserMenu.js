@@ -48,7 +48,9 @@ function UserMenu() {
               <li onClick={() => navigate("/login")}>로그인</li>
             </>
           ) : (
-            <></>
+            <>
+              <li onClick={() => navigate("/mypage")}>마이페이지</li>
+            </>
           )}
         </ul>
       )}
