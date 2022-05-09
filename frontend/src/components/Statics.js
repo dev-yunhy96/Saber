@@ -17,7 +17,7 @@ function Statics() {
         <div className={classNames(styles.stats)}>
           {sStats.map((Ranker, i) => {
             return (
-              <div className={classNames(styles.statcomponent)}>
+              <div key={i} className={classNames(styles.statcomponent)}>
                 <img
                   // className={classNames(styles.courseIcon, className)}
                   src="asdfasdf"
@@ -33,7 +33,7 @@ function Statics() {
         <div className={classNames(styles.stats)}>
           {iStats.map((Ranker, i) => {
             return (
-              <div className={classNames(styles.statcomponent)}>
+              <div key={i} className={classNames(styles.statcomponent)}>
                 <img
                   // className={classNames(styles.courseIcon, className)}
                   src="asdfasdf"
