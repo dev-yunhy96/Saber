@@ -1,8 +1,7 @@
 import * as React from "react";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import Pagination from "@mui/material/Pagination";
-import Sample from "./Sample";
+import Article from "./Article";
 import Typography from "@mui/material/Typography";
 
 export default function Board({ title }) {
@@ -22,6 +21,7 @@ export default function Board({ title }) {
         maxWidth: 400,
         bgcolor: "background.paper",
         borderRadius: 5,
+        boxShadow: 1,
         m: 2,
       }}
     >
@@ -29,18 +29,7 @@ export default function Board({ title }) {
         {title}
       </Typography>
       {articles.map((article, index) => (
-        <>
-          <Sample key={index} title={article.title} content={article.content} />
-          {index === articles.length - 1 ? (
-            ""
-          ) : (
-            <Divider
-              sx={{ borderBottomWidth: 2 }}
-              variant="middle"
-              component="li"
-            />
-          )}
-        </>
+        <Article key={index} title={article.title} content={article.content} />
       ))}
       <Pagination
         sx={{ display: "flex", justifyContent: "center" }}
