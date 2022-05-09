@@ -1,7 +1,6 @@
 import App from "./components/App";
 import HomePage from "./pages/HomePage";
 import CoursePage from "./pages/CoursePage";
-import CourseListPage from "./pages/CourseListPage";
 import WishlistPage from "./pages/WishlistPage";
 import SignUpPage from "./pages/SignUpPage";
 import QuestionListPage from "./pages/QuestionListPage";
@@ -10,6 +9,9 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import MyPageDemo2 from "./pages/MyPageDemo2";
+import MyPage from "./pages/MyPage";
+
 function Main() {
   return (
     <BrowserRouter>
@@ -17,7 +19,6 @@ function Main() {
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
           <Route path="courses">
-            <Route index element={<CourseListPage />} />
             <Route path=":courseSlug" element={<CoursePage />} />
           </Route>
           <Route path="wishlist" element={<WishlistPage />} />
@@ -26,10 +27,11 @@ function Main() {
             <Route index element={<QuestionListPage />} />
             <Route path=":id" element={<QuestionPage />} />
           </Route>
-          <Route path="login">
-            <Route index element={<LoginPage />} />
-          </Route>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="mypage" element={<MyPage />} />
+
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="mypage2" element={<MyPageDemo2 />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,11 +1,12 @@
 import Container from "./Container";
 import UserMenu from "./UserMenu";
-import logoImg from "../assets/logo.svg";
+import logoImg from "../assets/logo.png";
 import styles from "./Nav.module.css";
 import { Link, NavLink } from "react-router-dom";
 
 function getLinkStyle({ isActive }) {
   return {
+    "font-size": "1.2em",
     textDecoration: isActive ? "underline" : undefined,
   };
 }
@@ -19,8 +20,8 @@ function Nav() {
         </Link>
         <ul className={styles.menu}>
           <li>
-            <NavLink to="/courses" style={getLinkStyle}>
-              카탈로그
+            <NavLink to="/" style={getLinkStyle}>
+              홈
             </NavLink>
           </li>
           <li>
@@ -28,6 +29,16 @@ function Nav() {
               커뮤니티
             </NavLink>
           </li>
+          {/* <li>
+            <NavLink to="/questions" style={getLinkStyle}>
+              내 주변 PC방
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/questions" style={getLinkStyle}>
+              오늘의 운세
+            </NavLink>
+          </li> */}
           <li>
             <UserMenu />
           </li>
