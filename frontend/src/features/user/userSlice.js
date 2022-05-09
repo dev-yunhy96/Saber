@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/api/serverApi";
-
 export const fetchAsyncUsers = createAsyncThunk(
   "user/fetchAsyncUsers",
   async () => {
@@ -16,8 +15,24 @@ export const fetchAsyncLogin = createAsyncThunk(
       username,
       password,
     };
-    const headers = { "Content-type": "application/json" };
+    const headers = {
+      "Content-type": "application/json",
+    };
     const response = await serverApi.post(url, data, { headers });
+    return response.data;
+  }
+);
+export const fetchAsyncQuit = createAsyncThunk(
+  "user/fetchAsyncQuit",
+  async () => {
+    const headers = {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    console.log(headers["Authorization"]);
+    const data = { id: 13 };
+    const url = `/auth/attractions/delete`;
+    const response = await serverApi.delete(url, { headers, data });
     return response.data;
   }
 );
@@ -29,7 +44,11 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = {};
+    },
+  },
   extraReducers: {
     [fetchAsyncUsers.pending]: () => {
       console.log("Pending");
@@ -53,9 +72,21 @@ const userSlice = createSlice({
     [fetchAsyncLogin.rejected]: () => {
       console.log("로그인 Rejected!");
     },
+
+    //회원삭제
+    [fetchAsyncQuit.pending]: () => {
+      console.log("회원삭제중");
+    },
+    [fetchAsyncQuit.fulfilled]: (state, { payload }) => {
+      console.log("회원삭제 Successfully!");
+    },
+    [fetchAsyncQuit.rejected]: () => {
+      console.log("회원삭제 Rejected!");
+    },
   },
 });
 
 // export const {} = userSlice.actions;
 export const getUser = (state) => state.user.user;
+export const { logout } = userSlice.actions;
 export default userSlice.reducer;
