@@ -85,7 +85,7 @@ function QuestionListPage() {
   return (
     <ListPage
       variant="community"
-      title="커뮤니티"
+      // title="커뮤니티"
       description="코드댓의 2만 수강생들과 함께 공부해봐요."
     >
       <form className={searchBarStyles.form} onSubmit={handleSubmit}>

@@ -1,7 +1,6 @@
 import App from "./components/App";
 import HomePage from "./pages/HomePage";
 import CoursePage from "./pages/CoursePage";
-import CourseListPage from "./pages/CourseListPage";
 import WishlistPage from "./pages/WishlistPage";
 import SignUpPage from "./pages/SignUpPage";
 import QuestionListPage from "./pages/QuestionListPage";
@@ -20,7 +19,6 @@ function Main() {
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
           <Route path="courses">
-            <Route index element={<CourseListPage />} />
             <Route path=":courseSlug" element={<CoursePage />} />
           </Route>
           <Route path="wishlist" element={<WishlistPage />} />
