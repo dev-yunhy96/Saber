@@ -1,8 +1,8 @@
 import { useState } from "react";
 import ListPage from "../components/ListPage";
-import Warn from "../components/Warn";
-import CourseItem from "../components/CourseItem";
-import { getCourses } from "../api";
+// import Warn from "../components/Warn";
+// import CourseItem from "../components/CourseItem";
+// import { getCourses } from "../api";
 import styles from "./HomePage.module.css";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
@@ -14,7 +14,7 @@ function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initKeyword = searchParams.get("keyword");
   const [keyword, setKeyword] = useState(initKeyword || "");
-  const courses = getCourses(initKeyword);
+  // const courses = getCourses(initKeyword);
 
   const handleKeywordChange = (e) => setKeyword(e.target.value);
 
