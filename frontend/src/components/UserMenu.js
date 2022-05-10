@@ -1,9 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import personIcon from "../assets/person.png";
 import styles from "./UserMenu.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getUser } from "../features/user/userSlice";
+
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const user = useSelector(getUser);
+
+  const isEmptyObj = (obj) => {
+    if (obj.constructor === Object && Object.keys(obj).length === 0) {
+      return true;
+    }
+    return false;
+  };
 
   const handleButtonClick = useCallback((e) => {
     e.stopPropagation();
@@ -28,15 +40,18 @@ function UserMenu() {
       </button>
       {isOpen && (
         <ul className={styles.popup}>
-          <li>
-            <Link to="/wishlist">위시리스트</Link>
-          </li>
-          <li>
-            <Link to="/signup">회원회원회원도커도커도커11번째시도가입</Link>
-          </li>
-          <li>
-            <Link to="/login">로그인</Link>
-          </li>
+          <li onClick={() => navigate("/wishlist")}>위시리스트</li>
+
+          {isEmptyObj(user) ? (
+            <>
+              <li onClick={() => navigate("/signup")}>회원가입</li>
+              <li onClick={() => navigate("/login")}>로그인</li>
+            </>
+          ) : (
+            <>
+              <li onClick={() => navigate("/mypage")}>마이페이지</li>
+            </>
+          )}
         </ul>
       )}
     </div>
