@@ -1,5 +1,6 @@
 package com.saber404.api.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.saber404.api.dto.request.LoginReq;
 import com.saber404.api.dto.request.SignUpReq;
 import com.saber404.api.dto.request.UserDTO;
@@ -43,9 +44,12 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, String>> login(@RequestBody LoginReq loginReq){
 		HashMap<String, String> map = new HashMap<String, String>();
+		System.out.println(loginReq.getEmail()+"지금찎어본거");
 		
 		try {
 			String token = userService.login(loginReq);
+			System.out.println(loginReq+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println(token+"토큰자리입니다.");
 			if(!token.equals("")) {
 				map.put("message", "로그인 성공");
 				map.put("email", loginReq.getEmail())	;
