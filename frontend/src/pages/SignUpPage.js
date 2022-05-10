@@ -56,6 +56,7 @@ export default function SignUp() {
       })
       .then((res) => {
         console.log(res.data);
+        console.log("성공");
       })
       .catch((error) => {
         console.error(error);
