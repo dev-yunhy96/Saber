@@ -61,8 +61,10 @@ export default function SignUp() {
         if (!error.response) {
             // network error
             this.errorStatus = 'Error: Network Error';
+            console.error(error);
         } else {
             this.errorStatus = error.response.data.message;
+            console.error(error);
         }
       });
   };
