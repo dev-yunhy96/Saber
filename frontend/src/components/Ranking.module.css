@@ -1,0 +1,16 @@
+.bg {
+  width: 200px;
+
+  align-items: center;
+  justify-content: center;
+  padding: 38px 0 58px;
+}
+.title {
+  font-weight: bold;
+  height: 30px;
+}
+.ranker {
+  padding: 5px 5px 5px 5px;
+  align-items: center;
+  box-shadow: var(--box-shadow);
+}
