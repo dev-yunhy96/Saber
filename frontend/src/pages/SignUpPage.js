@@ -49,7 +49,7 @@ export default function SignUp() {
       avatar: "https://www.mecallapi.com/users/cat.png",
     });
     axios
-      .post("https://localhost:8080/api/users/signup", {
+      .post("http://localhost:8080/api/users/signup", {
         nickname: "starstar",
         email: "yunhy96@naver.com",
         password: "password1234!",
