@@ -1169,5 +1169,33 @@
         "level": "ROCK"
       }
     }
-  ]
+  ],
+  "Ranker": [
+    "문호준",
+    "유영혁",
+    "전대웅",
+    "박인수",
+    "이재혁",
+    "이은택",
+    "노준현",
+    "김다원",
+    "유창현",
+    "배성빈"
+  ],
+  "Statics": {
+    "speed": [
+      "f7724634e3a539e6f45cbfa30eb90074081fcb2abddeff6f035d06191d784931",
+      "751a4dd7b0e66ba60c3feb72191980bfed2eac7068930521c59171a514fff837",
+      "eb333073a3486846660dc9e82e6b0c55c508c31853e4f4151d36f4b7fe17fe33",
+      "5dae1a3dd645b7e8ee1e61b51c7f4111d9861b08ed0cdc68c2b0cdcbd8ac7d94",
+      "25ecb81acbd802189dd28add78b4f02e495a895ed89aa8c3a09c2a6c15f8bd40"
+    ],
+    "item": [
+      "7e9af2569848299f8aae60f4cfdeb21df32daa1f26aef4e3001b21deb4d54dde",
+      "22f6e7faf98caf43b1bad667f77daabb4d77656226448f8366fc81e5dfd125e6",
+      "19f77c48baccbd83b9cf6f0313a81fcfe04c30b9ff6752828975d6e050229c7d",
+      "199114d190e456acde0c46e436c2770cc2ead1e86410272277f4cc0c97465ff0",
+      "a0f8e8f6331f473014d21e5b8596cc179db98102fe92dbe44e443a543c72fd27"
+    ]
+  }
 }

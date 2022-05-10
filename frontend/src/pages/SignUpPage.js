@@ -49,12 +49,10 @@ export default function SignUp() {
       avatar: "https://www.mecallapi.com/users/cat.png",
     });
     axios
-      .post("https://www.mecallapi.com/api/users/create", {
-        fname: data.get("firstName"),
-        lname: data.get("lastName"),
-        username: data.get("userNick"),
-        email: data.get("email"),
-        avatar: "https://www.mecallapi.com/users/cat.png",
+      .post("https://localhost:8080/api/users/signup", {
+        nickname: "starstar",
+        email: "yunhy96@naver.com",
+        password: "password1234!",
       })
       .then((res) => {
         console.log(res.data);
