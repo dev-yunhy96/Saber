@@ -58,7 +58,12 @@ export default function SignUp() {
         console.log(res.data);
       })
       .catch(() => {
-        console.log("실패");
+        if (!error.response) {
+            // network error
+            this.errorStatus = 'Error: Network Error';
+        } else {
+            this.errorStatus = error.response.data.message;
+        }
       });
   };
 
