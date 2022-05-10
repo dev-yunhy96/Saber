@@ -57,7 +57,7 @@ export default function SignUp() {
       .then((res) => {
         console.log(res.data);
       })
-      .catch(() => {
+      .catch((error) => {
         if (!error.response) {
             // network error
             this.errorStatus = 'Error: Network Error';
