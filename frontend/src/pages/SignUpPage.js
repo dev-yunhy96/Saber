@@ -49,7 +49,7 @@ export default function SignUp() {
       avatar: "https://www.mecallapi.com/users/cat.png",
     });
     axios
-      .post("k6a404.p.ssafy.io/api/v1/users/signup", {
+      .post("https://k6a404.p.ssafy.io/api/v1/users/signup", {
         nickname: "starstar",
         email: "yunhy96@naver.com",
         password: "password1234!",
