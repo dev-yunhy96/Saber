@@ -50,8 +50,8 @@ export default function SignUp() {
     });
     axios
       .post("https://k6a404.p.ssafy.io/api/v1/users/signup", {
-        nickname: "starstar",
-        email: "yunhy96@naver.com",
+        nickname: "ssafy3806",
+        email: "ssafy3806@naver.com",
         password: "password1234!",
       })
       .then((res) => {
