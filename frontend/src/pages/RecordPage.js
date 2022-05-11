@@ -1,20 +1,14 @@
-import { useState, useEffect } from "react";
-import { getQuestions } from "../api";
+import { useState } from "react";
 import DateText from "../components/DateText";
-import ListPage from "../components/ListPage";
 import Warn from "../components/Warn";
 import Card from "../components/Card";
 import Avatar from "../components/Avatar";
 import styles from "./RecordPage.module.css";
-import searchBarStyles from "../components/SearchBar.module.css";
-import searchIcon from "../assets/search.svg";
 import { Link } from "react-router-dom";
-import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Answer } from "./QuestionPage";
 import Container from "../components/Container";
-// import Lined from "../components/Lined";
-import Grid from "@mui/material/Grid";
-import serverApi from "../common/api/serverApi";
+import { getPlayer } from "../features/player/playerSlice";
 
 function QuestionItem({ question }) {
   const [state, setstate] = useState(0);
@@ -75,41 +69,14 @@ function QuestionItem({ question }) {
 }
 
 function RecordPage() {
-  const { userNick } = useParams();
-  const [keyword, setKeyword] = useState(userNick);
-  const [playerInfo, setPlayerInfo] = useState([]);
-  const navigate = useNavigate();
-
-  const getPlayerInfo = async () => {
-    const response = await serverApi.get(`users?search=${keyword}`);
-    setPlayerInfo(response.data[0]);
-    setKeyword("");
-  };
-  useEffect(() => {
-    getPlayerInfo();
-  }, []);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate(`/record/${keyword}`);
-    getPlayerInfo();
-  };
-
+  const player = useSelector(getPlayer);
   return (
-    <Container sx={{ display: "grid", gridAutoColumns: "1fr", gap: 1 }}>
-      <div sx={{ gridRow: "1", gridColumn: "4" }}>{playerInfo.fname}</div>
-      <div sx={{ gridRow: "1", gridColumn: "8" }}>
-        <form className={searchBarStyles.form} onSubmit={handleSubmit}>
-          <input
-            name="keyword"
-            value={keyword}
-            placeholder="유저 검색"
-            onChange={(e) => setKeyword(e.target.value)}
-          />
-          <button type="submit">
-            <img src={searchIcon} alt="검색" />
-          </button>
-        </form>
-      </div>
+    <Container>
+      <p>{player.fname}</p>
+      <p>{player.lname}</p>
+      <p>{player.username}</p>
+      <img src="player.avatar" alt="player" />
+      {/* <div>{playerInfo.fname}</div> */}
       {/* <p className={styles.count}>총 {questions.length}개 질문</p>
 
       {keyword && questions.length === 0 ? (
