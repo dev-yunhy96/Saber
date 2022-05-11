@@ -61,7 +61,7 @@ function RecordPage() {
       <p>{player.lname}</p>
       <p>{player.username}</p>
       <img src="player.avatar" alt="player" />
-      <QuestionItem />
+      <QuestionItem question="" />
       {/* <div>{playerInfo.fname}</div> */}
       {/* <p className={styles.count}>총 {questions.length}개 질문</p>
 
