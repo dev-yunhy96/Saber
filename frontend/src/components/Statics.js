@@ -17,7 +17,6 @@ function Statics() {
         <div className={classNames(styles.stats)}>스피드 픽률 TOP5</div>
         <div className={classNames(styles.stats)}>
           {sStats.map((kart, i) => {
-            const kartname = "./kart.jpg";
             return (
               <div key={i} className={classNames(styles.statcomponent)}>
                 <img

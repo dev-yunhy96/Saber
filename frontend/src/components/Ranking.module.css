@@ -6,8 +6,16 @@
   padding: 38px 0 58px;
 }
 .title {
-  font-weight: bold;
   height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.a {
+  font-weight: bold;
+}
+.b {
+  font-size: 8pt;
 }
 .ranker {
   padding: 5px 5px 5px 5px;

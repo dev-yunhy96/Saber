@@ -12,60 +12,49 @@ import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import { Answer } from "./QuestionPage";
 import Container from "../components/Container";
+import { getMatch } from "../api";
 // import Lined from "../components/Lined";
 function QuestionItem({ question }) {
   const [state, setstate] = useState(0);
-
+  const matchinfo = getMatch();
   return (
     <div>
       <Card className={styles.questionItem} key={question.title}>
-        <div className={styles.info}>
-          <Link to={`/questions/${question.id}`}>
-            <p className={styles.title}>
-              {question.title}
-              {question.answers.length > 0 && (
-                <span className={styles.count}>
-                  [{question.answers.length}]
-                </span>
-              )}
-            </p>
+        <div className={styles.info}>승리</div>
+        <div className={styles.info}>1위</div>
+        <div className={styles.info}>빌리지 붐힐터널</div>
+        <div className={styles.info}>01:02:273</div>
 
-            <p className={styles.date}>
-              <DateText value={question.createdAt} />
-            </p>
-          </Link>
-        </div>
-        <div className={styles.writer}>
-          <Avatar
-            photo={question.writer.profile.photo}
-            name={question.writer.name}
-          />
-        </div>
         <button
           onClick={() => {
             setstate(!state);
           }}
         >
-          V
+          {state ? "∧" : "∨"}
         </button>
       </Card>
       {!state ? null : (
-        <Container className={styles.answers}>
-          {question.answers.length > 0 ? (
-            question.answers.map((answer) => (
-              <Answer
-                key={answer.id}
-                className={styles.answerItem}
-                answer={answer}
-              />
-            ))
-          ) : (
-            <Warn
-              title="답변을 기다리고 있어요."
-              description="이 질문의 첫 번째 답변을 달아주시겠어요?"
-            />
-          )}
-        </Container>
+        <Card className={styles.answers}>
+          <div className={styles.matchheader}>
+            <div className={styles.rank}>순위</div>
+            <div className={styles.nick}>닉네임 </div>
+            <div className={styles.rec}>기록</div>
+            <div className={styles.kart}>카트</div>
+          </div>
+          {matchinfo.map((e, i) => {
+            return (
+              <div className={styles.matchdetail}>
+                <div className={styles.rank}>{i + 1}</div>
+                <Link to={`/record/${e.nick}`}>
+                  <div className={styles.nick}>{e.nick}</div>
+                </Link>
+
+                <div className={styles.rec}>{e.record}</div>
+                <div className={styles.kart}>{e.kart}</div>
+              </div>
+            );
+          })}
+        </Card>
       )}
     </div>
   );
@@ -83,7 +72,7 @@ function QuestionListPage() {
     navigate(`/record/${keyword}`);
   };
   return (
-    <ListPage
+    <Container
       variant="community"
       // title="커뮤니티"
       description="코드댓의 2만 수강생들과 함께 공부해봐요."
@@ -115,7 +104,7 @@ function QuestionListPage() {
           ))}
         </div>
       )}
-    </ListPage>
+    </Container>
   );
 }
 
