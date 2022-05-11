@@ -8,7 +8,9 @@
   font-weight: 300;
   color: #878787;
 }
-
+.answers {
+  margin-bottom: 10px;
+}
 .emptyList {
   margin: 40px auto;
 }
@@ -19,10 +21,35 @@
   padding: 19px 30px 20px;
 }
 
-.questionItem:not(:last-child) {
-  margin-bottom: 11px;
+.matchheader {
+  border: #ffffff;
+  border-top: #000000;
+
+  border-style: solid;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  /* justify-content: space-around; */
+}
+.matchdetail {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  /* justify-content: space-around; */
 }
 
+.rank {
+  width: 200px;
+}
+.nick {
+  width: 300px;
+}
+.rec {
+  width: 300px;
+}
+.kart {
+  width: 200px;
+}
 .questionItem .info {
   flex: 1 1;
 }
