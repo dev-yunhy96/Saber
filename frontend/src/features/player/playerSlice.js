@@ -16,7 +16,11 @@ const initialState = {
 const playerSlice = createSlice({
   name: "player",
   initialState,
-  reducers: {},
+  reducers: {
+    removeSelectedPlayer: (state) => {
+      state.player = {};
+    },
+  },
   extraReducers: {
     [fetchAsyncPlayer.pending]: () => {
       console.log("Pending");
@@ -31,6 +35,6 @@ const playerSlice = createSlice({
   },
 });
 
-// export const {} = userSlice.actions;
+export const { removeSelectedPlayer } = playerSlice.actions;
 export const getPlayer = (state) => state.player.player;
 export default playerSlice.reducer;

@@ -4,10 +4,8 @@ import UserMenu from "./UserMenu";
 import logoImg from "../assets/logo.png";
 import styles from "./Nav.module.css";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
-import { fetchAsyncPlayer } from "../features/player/playerSlice";
 
 function getLinkStyle({ isActive }) {
   return {
@@ -18,13 +16,11 @@ function getLinkStyle({ isActive }) {
 
 function Nav() {
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userNick, setUserNick] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchAsyncPlayer(userNick));
     navigate(`/record/${userNick}`);
     setUserNick("");
   };
