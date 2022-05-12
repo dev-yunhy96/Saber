@@ -47,7 +47,7 @@ function QuestionItem({ question }) {
                 onClick={() => {
                   navigate(`/record/${e.nick}`);
                 }}
-                className={styles.nick}
+                className={styles.nick2}
               >
                 {e.nick}
               </div>
