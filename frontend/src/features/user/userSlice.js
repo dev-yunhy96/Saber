@@ -36,7 +36,7 @@ const userSlice = createSlice({
     },
     [fetchAsyncUsers.fulfilled]: (state, { payload }) => {
       console.log("Fetched Successfully!");
-      return { user: payload };
+      return { ...state, user: payload };
     },
     [fetchAsyncUsers.rejected]: () => {
       console.log("Rejected!");

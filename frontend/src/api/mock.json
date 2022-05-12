@@ -1197,5 +1197,22 @@
       "199114d190e456acde0c46e436c2770cc2ead1e86410272277f4cc0c97465ff0",
       "a0f8e8f6331f473014d21e5b8596cc179db98102fe92dbe44e443a543c72fd27"
     ]
-  }
+  },
+  "matchdetail": [
+    {
+      "nick": "Ivy",
+      "kart": "어벤저",
+      "record": "01:02:231"
+    },
+    {
+      "nick": "gayla",
+      "kart": "세이버",
+      "record": "01:02:331"
+    },
+    {
+      "nick": "karn",
+      "kart": "스펙터",
+      "record": "01:02:231"
+    }
+  ]
 }
