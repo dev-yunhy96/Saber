@@ -36,5 +36,5 @@ const playerSlice = createSlice({
 });
 
 export const { removeSelectedPlayer } = playerSlice.actions;
-export const getPlayer = (state) => state.player.matches;
+export const getMatches = (state) => state.player.matches;
 export default playerSlice.reducer;

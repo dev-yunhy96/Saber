@@ -8,7 +8,7 @@ import { getMatch } from "../api";
 import { useDispatch } from "react-redux";
 import {
   fetchAsyncPlayer,
-  getPlayer,
+  getMatches,
   removeSelectedPlayer,
 } from "../features/player/playerSlice";
 
@@ -64,7 +64,8 @@ function QuestionItem({ question }) {
 function RecordPage() {
   const { userNick } = useParams();
   const dispatch = useDispatch();
-  const player = useSelector(getPlayer);
+  const matches = useSelector(getMatches);
+  console.log(matches);
   useEffect(() => {
     dispatch(fetchAsyncPlayer(userNick));
     return () => {
