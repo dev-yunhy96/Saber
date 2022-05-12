@@ -64,6 +64,8 @@ public class MatchService {
             accessId = findPlayer.get().getAccountNo();
             address2 = "https://api.nexon.co.kr/kart/v1.0/users/" + accessId +"/matches?start_date=" + findPlayer.get().getLastUpdateTime() + "&end_date=&offset=&limit=200&match_types=";
         }
+
+        System.out.println(address2);
         player.setAccountNo(accessId);
         player.setCharacterName(playerId);
 
@@ -81,7 +83,7 @@ public class MatchService {
             JSONArray jsonAry2 = (JSONArray) jsonObj3.get("matches");
             for(int j = 0; j<jsonAry2.size(); j++) {
                 JSONObject jsonObj4 = (JSONObject) jsonAry2.get(j);
-                if(matchPlayerRepository.findByPlayerId(jsonObj4.get("matchId").toString()).size() == 0) {
+                if(matchPlayerRepository.check(jsonObj4.get("matchId").toString(), accessId).size() == 1) {
                     continue;
                 }
                 Match match = new Match();
