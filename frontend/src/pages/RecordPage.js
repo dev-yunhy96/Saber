@@ -1,24 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "../components/Card";
 import styles from "./RecordPage.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
-import { getPlayer } from "../features/player/playerSlice";
 import { getMatch } from "../api";
 import { useDispatch } from "react-redux";
-import { fetchAsyncPlayer } from "../features/player/playerSlice";
+import {
+  fetchAsyncPlayer,
+  getPlayer,
+  removeSelectedPlayer,
+} from "../features/player/playerSlice";
 
 function QuestionItem({ question }) {
-  const [state, setstate] = useState(0);
+  const [open, setOpen] = useState(false);
   const matchinfo = getMatch();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const torecord = (userNick) => {
-    console.log(userNick);
-    dispatch(fetchAsyncPlayer(userNick));
-    navigate(`/record/${userNick}`);
-  };
   return (
     <div>
       <Card className={styles.questionItem} key={question.title}>
@@ -29,13 +26,13 @@ function QuestionItem({ question }) {
 
         <button
           onClick={() => {
-            setstate(!state);
+            setOpen((state) => !state);
           }}
         >
-          {state ? "∧" : "∨"}
+          {open ? "∧" : "∨"}
         </button>
       </Card>
-      {!state ? null : (
+      {!open ? null : (
         <Card className={styles.answers}>
           <div className={styles.matchheader}>
             <div className={styles.rank}>순위</div>
@@ -43,19 +40,21 @@ function QuestionItem({ question }) {
             <div className={styles.rec}>기록</div>
             <div className={styles.kart}>카트</div>
           </div>
-          {matchinfo.map((e, i) => {
-            return (
-              <div className={styles.matchdetail}>
-                <div className={styles.rank}>{i + 1}</div>
-                <div onClick={torecord(e.nick)} className={styles.nick}>
-                  {e.nick}
-                </div>
-
-                <div className={styles.rec}>{e.record}</div>
-                <div className={styles.kart}>{e.kart}</div>
+          {matchinfo.map((e, i) => (
+            <div key={i} className={styles.matchdetail}>
+              <div className={styles.rank}>{i + 1}</div>
+              <div
+                onClick={() => {
+                  navigate(`/record/${e.nick}`);
+                }}
+                className={styles.nick}
+              >
+                {e.nick}
               </div>
-            );
-          })}
+              <div className={styles.rec}>{e.record}</div>
+              <div className={styles.kart}>{e.kart}</div>
+            </div>
+          ))}
         </Card>
       )}
     </div>
@@ -63,7 +62,15 @@ function QuestionItem({ question }) {
 }
 
 function RecordPage() {
+  const { userNick } = useParams();
+  const dispatch = useDispatch();
   const player = useSelector(getPlayer);
+  useEffect(() => {
+    dispatch(fetchAsyncPlayer(userNick));
+    return () => {
+      dispatch(removeSelectedPlayer());
+    };
+  }, [dispatch, userNick]);
   return (
     <Container>
       <p>{player.fname}</p>
