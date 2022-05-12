@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,9 +15,12 @@ import LoginIcon from "@mui/icons-material/Login";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { fetchAsyncLogin } from "../features/user/userSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
+import {
+  fetchAsyncLogin,
+  fetchAsyncUserDetail,
+} from "../features/user/userSlice";
+
 import Swal from "sweetalert2";
 import NaverLogin from "../components/NaverLogin";
 
@@ -37,7 +43,6 @@ export default function LoginPage() {
           buttons: false,
           timer: 2000,
         });
-        navigate("/");
         return response;
       })
       .then((response) => {
@@ -46,6 +51,11 @@ export default function LoginPage() {
         // axios.defaults.headers.common["Authorization"] =
         //   "Bearer " + response.jwt_token;
         // setData(response);
+        console.log(response.accessToken);
+        dispatch(fetchAsyncUserDetail(response.accessToken));
+      })
+      .then((response) => {
+        navigate("/");
       })
       .catch((err) => {
         Swal.fire("이메일, 비밀번호를 다시 확인해주세요");
