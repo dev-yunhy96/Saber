@@ -216,7 +216,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-<<<<<<< HEAD
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -226,17 +225,7 @@
                 </configuration>
             </plugin>
         </plugins>
-=======
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
-				</configuration>
-			</plugin>
-		</plugins>
->>>>>>> 03104703ad956373568d3873dcc72fe605e8faa8
+
 	</build>
 
 </project>
