@@ -1,0 +1,32 @@
+.title h1 {
+  text-decoration: underline;
+}
+
+.body {
+  font-weight: 400;
+  font-size: 20px;
+  /* line-height: ; */
+  color: #1e2022;
+  margin-top: 40px;
+}
+.sub {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  line-height: 1.43;
+  color: #7b858e;
+  margin-top: 8px;
+}
+
+.hr {
+  color: #7b858e;
+  margin-top: 18px;
+}
+.checkBox {
+  font-size: 14px;
+  margin-top: 18px;
+}
+
+.button {
+  margin: auto;
+}
