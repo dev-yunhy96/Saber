@@ -16,15 +16,6 @@ function QuestionItem({ question }) {
   const [open, setOpen] = useState(false);
   const matchinfo = getMatch();
   const navigate = useNavigate();
-<<<<<<< HEAD
-  const dispatch = useDispatch();
-  const torecord = (userNick) => {
-    console.log(userNick);
-    // dispatch(fetchAsyncPlayer(userNick));
-    // navigate(`/record/${userNick}`);
-  };
-=======
->>>>>>> a4fe52b72b618ba233cbbc11155bad0466b16395
   return (
     <div>
       <Card className={styles.questionItem} key={question.title}>
@@ -50,21 +41,6 @@ function QuestionItem({ question }) {
             <div className={styles.kart}>카트</div>
           </div>
           {matchinfo.map((e, i) => (
-<<<<<<< HEAD
-            <div className={styles.matchdetail}>
-              <div className={styles.rank}>{i + 1}</div>
-              <div
-                onClick={() => {
-                  console.log(e.nick);
-                  dispatch(fetchAsyncPlayer(e.nick));
-                  navigate(`/record/${e.nick}`);
-                }}
-                className={styles.nick2}
-              >
-                {e.nick}
-              </div>
-
-=======
             <div key={i} className={styles.matchdetail}>
               <div className={styles.rank}>{i + 1}</div>
               <div
@@ -75,7 +51,6 @@ function QuestionItem({ question }) {
               >
                 {e.nick}
               </div>
->>>>>>> a4fe52b72b618ba233cbbc11155bad0466b16395
               <div className={styles.rec}>{e.record}</div>
               <div className={styles.kart}>{e.kart}</div>
             </div>
