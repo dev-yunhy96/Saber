@@ -73,10 +73,6 @@ function RecordPage() {
   }, [dispatch, userNick]);
   return (
     <Container>
-      <p>{player.fname}</p>
-      <p>{player.lname}</p>
-      <p>{player.username}</p>
-      <img src="player.avatar" alt="player" />
       <QuestionItem question="" />
       {/* <div>{playerInfo.fname}</div> */}
       {/* <p className={styles.count}>총 {questions.length}개 질문</p>
