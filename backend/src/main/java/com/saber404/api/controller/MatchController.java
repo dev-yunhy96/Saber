@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/match")
+@RequestMapping("/api/v1/match")
 public class MatchController {
 
     private final MatchService matchService;
@@ -27,5 +27,5 @@ public class MatchController {
     @GetMapping("/list/{user_id}")
     public ResponseEntity<List<MatchPlayer>> test(@PathVariable("user_id") String userId) throws Exception {
 
-        return new ResponseEntity<List<MatchPlayer>>(matchService.searchMatch(userId), HttpStatus.OK);
+        return new ResponseEntity<List<MatchPlayer>>(matchService.findByPlayerId(userId), HttpStatus.OK);
     }}
