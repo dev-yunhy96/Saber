@@ -4,13 +4,13 @@ import serverApi from "../../common/api/serverApi";
 export const fetchAsyncPlayer = createAsyncThunk(
   "user/fetchAsyncPlayer",
   async (keyword) => {
-    const response = await serverApi.get(`users?search=${keyword}`);
-    return response.data[0];
+    const response = await serverApi.get(`match/list/${keyword}`);
+    return response.data;
   }
 );
 
 const initialState = {
-  player: {},
+  matches: [],
 };
 
 const playerSlice = createSlice({
@@ -18,7 +18,7 @@ const playerSlice = createSlice({
   initialState,
   reducers: {
     removeSelectedPlayer: (state) => {
-      state.player = {};
+      state.matches = [];
     },
   },
   extraReducers: {
@@ -27,7 +27,7 @@ const playerSlice = createSlice({
     },
     [fetchAsyncPlayer.fulfilled]: (state, { payload }) => {
       console.log("Fetched Successfully!");
-      return { ...state, player: payload };
+      return { ...state, matches: payload };
     },
     [fetchAsyncPlayer.rejected]: () => {
       console.log("Rejected!");
@@ -36,5 +36,5 @@ const playerSlice = createSlice({
 });
 
 export const { removeSelectedPlayer } = playerSlice.actions;
-export const getPlayer = (state) => state.player.player;
+export const getPlayer = (state) => state.player.matches;
 export default playerSlice.reducer;

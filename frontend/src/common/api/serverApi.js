@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://www.mecallapi.com/api",
+  baseURL: "http://localhost:8080/api/v1",
 });
