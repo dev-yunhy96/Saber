@@ -4,8 +4,8 @@ import serverApi from "../../common/api/serverApi";
 export const fetchAsyncPlayer = createAsyncThunk(
   "user/fetchAsyncPlayer",
   async (keyword) => {
-    const response = await serverApi.get(`users?search=${keyword}`);
-    return response.data[0];
+    const response = await serverApi.get(`match/list/${keyword}`);
+    return response.data;
   }
 );
 
