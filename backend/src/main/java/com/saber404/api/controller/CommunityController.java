@@ -17,7 +17,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor
-@RequestMapping("/api/community")
+@RequestMapping("/api/v1/community")
 public class CommunityController {
     private final CommunityService communityService;
 

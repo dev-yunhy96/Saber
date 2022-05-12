@@ -17,7 +17,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor
-@RequestMapping("/api/comment")
+@RequestMapping("/api/v1/comment")
 public class CommentController {
 
     private final CommentService commentService;
