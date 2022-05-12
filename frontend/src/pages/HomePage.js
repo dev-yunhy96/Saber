@@ -5,18 +5,14 @@ import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
 import Ranking from "../components/Ranking";
 import Statics from "../components/Statics";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchAsyncPlayer } from "../features/player/playerSlice";
 
 function HomePage() {
   const [userNick, setUserNick] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchAsyncPlayer(userNick));
     navigate(`/record/${userNick}`);
   };
   return (
