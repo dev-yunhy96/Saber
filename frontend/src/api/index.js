@@ -1,7 +1,7 @@
 //import { courses, questions } from "./mock.json";
 import mock from "./mock.json";
 import kart from "./kart.json";
-const { courses, questions, Ranker, Statics } = mock;
+const { courses, questions, Ranker, Statics, matchdetail } = mock;
 
 export function kartById(keywords) {
   return kart.filter(function (e) {
@@ -13,7 +13,9 @@ function filterByKeyword(items, keyword) {
   const lowered = keyword.toLowerCase();
   return items.filter(({ title }) => title.toLowerCase().includes(lowered));
 }
-
+export function getMatch(keyword) {
+  return matchdetail;
+}
 export function getRanker() {
   return Ranker;
 }
