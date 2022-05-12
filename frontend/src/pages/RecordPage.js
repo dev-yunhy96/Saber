@@ -16,8 +16,8 @@ function QuestionItem({ question }) {
   const dispatch = useDispatch();
   const torecord = (userNick) => {
     console.log(userNick);
-    dispatch(fetchAsyncPlayer(userNick));
-    navigate(`/record/${userNick}`);
+    // dispatch(fetchAsyncPlayer(userNick));
+    // navigate(`/record/${userNick}`);
   };
   return (
     <div>
@@ -43,19 +43,24 @@ function QuestionItem({ question }) {
             <div className={styles.rec}>기록</div>
             <div className={styles.kart}>카트</div>
           </div>
-          {matchinfo.map((e, i) => {
-            return (
-              <div className={styles.matchdetail}>
-                <div className={styles.rank}>{i + 1}</div>
-                <div onClick={torecord(e.nick)} className={styles.nick}>
-                  {e.nick}
-                </div>
-
-                <div className={styles.rec}>{e.record}</div>
-                <div className={styles.kart}>{e.kart}</div>
+          {matchinfo.map((e, i) => (
+            <div className={styles.matchdetail}>
+              <div className={styles.rank}>{i + 1}</div>
+              <div
+                onClick={() => {
+                  console.log(e.nick);
+                  dispatch(fetchAsyncPlayer(e.nick));
+                  navigate(`/record/${e.nick}`);
+                }}
+                className={styles.nick2}
+              >
+                {e.nick}
               </div>
-            );
-          })}
+
+              <div className={styles.rec}>{e.record}</div>
+              <div className={styles.kart}>{e.kart}</div>
+            </div>
+          ))}
         </Card>
       )}
     </div>
