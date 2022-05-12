@@ -1,15 +1,24 @@
 import { useState } from "react";
 import Card from "../components/Card";
 import styles from "./RecordPage.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
 import { getPlayer } from "../features/player/playerSlice";
 import { getMatch } from "../api";
+import { useDispatch } from "react-redux";
+import { fetchAsyncPlayer } from "../features/player/playerSlice";
 
 function QuestionItem({ question }) {
   const [state, setstate] = useState(0);
   const matchinfo = getMatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const torecord = (userNick) => {
+    console.log(userNick);
+    dispatch(fetchAsyncPlayer(userNick));
+    navigate(`/record/${userNick}`);
+  };
   return (
     <div>
       <Card className={styles.questionItem} key={question.title}>
@@ -38,9 +47,9 @@ function QuestionItem({ question }) {
             return (
               <div className={styles.matchdetail}>
                 <div className={styles.rank}>{i + 1}</div>
-                <Link to={`/record/${e.nick}`}>
-                  <div className={styles.nick}>{e.nick}</div>
-                </Link>
+                <div onClick={torecord(e.nick)} className={styles.nick}>
+                  {e.nick}
+                </div>
 
                 <div className={styles.rec}>{e.record}</div>
                 <div className={styles.kart}>{e.kart}</div>
