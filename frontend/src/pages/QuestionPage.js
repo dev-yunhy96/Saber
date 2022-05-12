@@ -93,3 +93,4 @@ function Answer({ className, answer }) {
 }
 
 export default QuestionPage;
+export { QuestionPage, Answer };

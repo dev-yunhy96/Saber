@@ -25,14 +25,4 @@ public class SignUpReq {
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
     private String email;
 
-    private String profileImage;
-    
-    @ApiModelProperty(name="법정동/법정리 코드", example="4113510900")
-    private String bcode;
-
-	@ApiModelProperty(name="법정동/법정리 이름", example="삼평동")
-    private String bname;
-
-    @ApiModelProperty(name="시군구 이름", example="과천시 문원동")
-    private String sigungu;
 }
