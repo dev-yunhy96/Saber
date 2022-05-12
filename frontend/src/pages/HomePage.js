@@ -1,34 +1,42 @@
-import Button from "../components/Button";
-import Container from "../components/Container";
-import Lined from "../components/Lined";
+import { useState } from "react";
+import ListPage from "../components/ListPage";
 import styles from "./HomePage.module.css";
-import landingImg from "../assets/landing.svg";
+import searchBarStyles from "../components/SearchBar.module.css";
+import searchIcon from "../assets/search.svg";
+import Ranking from "../components/Ranking";
+import Statics from "../components/Statics";
+import { useNavigate } from "react-router-dom";
+
 function HomePage() {
+  const [userNick, setUserNick] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/record/${userNick}`);
+  };
   return (
-    <>
-      <div className={styles.bg} />
-      <Container className={styles.container}>
-        <div className={styles.texts}>
-          <h1 className={styles.heading}>
-            <Lined>코딩이 처음이라면,</Lined>
-            <br />
-            <strong>코드댓</strong>
-          </h1>
-          <p className={styles.description}>
-            11만 명이 넘는 비전공자, 코딩 입문자가 코드댓 무제한 멤버십을
-            선택했어요.
-            <br />
-            지금 함께 시작해보실래요?
-          </p>
-          <div>
-            <Button>지금 시작하기</Button>
-          </div>
-        </div>
-        <div className={styles.figure}>
-          <img src={landingImg} alt="그래프, 모니터, 윈도우, 자물쇠, 키보드" />
-        </div>
-      </Container>
-    </>
+    <ListPage
+      variant="catalog"
+      title="SABER.GG"
+      description="자체 제작된 코스들로 기초를 쌓으세요."
+    >
+      <form className={searchBarStyles.form} onSubmit={handleSubmit}>
+        <input
+          name="keyword"
+          value={userNick}
+          onChange={(e) => setUserNick(e.target.value)}
+          placeholder="유저 검색"
+        ></input>
+        <button type="submit">
+          <img src={searchIcon} alt="검색" />
+        </button>
+      </form>
+      <div className={styles.content}>
+        <Ranking />
+        <Statics />
+      </div>
+    </ListPage>
   );
 }
 

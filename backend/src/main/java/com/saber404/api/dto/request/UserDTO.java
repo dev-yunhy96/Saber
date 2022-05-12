@@ -27,16 +27,7 @@ public class UserDTO {
 		setPassword(data.getPassword());
 		setNickname(data.getNickname());
 		setEmail(data.getEmail());
-		if(data.getProfileImage()==null)
-			setProfileImage("");
-		else
-			setProfileImage(data.getProfileImage());
-		setBcode(data.getBcode());
-		setBname(data.getBname());
-		setSigungu(data.getSigungu());
-		setProfileDescription("");
-		setRoles(new ArrayList<String>());
-		getRoles().add("ROLE_USER");
+
 	}
 
 }

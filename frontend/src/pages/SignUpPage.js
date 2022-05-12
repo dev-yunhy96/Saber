@@ -49,18 +49,17 @@ export default function SignUp() {
       avatar: "https://www.mecallapi.com/users/cat.png",
     });
     axios
-      .post("https://www.mecallapi.com/api/users/create", {
-        fname: data.get("firstName"),
-        lname: data.get("lastName"),
-        username: data.get("userNick"),
-        email: data.get("email"),
-        avatar: "https://www.mecallapi.com/users/cat.png",
+      .post("https://k6a404.p.ssafy.io/api/v1/users/signup", {
+        nickname: "ssafy3806",
+        email: "ssafy3806@naver.com",
+        password: "password1234!",
       })
       .then((res) => {
         console.log(res.data);
+        console.log("성공");
       })
-      .catch(() => {
-        console.log("실패");
+      .catch((error) => {
+        console.error(error);
       });
   };
 
