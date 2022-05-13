@@ -16,6 +16,9 @@ public interface MatchPlayerRepository extends JpaRepository<MatchPlayer, String
     @Query(value = "select * from match_player m where player_id = :playerId", nativeQuery = true )
     List<MatchPlayer> findByPlayerId(String playerId);
 
+    @Query(value = "select * from match_player m where matches_id = :matchId", nativeQuery = true )
+    List<MatchPlayer> findByMatchId(String matchId);
+
     @Query(value = "select * from match_player m where matches_id =:matchId and player_id = :playerId", nativeQuery = true )
     List<MatchPlayer> check(String matchId, String playerId);
 
