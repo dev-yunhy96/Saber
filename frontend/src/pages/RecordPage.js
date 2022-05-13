@@ -4,7 +4,7 @@ import styles from "./RecordPage.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
-import { getMatch } from "../api";
+import { getMatch, trackById, gameTypeById } from "../api";
 import { useDispatch } from "react-redux";
 import {
   fetchAsyncPlayer,
@@ -12,17 +12,32 @@ import {
   removeSelectedPlayer,
 } from "../features/player/playerSlice";
 
+function sectomin(record) {
+  const zeroPad = (num, places) => String(num).padStart(places, "0");
+  const min = zeroPad(parseInt(record / 1000 / 60), 2);
+  const sec = zeroPad(parseInt(record / 1000) % 60, 2);
+  const msec = zeroPad(record % 1000, 3);
+  return `${min}:${sec}:${msec}`;
+}
+
 function QuestionItem({ question }) {
   const [open, setOpen] = useState(false);
   const matchinfo = getMatch();
   const navigate = useNavigate();
+
   return (
     <div>
       <Card className={styles.questionItem} key={question.title}>
-        <div className={styles.info}>승리</div>
-        <div className={styles.info}>1위</div>
-        <div className={styles.info}>빌리지 붐힐터널</div>
-        <div className={styles.info}>01:02:273</div>
+        <div className={styles.info}>{question.matchWin ? "승리" : "패배"}</div>
+        <div className={styles.info}>
+          {gameTypeById(question.match.matchType)}
+        </div>
+        <div className={styles.info}>
+          {question.matchRank === "99" ? "리타이어" : `${question.matchRank}위`}
+        </div>
+        <div className={styles.info}>{trackById(question.match.trackId)}</div>
+        {/* <div className={styles.info}>{question.matchTime}</div> */}
+        <div className={styles.rec}>{sectomin(question.matchTime)}</div>
 
         <button
           onClick={() => {
@@ -50,7 +65,7 @@ function QuestionItem({ question }) {
                 className={styles.nick2}
               >
                 {e.nick}
-              </div>
+              </div>{" "}
               <div className={styles.rec}>{e.record}</div>
               <div className={styles.kart}>{e.kart}</div>
             </div>
@@ -72,9 +87,16 @@ function RecordPage() {
       dispatch(removeSelectedPlayer());
     };
   }, [dispatch, userNick]);
+  const sortedMatches = matches.slice().sort(function (a, b) {
+    if (a.match.startTime < b.match.startTime) return 1;
+    else return -1;
+  });
   return (
     <Container>
-      <QuestionItem question="" />
+      {sortedMatches.map((e) => (
+        <QuestionItem question={e} />
+      ))}
+
       {/* <div>{playerInfo.fname}</div> */}
       {/* <p className={styles.count}>총 {questions.length}개 질문</p>
 
