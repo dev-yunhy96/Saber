@@ -24,8 +24,13 @@ public class MatchController {
 
     private final MatchService matchService;
 
-    @GetMapping("/list/{user_id}")
-    public ResponseEntity<List<MatchPlayer>> test(@PathVariable("user_id") String userId) throws Exception {
+    @GetMapping("/list/{player_id}")
+    public ResponseEntity<List<MatchPlayer>> searchPlayer(@PathVariable("player_id") String playerId) throws Exception {
+        return new ResponseEntity<List<MatchPlayer>>(matchService.findByPlayerId(playerId), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<List<MatchPlayer>>(matchService.findByPlayerId(userId), HttpStatus.OK);
-    }}
+    @GetMapping("/detail/{match_id}")
+    public ResponseEntity<List<MatchPlayer>> matchDetail(@PathVariable("match_id") String matchId) throws Exception {
+        return new ResponseEntity<List<MatchPlayer>>(matchService.findByMatchId(matchId), HttpStatus.OK);
+    }
+}

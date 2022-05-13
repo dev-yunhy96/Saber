@@ -28,16 +28,22 @@ function QuestionItem({ question }) {
   return (
     <div>
       <Card className={styles.questionItem} key={question.title}>
-        <div className={styles.info}>{question.matchWin ? "승리" : "패배"}</div>
         <div className={styles.info}>
-          {gameTypeById(question.match.matchType)}
+          {" "}
+          <div className={styles.info}>
+            {question.matchWin ? "승리" : "패배"}
+          </div>
+          <div className={styles.info}>
+            {gameTypeById(question.match.matchType)}
+          </div>
         </div>
+
         <div className={styles.info}>
           {question.matchRank === "99" ? "리타이어" : `${question.matchRank}위`}
         </div>
         <div className={styles.info}>{trackById(question.match.trackId)}</div>
         {/* <div className={styles.info}>{question.matchTime}</div> */}
-        <div className={styles.rec}>{sectomin(question.matchTime)}</div>
+        <div className={styles.info}>{sectomin(question.matchTime)}</div>
 
         <button
           onClick={() => {
