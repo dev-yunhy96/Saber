@@ -1,10 +1,32 @@
 //import { courses, questions } from "./mock.json";
 import mock from "./mock.json";
 import kart from "./kart.json";
+import track from "./track.json";
+import gameType from "./gameType.json";
 const { courses, questions, Ranker, Statics, matchdetail } = mock;
 
 export function kartById(keywords) {
   return kart.filter(function (e) {
+    return e.id === keywords;
+  })[0].name;
+}
+
+export function trackById(keywords) {
+  const a = track.filter(function (e) {
+    return e.id === keywords;
+  });
+  if (a.length === 0) {
+    return "알 수 없음";
+  } else {
+    return a[0].name;
+  }
+  // return track.filter(function (e) {
+  //   return e.id === keywords;
+  // })[0].name;
+}
+
+export function gameTypeById(keywords) {
+  return gameType.filter(function (e) {
     return e.id === keywords;
   })[0].name;
 }
