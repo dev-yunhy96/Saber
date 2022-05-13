@@ -21,7 +21,7 @@ import java.util.StringTokenizer;
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/rank")
+@RequestMapping("/api/v1/rank")
 public class RankController {
 
     @GetMapping("/rp")
