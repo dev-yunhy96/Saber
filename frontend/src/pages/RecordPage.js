@@ -20,30 +20,28 @@ function sectomin(record) {
   return `${min}:${sec}:${msec}`;
 }
 
-function QuestionItem({ question }) {
+function MatchItem({ match }) {
   const [open, setOpen] = useState(false);
   const matchinfo = getMatch();
   const navigate = useNavigate();
 
   return (
     <div>
-      <Card className={styles.questionItem} key={question.title}>
+      <Card className={styles.matchItem} key={match.title}>
         <div className={styles.info}>
           {" "}
+          <div className={styles.info}>{match.matchWin ? "승리" : "패배"}</div>
           <div className={styles.info}>
-            {question.matchWin ? "승리" : "패배"}
-          </div>
-          <div className={styles.info}>
-            {gameTypeById(question.match.matchType)}
+            {gameTypeById(match.match.matchType)}
           </div>
         </div>
 
         <div className={styles.info}>
-          {question.matchRank === "99" ? "리타이어" : `${question.matchRank}위`}
+          {match.matchRank === "99" ? "리타이어" : `${match.matchRank}위`}
         </div>
-        <div className={styles.info}>{trackById(question.match.trackId)}</div>
-        {/* <div className={styles.info}>{question.matchTime}</div> */}
-        <div className={styles.info}>{sectomin(question.matchTime)}</div>
+        <div className={styles.info}>{trackById(match.match.trackId)}</div>
+        {/* <div className={styles.info}>{match.matchTime}</div> */}
+        <div className={styles.info}>{sectomin(match.matchTime)}</div>
 
         <button
           onClick={() => {
@@ -100,22 +98,22 @@ function RecordPage() {
   return (
     <Container>
       {sortedMatches.map((e) => (
-        <QuestionItem question={e} />
+        <MatchItem match={e} />
       ))}
 
       {/* <div>{playerInfo.fname}</div> */}
-      {/* <p className={styles.count}>총 {questions.length}개 질문</p>
+      {/* <p className={styles.count}>총 {matchs.length}개 질문</p>
 
-      {keyword && questions.length === 0 ? (
+      {keyword && matchs.length === 0 ? (
         <Warn
           className={styles.emptyList}
           title="조건에 맞는 질문이 없어요."
           description="올바른 검색어가 맞는지 다시 한 번 확인해 주세요."
         />
       ) : (
-        <div className={styles.questionList}>
-          {questions.map((question) => (
-            <QuestionItem key={question.id} question={question} />
+        <div className={styles.matchList}>
+          {matchs.map((match) => (
+            <MatchItem key={match.id} match={match} />
           ))}
         </div>
       )} */}
