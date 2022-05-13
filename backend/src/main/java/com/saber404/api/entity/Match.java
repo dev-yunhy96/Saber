@@ -37,7 +37,4 @@ public class Match {
     @Column
     private Long playerCount;
 
-    @Column
-    private Long battle;
-
 }
