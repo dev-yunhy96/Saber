@@ -59,6 +59,8 @@ public class MatchService {
             Object obj1 = jsonParser.parse(result1);
             JSONObject jsonObj1 = (JSONObject) obj1;
             accessId = String.valueOf(jsonObj1.get("accessId"));
+            player.setAccountNo(accessId);
+            player.setCharacterName(playerId);
             address2 = "https://api.nexon.co.kr/kart/v1.0/users/" + accessId +"/matches?start_date=&end_date=&offset=&limit=200&match_types=";
         }else {
             accessId = findPlayer.get().getAccountNo();
@@ -78,9 +80,9 @@ public class MatchService {
         for(int i = 0; i<jsonAry1.size(); i++) {
             JSONObject jsonObj3 = (JSONObject) jsonAry1.get(i);
             JSONArray jsonAry2 = (JSONArray) jsonObj3.get("matches");
-            for(int j = 0; j<jsonAry2.size(); j++) {
+            for (int j = 0; j < jsonAry2.size(); j++) {
                 JSONObject jsonObj4 = (JSONObject) jsonAry2.get(j);
-                if(matchPlayerRepository.check(jsonObj4.get("matchId").toString(), accessId).size() == 1) {
+                if (matchPlayerRepository.check(jsonObj4.get("matchId").toString(), accessId).size() == 1) {
                     continue;
                 }
                 Match match = new Match();
@@ -89,7 +91,7 @@ public class MatchService {
                 match.setStartTime(jsonObj4.get("startTime").toString());
                 match.setEndTime(jsonObj4.get("endTime").toString());
                 match.setTrackId(jsonObj4.get("trackId").toString());
-                match.setPlayerCount((Long)jsonObj4.get("playerCount"));
+                match.setPlayerCount((Long) jsonObj4.get("playerCount"));
                 MatchPlayer matchPlayer = new MatchPlayer();
                 matchPlayer.setMatch(match);
                 matchPlayer.setPlayer(player);
@@ -99,18 +101,8 @@ public class MatchService {
                 matchPlayer.setMatchRetired(jsonObj5.get("matchRetired").toString());
                 matchPlayer.setMatchWin(jsonObj5.get("matchWin").toString());
                 matchPlayer.setMatchTime(jsonObj5.get("matchTime").toString());
-                matchPlayers.add(matchPlayer);
+                matchPlayerRepository.save(matchPlayer);
             }
-        }
-        Collections.sort(matchPlayers, new Comparator<MatchPlayer>() {
-            @Override
-            public int compare(MatchPlayer o1, MatchPlayer o2) {
-                return o1.getMatchTime().compareTo(o2.getMatchTime());
-            }
-        });
-
-        for(int i=0; i<matchPlayers.size(); i++) {
-            matchPlayerRepository.save(matchPlayers.get(i));
         }
 
         return matchPlayerRepository.findByPlayerId(accessId);
@@ -151,7 +143,9 @@ public class MatchService {
                 for(int j=0; j<jsonAry1.size(); j++) {
                     JSONObject jsonObj2 = (JSONObject) jsonAry1.get(j);
                     MatchPlayer matchPlayer = new MatchPlayer();
-                    matchPlayer.setMatch(match);
+                    if (matchPlayerRepository.check(match.getMatchId(), jsonObj2.get("accountNo").toString()).size() == 1) {
+                        continue;
+                    }
                     Optional<Player> findPlayer = playerRepository.findByCharacterName(jsonObj2.get("characterName").toString());
                     if(findPlayer.isEmpty()){
                         Player player = new Player();
@@ -161,12 +155,13 @@ public class MatchService {
                     }else {
                         matchPlayer.setPlayer(findPlayer.get());
                     }
+                    matchPlayer.setMatch(match);
                     matchPlayer.setCharacterType(jsonObj2.get("character").toString());
                     matchPlayer.setMatchRank(jsonObj2.get("matchRank").toString());
                     matchPlayer.setMatchRetired(jsonObj2.get("matchRetired").toString());
                     matchPlayer.setMatchWin(jsonObj2.get("matchWin").toString());
                     matchPlayer.setMatchTime(jsonObj2.get("matchTime").toString());
-                    matchPlayers.add(matchPlayer);
+                    matchPlayerRepository.save(matchPlayer);
 
                 }
             }
@@ -176,7 +171,9 @@ public class MatchService {
             for(int i=0; i<jsonAry.size(); i++) {
                 JSONObject jsonObj2 = (JSONObject) jsonAry.get(i);
                 MatchPlayer matchPlayer = new MatchPlayer();
-                matchPlayer.setMatch(match);
+                if (matchPlayerRepository.check(jsonObj2.get("matchId").toString(), jsonObj2.get("accountNo").toString()).size() == 1) {
+                    continue;
+                }
                 Optional<Player> findPlayer = playerRepository.findByCharacterName(jsonObj2.get("accountNo").toString());
                 if(findPlayer.isEmpty()){
                     Player player = new Player();
@@ -186,25 +183,14 @@ public class MatchService {
                 }else {
                     matchPlayer.setPlayer(findPlayer.get());
                 }
+                matchPlayer.setMatch(match);
                 matchPlayer.setCharacterType(jsonObj2.get("character").toString());
                 matchPlayer.setMatchRank(jsonObj2.get("matchRank").toString());
                 matchPlayer.setMatchRetired(jsonObj2.get("matchRetired").toString());
                 matchPlayer.setMatchWin(jsonObj2.get("matchWin").toString());
                 matchPlayer.setMatchTime(jsonObj2.get("matchTime").toString());
-                matchPlayers.add(matchPlayer);
+                matchPlayerRepository.save(matchPlayer);
             }
-
-
-        }
-        Collections.sort(matchPlayers, new Comparator<MatchPlayer>() {
-            @Override
-            public int compare(MatchPlayer o1, MatchPlayer o2) {
-                return o1.getMatchTime().compareTo(o2.getMatchTime());
-            }
-        });
-
-        for(int i=0; i<matchPlayers.size(); i++) {
-            matchPlayerRepository.save(matchPlayers.get(i));
         }
 
         return matchPlayerRepository.findByMatchId(matchId);
