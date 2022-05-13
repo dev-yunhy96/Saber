@@ -91,10 +91,6 @@ const userSlice = createSlice({
     },
     [fetchAsyncLogin.fulfilled]: (state, { payload }) => {
       console.log("로그인 Successfully!");
-<<<<<<< HEAD
-      return { ...state, userInfo: payload };
-=======
->>>>>>> 32036322703b5f914d696e6a80f763194668b032
     },
     [fetchAsyncLogin.rejected]: () => {
       console.log("로그인 Rejected!");
@@ -137,10 +133,6 @@ const userSlice = createSlice({
 });
 
 // export const {} = userSlice.actions;
-<<<<<<< HEAD
-export const getUser = (state) => state.user.userInfo;
-=======
 export const getUser = (state) => state.user.user;
 export const { logout } = userSlice.actions;
->>>>>>> 32036322703b5f914d696e6a80f763194668b032
 export default userSlice.reducer;
