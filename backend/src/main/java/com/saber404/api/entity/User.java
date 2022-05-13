@@ -30,14 +30,18 @@ public class User extends BaseEntity implements UserDetails {
 	@Column(unique = true)
 	private String email;
 
+	@Column(columnDefinition = "boolean default false")
+	private boolean delYn;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
 	private List<String> roles = new ArrayList<>();
 
-	public User(String password, String nickname, String email, List<String> roles) {
+	public User(String password, String nickname, String email, boolean delYn, List<String> roles) {
 		this.password = password;
 		this.nickname = nickname;
 		this.email = email;
+		this.delYn = delYn;
 		this.roles = roles;
 	}
 
