@@ -4,7 +4,7 @@ import styles from "./RecordPage.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
-import { getMatch } from "../api";
+import { getMatch, trackById, gameTypeById } from "../api";
 import { useDispatch } from "react-redux";
 import {
   fetchAsyncPlayer,
@@ -12,17 +12,36 @@ import {
   removeSelectedPlayer,
 } from "../features/player/playerSlice";
 
-function QuestionItem({ question }) {
+function sectomin(record) {
+  const zeroPad = (num, places) => String(num).padStart(places, "0");
+  const min = zeroPad(parseInt(record / 1000 / 60), 2);
+  const sec = zeroPad(parseInt(record / 1000) % 60, 2);
+  const msec = zeroPad(record % 1000, 3);
+  return `${min}:${sec}:${msec}`;
+}
+
+function MatchItem({ match }) {
   const [open, setOpen] = useState(false);
   const matchinfo = getMatch();
   const navigate = useNavigate();
+
   return (
     <div>
-      <Card className={styles.questionItem} key={question.title}>
-        <div className={styles.info}>승리</div>
-        <div className={styles.info}>1위</div>
-        <div className={styles.info}>빌리지 붐힐터널</div>
-        <div className={styles.info}>01:02:273</div>
+      <Card className={styles.matchItem} key={match.title}>
+        <div className={styles.info}>
+          {" "}
+          <div className={styles.info}>{match.matchWin ? "승리" : "패배"}</div>
+          <div className={styles.info}>
+            {gameTypeById(match.match.matchType)}
+          </div>
+        </div>
+
+        <div className={styles.info}>
+          {match.matchRank === "99" ? "리타이어" : `${match.matchRank}위`}
+        </div>
+        <div className={styles.info}>{trackById(match.match.trackId)}</div>
+        {/* <div className={styles.info}>{match.matchTime}</div> */}
+        <div className={styles.info}>{sectomin(match.matchTime)}</div>
 
         <button
           onClick={() => {
@@ -50,7 +69,7 @@ function QuestionItem({ question }) {
                 className={styles.nick2}
               >
                 {e.nick}
-              </div>
+              </div>{" "}
               <div className={styles.rec}>{e.record}</div>
               <div className={styles.kart}>{e.kart}</div>
             </div>
@@ -72,22 +91,29 @@ function RecordPage() {
       dispatch(removeSelectedPlayer());
     };
   }, [dispatch, userNick]);
+  const sortedMatches = matches.slice().sort(function (a, b) {
+    if (a.match.startTime < b.match.startTime) return 1;
+    else return -1;
+  });
   return (
     <Container>
-      <QuestionItem question="" />
-      {/* <div>{playerInfo.fname}</div> */}
-      {/* <p className={styles.count}>총 {questions.length}개 질문</p>
+      {sortedMatches.map((e) => (
+        <MatchItem match={e} />
+      ))}
 
-      {keyword && questions.length === 0 ? (
+      {/* <div>{playerInfo.fname}</div> */}
+      {/* <p className={styles.count}>총 {matchs.length}개 질문</p>
+
+      {keyword && matchs.length === 0 ? (
         <Warn
           className={styles.emptyList}
           title="조건에 맞는 질문이 없어요."
           description="올바른 검색어가 맞는지 다시 한 번 확인해 주세요."
         />
       ) : (
-        <div className={styles.questionList}>
-          {questions.map((question) => (
-            <QuestionItem key={question.id} question={question} />
+        <div className={styles.matchList}>
+          {matchs.map((match) => (
+            <MatchItem key={match.id} match={match} />
           ))}
         </div>
       )} */}
