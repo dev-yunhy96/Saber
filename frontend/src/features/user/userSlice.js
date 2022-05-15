@@ -12,9 +12,9 @@ export const fetchAsyncUsers = createAsyncThunk(
 export const fetchAsyncLogin = createAsyncThunk(
   "user/fetchAsyncLogin",
   async ({ username, password }) => {
-    const url = `/login`;
+    const url = `/users/login`;
     const data = {
-      username,
+      email: username,
       password,
     };
     const headers = {
@@ -29,12 +29,11 @@ export const fetchAsyncLogin = createAsyncThunk(
 export const fetchAsyncUserDetail = createAsyncThunk(
   "user/fetchAsyncUserDetail",
   async (token) => {
-    const url = `/auth/user`;
+    const url = `/users/`;
     const headers = {
       "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    console.log("회원정보 조회 ", token);
     const response = await serverApi.get(url, { headers });
     return response.data;
   }
@@ -113,7 +112,6 @@ const userSlice = createSlice({
     },
     [fetchAsyncUserDetail.fulfilled]: (state, { payload }) => {
       console.log("정보조회 Successfully!");
-      console.log(payload);
       return { ...state, user: payload };
     },
     [fetchAsyncUserDetail.rejected]: () => {
