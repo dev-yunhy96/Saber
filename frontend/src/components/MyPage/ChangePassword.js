@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import styles from "./ChangePassword.module.css";
 import Container from "../Container";
 
@@ -17,6 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { styled } from "@mui/system";
 import { Button } from "@mui/material";
+import { fetchAsyncPasswordChange } from "../../features/user/userSlice";
 
 const blue = {
   100: "#DAECFF",
@@ -121,6 +122,7 @@ CustomInput.propTypes = {
 };
 
 function ChangePassword() {
+  const dispatch = useDispatch();
   const [values, setValues] = React.useState({
     amount: "",
     password: "",
@@ -137,17 +139,43 @@ function ChangePassword() {
     password: "",
     showPassword: false,
   });
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
   const handleChange2 = (prop) => (event) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!event.target.value || passwordRegex.test(event.target.value))
+      setPasswordError(false);
+    else setPasswordError(true);
+    if (!confirmPassword || event.target.value === confirmPassword)
+      setConfirmPasswordError(false);
+    else setConfirmPasswordError(true);
     setChangePassword({ ...changePassword, [prop]: event.target.value });
   };
   const handleChange3 = (prop) => (event) => {
+    if (changePassword.password === event.target.value)
+      setConfirmPasswordError(false);
+    else setConfirmPasswordError(true);
     setConfirmPassword({ ...confirmPassword, [prop]: event.target.value });
   };
+  const validation = () => {
+    if (!changePassword) {
+      console.log("1번");
+      setPasswordError(true);
+    }
+    if (!confirmPassword) {
+      console.log("2번");
+      setConfirmPasswordError(true);
+    }
 
+    if (changePassword && confirmPassword) {
+      console.log("3번");
+      return false;
+    } else return true;
+  };
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -173,48 +201,32 @@ function ChangePassword() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("버튼클릭");
+    if (validation()) return;
     const data = new FormData(event.currentTarget);
+
     const password_data = {
       currnetPassword: data.get("currnetPassword"),
       changePassword: data.get("changePassword"),
-      confirmPassword: data.get("confirmPassword"),
     };
-    console.log("password_data", password_data);
+
+    dispatch(fetchAsyncPasswordChange())
+      .unwrap()
+      .then((response) => {
+        Swal.fire(
+          "비밀번호 변경 성공!",
+          "정상적으로 비밀번호가 변경되었습니다.",
+          "success"
+        );
+      })
+      .catch((error) => {
+        Swal.fire(
+          "비밀번호 변경 실패!",
+          "현재 비밀번호가 틀립니다. 다시 입력해주세요",
+          "error"
+        );
+      });
   };
-
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   const user_data = {
-  //     username: data.get("email"),
-  //     password: data.get("password"),
-  //   };
-  //   dispatch(fetchAsyncLogin(user_data))
-  //     .unwrap()
-  //     .then((response) => {
-  //       Swal.fire("로그인 성공", {
-  //         buttons: false,
-  //         timer: 2000,
-  //       });
-  //       navigate("/");
-  //       return response;
-  //     })
-  //     .then((response) => {
-  //       // Vue store도 localstore ->
-  //       localStorage.setItem("token", response.accessToken);
-  //       // axios.defaults.headers.common["Authorization"] =
-  //       //   "Bearer " + response.jwt_token;
-  //       // setData(response);
-  //     })
-  //     .catch((err) => {
-  //       Swal.fire("이메일, 비밀번호를 다시 확인해주세요");
-  //     });
-
-  //   // setErrors(validate({ email: email, password: password }));
-  // };
 
   return (
     <Container>
@@ -235,7 +247,6 @@ function ChangePassword() {
             type={values.showPassword ? "text" : "password"}
             value={values.password}
             onChange={handleChange("password")}
-            fullWidth
             margin="normal"
             endAdornment={
               <InputAdornment>
@@ -272,6 +283,12 @@ function ChangePassword() {
               </InputAdornment>
             }
           />
+          {passwordError && (
+            <div className={styles.errorMessage}>
+              문자,숫자를 포함해서 최소 8자리를 입력해주세요{" "}
+            </div>
+          )}
+
           <h3 className={styles.body}>
             사용하실 비밀번호를 다시 한번 입력해주세요
           </h3>
@@ -297,6 +314,13 @@ function ChangePassword() {
               </InputAdornment>
             }
           />
+
+          {confirmPasswordError && (
+            <div className={styles.errorMessage}>
+              입력하신 비밀번호와 다릅니다. 확인해주세요.
+            </div>
+          )}
+
           <div style={{ width: "100px", margin: "auto" }}>
             <Button
               type="submit"

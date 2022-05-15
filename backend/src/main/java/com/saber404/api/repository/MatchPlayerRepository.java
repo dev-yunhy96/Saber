@@ -13,8 +13,11 @@ import java.util.Optional;
 @Repository
 public interface MatchPlayerRepository extends JpaRepository<MatchPlayer, String> {
 
-    @Query(value = "select * from match_player m where player_id = :playerId", nativeQuery = true )
+    @Query(value = "select * from match_player m left join matches ma on m.matches_id = ma.match_id where player_id = :playerId order by end_time desc", nativeQuery = true )
     List<MatchPlayer> findByPlayerId(String playerId);
+
+    @Query(value = "select * from match_player m left join matches ma on m.matches_id = ma.match_id where match_id = :matchId order by end_time desc", nativeQuery = true )
+    List<MatchPlayer> findByMatchId(String matchId);
 
     @Query(value = "select * from match_player m where matches_id =:matchId and player_id = :playerId", nativeQuery = true )
     List<MatchPlayer> check(String matchId, String playerId);
