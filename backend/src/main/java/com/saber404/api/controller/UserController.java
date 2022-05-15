@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import com.saber404.api.dto.request.LoginReq;
 import com.saber404.api.dto.request.SignUpReq;
 import com.saber404.api.dto.request.UserDTO;
+import com.saber404.api.dto.response.GetUserByProfileRes;
 import com.saber404.api.dto.response.MessageRes;
 import com.saber404.api.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -64,6 +66,13 @@ public class UserController {
 		}
 		map.put("message", "로그인 실패");
 		return new ResponseEntity<Map<String,String>>(map, HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping("/")
+	public ResponseEntity<GetUserByProfileRes> getUser (@ApiIgnore @RequestHeader("Authorization") String accessToken) {
+
+		UserDTO user = userService.getUserById(accessToken);
+		return new ResponseEntity<GetUserByProfileRes>(new GetUserByProfileRes(user), HttpStatus.OK);
 	}
 
 }
