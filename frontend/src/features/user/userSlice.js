@@ -1,6 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/api/serverApi";
+<<<<<<< HEAD
+export const fetchAsyncUsers = createAsyncThunk(
+  "user/fetchAsyncUsers",
+  async () => {
+    const response = await serverApi.get(`/users`);
+    return response.data;
+  }
+);
 
+//로그인
+=======
+
+>>>>>>> 0102d65cb3ca69957b87a11e9ac172828c7af479
 export const fetchAsyncLogin = createAsyncThunk(
   "user/fetchAsyncLogin",
   async ({ username, password }) => {
@@ -83,7 +95,10 @@ const userSlice = createSlice({
     },
     [fetchAsyncLogin.fulfilled]: (state, { payload }) => {
       console.log("로그인 Successfully!");
+<<<<<<< HEAD
+=======
       return { ...state, userInfo: payload };
+>>>>>>> 0102d65cb3ca69957b87a11e9ac172828c7af479
     },
     [fetchAsyncLogin.rejected]: () => {
       console.log("로그인 Rejected!");
@@ -125,6 +140,12 @@ const userSlice = createSlice({
   },
 });
 
+<<<<<<< HEAD
+// export const {} = userSlice.actions;
+export const getUser = (state) => state.user.user;
+export const { logout } = userSlice.actions;
+=======
 export const { logout } = userSlice.actions;
 export const getUser = (state) => state.user.userInfo;
+>>>>>>> 0102d65cb3ca69957b87a11e9ac172828c7af479
 export default userSlice.reducer;

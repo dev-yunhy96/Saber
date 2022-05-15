@@ -1,4 +1,4 @@
-.questionList {
+.matchList {
   margin-top: 20px;
 }
 
@@ -15,7 +15,7 @@
   margin: 40px auto;
 }
 
-.questionItem {
+.matchItem {
   display: flex;
   align-items: center;
   padding: 19px 30px 20px;
@@ -57,33 +57,33 @@
 .kart {
   width: 200px;
 }
-.questionItem .info {
+.matchItem .info {
   flex: 1 1;
 }
 
-.questionItem .title {
+.matchItem .title {
   margin: 0 auto 10px;
   font-size: 14px;
   font-weight: 500;
   color: #494949;
 }
 
-.questionItem .title a {
+.matchItem .title a {
   font-family: var(--notosans);
 }
 
-.questionItem .title .count {
+.matchItem .title .count {
   margin-left: 5px;
   color: #fe92ab;
 }
 
-.questionItem .date {
+.matchItem .date {
   margin: 0;
   font-size: 12px;
   color: #c4c4c4;
 }
 
-.questionItem .writer {
+.matchItem .writer {
   flex: none;
   margin-left: 30px;
 }
