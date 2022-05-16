@@ -7,53 +7,46 @@ import Container from "../components/Container";
 import DateText from "../components/DateText";
 import Lined from "../components/Lined";
 import Warn from "../components/Warn";
-import styles from "./QuestionPage.module.css";
+import styles from "./CommunityDetail.module.css";
 
-function QuestionPage() {
+function CommunityDetail({ category }) {
   const { id } = useParams();
   const question = getQuestionById(id);
-  if (!question) {
-    return <Navigate to="/questions" />;
-  }
   return (
     <>
-      <div className={styles.header}>
-        <Container>
-          <div className={styles.question}>
-            <div className={styles.questionInfo}>
-              <div className={styles.content}>
-                <div className={styles.title}>
-                  {question.title}
-                  {question.answers > 0 && (
-                    <span className={styles.count}>
-                      {question.answers.length}
-                    </span>
-                  )}
-                </div>
-                <div className={styles.date}>
-                  <DateText value={question.createdAt} />
-                </div>
+      {category}
+      <Container className={styles.header}>
+        <div className={styles.question}>
+          <div className={styles.questionInfo}>
+            <div className={styles.content}>
+              <div className={styles.title}>
+                {question.title}
+                {question.answers > 0 && (
+                  <span className={styles.count}>
+                    {question.answers.length}
+                  </span>
+                )}
               </div>
-              <Writer className={styles.author} writer={question.writer} />
+              <div className={styles.date}>
+                <DateText value={question.createdAt} />
+              </div>
             </div>
-            <p
-              className={styles.content}
-              dangerouslySetInnerHTML={{ __html: question.content }}
-            />
+            <Writer className={styles.author} writer={question.writer} />
           </div>
-        </Container>
-      </div>
+          <p
+            className={styles.content}
+            dangerouslySetInnerHTML={{ __html: question.content }}
+          />
+        </div>
+      </Container>
+
       <Container className={styles.answers}>
         <h2 className={styles.count}>
           <Lined>{question.answers.length}개 답변</Lined>
         </h2>
         {question.answers.length > 0 ? (
-          question.answers.map((answer) => (
-            <Answer
-              key={answer.id}
-              className={styles.answerItem}
-              answer={answer}
-            />
+          question.answers.map((answer, index) => (
+            <Answer key={index} className={styles.answerItem} answer={answer} />
           ))
         ) : (
           <Warn
@@ -92,5 +85,5 @@ function Answer({ className, answer }) {
   );
 }
 
-export default QuestionPage;
-export { QuestionPage, Answer };
+export default CommunityDetail;
+export { CommunityDetail, Answer };
