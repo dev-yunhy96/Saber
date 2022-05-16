@@ -13,6 +13,7 @@ import MyPage from "./pages/MyPage";
 import BoardDetail from "./components/community/BoardDetail";
 import BoardUpdate from "./components/community/BoardUpdate";
 import CommunityWrite from "./pages/CommunityWrite";
+import NaverLoginCallBack from "./components/NaverLoginCallBack";
 
 function Main() {
   return (
@@ -29,6 +30,7 @@ function Main() {
           </Route>
           <Route path="signup" element={<SignUpPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="naver" element={<NaverLoginCallBack />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="community">
             <Route index element={<Community />} />
