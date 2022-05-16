@@ -5,7 +5,10 @@ import com.saber404.api.dto.request.LoginReq;
 import com.saber404.api.dto.request.SignUpReq;
 import com.saber404.api.dto.request.UpdatePasswordReq;
 import com.saber404.api.dto.request.UserDTO;
+import com.saber404.api.dto.response.GetUserByProfileRes;
+
 import com.saber404.api.dto.response.BaseResponseDto;
+
 import com.saber404.api.dto.response.MessageRes;
 import com.saber404.api.entity.User;
 import com.saber404.api.service.JwtTokenService;
@@ -71,6 +74,13 @@ public class UserController {
 		return new ResponseEntity<Map<String,String>>(map, HttpStatus.BAD_REQUEST);
 	}
 
+
+	@GetMapping("/")
+	public ResponseEntity<GetUserByProfileRes> getUser (@ApiIgnore @RequestHeader("Authorization") String accessToken) {
+
+		UserDTO user = userService.getUserById(accessToken);
+		return new ResponseEntity<GetUserByProfileRes>(new GetUserByProfileRes(user), HttpStatus.OK);
+	}
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<? extends BaseResponseDto> deleteUser (@PathVariable("id") String id){
 		if(userService.delete(id))
@@ -88,6 +98,7 @@ public class UserController {
 		if(userService.updatePassword(updatePasswordReq, email))
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(BaseResponseDto.of(HttpStatus.ACCEPTED.value(), "Success"));
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(BaseResponseDto.of(HttpStatus.NO_CONTENT.value(), "Fail"));
+
 	}
 
 }

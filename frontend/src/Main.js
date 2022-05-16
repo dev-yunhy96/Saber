@@ -7,9 +7,11 @@ import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import Community from "./pages/Community";
-import CommunityDetail from "./pages/CommunityDetail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyPage from "./pages/MyPage";
+
+import BoardDetail from "./components/community/BoardDetail";
+import BoardUpdate from "./components/community/BoardUpdate";
 import CommunityWrite from "./pages/CommunityWrite";
 
 function Main() {
@@ -33,12 +35,10 @@ function Main() {
             <Route path="write" element={<CommunityWrite />} />
             <Route
               path="battle/:id"
-              element={<CommunityDetail category="battle" />}
+              element={<BoardDetail category="battle" />}
             />
-            <Route
-              path="common/:id"
-              element={<CommunityDetail category="common" />}
-            />
+            <Route path=":communityId" element={<BoardDetail />} />
+            <Route path="update/:communityId" element={<BoardUpdate />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
