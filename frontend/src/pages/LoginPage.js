@@ -11,7 +11,6 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LoginIcon from "@mui/icons-material/Login";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -78,11 +77,19 @@ export default function LoginPage() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "success.light" }}>
-            <LoginIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Avatar
+            alt="Dio"
+            src="https://mblogthumb-phinf.pstatic.net/20160127_218/newiwep_1453882353807zsN3O_JPEG/1404457644_thumb.jpg?type=w800"
+            sx={{
+              m: 1,
+              width: 48,
+              height: 48,
+              border: 1,
+              borderColor: "secondary.main",
+            }}
+          ></Avatar>
+          <Typography component="div" variant="h5">
+            로그인
           </Typography>
           <Box
             component="form"
@@ -95,7 +102,7 @@ export default function LoginPage() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="이메일"
               name="email"
               autoComplete="email"
               autoFocus
@@ -108,7 +115,7 @@ export default function LoginPage() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -117,32 +124,37 @@ export default function LoginPage() {
               <span className="errorMessage">{errors.password}</span>
             )} */}
             <FormControlLabel
+              style={{ marginTop: 10 }}
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="로그인 유지하기"
             />
             <Button
               type="submit"
               fullWidth
+              style={{ height: 50 }}
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 2, mb: 2, fontSize: 20, fontWeight: 600 }}
             >
-              Sign In
+              로그인
             </Button>
-            <Grid container>
+            <Grid container spacing={0} alignItems="center">
               <Grid item xs>
-                <Link href="#" variant="body1">
-                  비밀번호 찾기
-                </Link>
+                <NaverLogin />
               </Grid>
               <Grid item>
-                <Link href="#" variant="body1">
+                <Link
+                  component="button"
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                  variant="h6"
+                >
                   회원가입
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <NaverLogin></NaverLogin>
       </Container>
     </ThemeProvider>
   );
