@@ -3,64 +3,42 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { blue } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useNavigate } from "react-router-dom";
+import serverApi from "../common/api/serverApi";
+import Swal from "sweetalert2";
 
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      //   email: data.get("email"),
-      //   password: data.get("password"),
-
-      fname: data.get("firstName"),
-      lname: data.get("lastName"),
-      username: data.get("userNick"),
-      email: data.get("email"),
-      avatar: "https://www.mecallapi.com/users/cat.png",
-    });
-    axios
-      .post("https://k6a404.p.ssafy.io/api/v1/users/signup", {
-        nickname: "ssafy3806",
-        email: "ssafy3806@naver.com",
-        password: "password1234!",
-      })
-      .then((res) => {
-        console.log(res.data);
-        console.log("성공");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (data.get("password") !== data.get("passwordConfirm")) {
+      Swal.fire("비밀번호를 확인해주세요");
+    } else {
+      serverApi
+        .post(`users/signup`, {
+          email: data.get("email"),
+          nickname: data.get("userNick"),
+          password: data.get("password"),
+        })
+        .then((res) => {
+          console.log(res);
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -75,11 +53,13 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
+          <Avatar
+            alt="Dio"
+            src="https://image.msscdn.net/special/slowacid3/item3-1.png"
+            sx={{ m: 1, width: 48, height: 48, bgcolor: blue[500] }}
+          />
+          <Typography component="div" variant="h5">
+            회원가입
           </Typography>
           <Box
             component="form"
@@ -93,7 +73,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="이메일"
                   name="email"
                   autoComplete="email"
                 />
@@ -102,8 +82,18 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  name="userNick"
+                  label="닉네임"
+                  id="userNick"
+                  autoComplete="new-userNick"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
-                  label="Password"
+                  label="비밀번호"
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -113,18 +103,11 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="userNick"
-                  label="userNick"
-                  id="userNick"
-                  autoComplete="new-userNick"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  name="passwordConfirm"
+                  label="비밀번호 확인"
+                  type="password"
+                  id="passwordConfirm"
+                  autoComplete="new-password"
                 />
               </Grid>
             </Grid>
@@ -133,35 +116,24 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              //   onClick={() => {
-              //     axios
-              //       .post("https://www.mecallapi.com/api/users/create", {
-              //         fname: data.get("firstName"),
-              //         lname: data.get("lastName"),
-              //         username: data.get("userNick"),
-              //         email: data.get("email"),
-              //         avatar: "https://www.mecallapi.com/users/cat.png",
-              //       })
-              //       .then((res) => {
-              //         console.log(res.data);
-              //       })
-              //       .catch(() => {
-              //         console.log("실패");
-              //       });
-              //   }}
             >
-              Sign Up
+              회원가입
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                <Link
+                  component="button"
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                  variant="body2"
+                >
+                  계정이 있으신가요? 로그인으로
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
