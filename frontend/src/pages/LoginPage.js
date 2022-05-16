@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
@@ -43,16 +43,18 @@ export default function LoginPage() {
           buttons: false,
           timer: 2000,
         });
+
         return response;
       })
       .then((response) => {
+        console.log(response);
         // Vue store도 localstore ->
-        localStorage.setItem("token", response.accessToken);
+        localStorage.setItem("token", response.token);
         // axios.defaults.headers.common["Authorization"] =
         //   "Bearer " + response.jwt_token;
         // setData(response);
-        console.log(response.accessToken);
-        dispatch(fetchAsyncUserDetail(response.accessToken));
+
+        dispatch(fetchAsyncUserDetail(response.token));
       })
       .then((response) => {
         navigate("/");
