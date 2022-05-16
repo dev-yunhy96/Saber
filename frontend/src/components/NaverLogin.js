@@ -11,7 +11,7 @@ const NaverLogin = () => {
       clientId: NAVER_CLIENT_ID,
       callbackUrl: NAVER_CALLBACK_URL,
       isPopup: false,
-      loginButton: { color: "green", height: 50 },
+      loginButton: { color: "green", height: 45 },
       callbackHandle: true,
     });
     naverLogin.init();

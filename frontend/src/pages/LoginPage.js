@@ -88,7 +88,7 @@ export default function LoginPage() {
               borderColor: "secondary.main",
             }}
           ></Avatar>
-          <Typography component="div" variant="h5">
+          <Typography sx={{ fontWeight: 600 }} component="div" variant="h5">
             로그인
           </Typography>
           <Box
@@ -131,7 +131,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               fullWidth
-              style={{ height: 50 }}
+              style={{ height: 45 }}
               variant="contained"
               sx={{ mt: 2, mb: 2, fontSize: 20, fontWeight: 600 }}
             >
