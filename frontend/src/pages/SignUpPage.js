@@ -10,7 +10,6 @@ import { blue } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { useNavigate } from "react-router-dom";
 import serverApi from "../common/api/serverApi";
 import Swal from "sweetalert2";
@@ -56,9 +55,15 @@ export default function SignUp() {
           <Avatar
             alt="Dio"
             src="https://image.msscdn.net/special/slowacid3/item3-1.png"
-            sx={{ m: 1, width: 48, height: 48, bgcolor: blue[500] }}
+            sx={{
+              m: 1,
+              width: 48,
+              height: 48,
+              bgcolor: blue[500],
+              borderColor: "primary.main",
+            }}
           />
-          <Typography component="div" variant="h5">
+          <Typography sx={{ fontWeight: 600 }} component="div" variant="h5">
             회원가입
           </Typography>
           <Box
@@ -114,8 +119,9 @@ export default function SignUp() {
             <Button
               type="submit"
               fullWidth
+              style={{ height: 45 }}
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, fontSize: 20, fontWeight: 600 }}
             >
               회원가입
             </Button>
@@ -126,7 +132,7 @@ export default function SignUp() {
                   onClick={() => {
                     navigate("/login");
                   }}
-                  variant="body2"
+                  variant="h6"
                 >
                   계정이 있으신가요? 로그인으로
                 </Link>
