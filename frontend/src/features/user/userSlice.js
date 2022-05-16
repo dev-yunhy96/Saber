@@ -1,20 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/api/serverApi";
-export const fetchAsyncUsers = createAsyncThunk(
-  "user/fetchAsyncUsers",
-  async () => {
-    const response = await serverApi.get(`/users`);
-    return response.data;
-  }
-);
-
-//로그인
 export const fetchAsyncLogin = createAsyncThunk(
   "user/fetchAsyncLogin",
   async ({ username, password }) => {
-    const url = `/login`;
+    const url = `/users/login`;
     const data = {
-      username,
+      email: username,
       password,
     };
     const headers = {
@@ -29,12 +20,11 @@ export const fetchAsyncLogin = createAsyncThunk(
 export const fetchAsyncUserDetail = createAsyncThunk(
   "user/fetchAsyncUserDetail",
   async (token) => {
-    const url = `/auth/user`;
+    const url = `/users/`;
     const headers = {
       "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    console.log("회원정보 조회 ", token);
     const response = await serverApi.get(url, { headers });
     return response.data;
   }
@@ -73,7 +63,7 @@ export const fetchAsyncPasswordChange = createAsyncThunk(
   }
 );
 const initialState = {
-  user: {},
+  userInfo: {},
 };
 
 const userSlice = createSlice({
@@ -81,27 +71,17 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = {};
+      state.userInfo = {};
     },
   },
   extraReducers: {
-    [fetchAsyncUsers.pending]: () => {
-      console.log("Pending");
-    },
-    [fetchAsyncUsers.fulfilled]: (state, { payload }) => {
-      console.log("Fetched Successfully!");
-      return { user: payload };
-    },
-    [fetchAsyncUsers.rejected]: () => {
-      console.log("Rejected!");
-    },
-
     //로그인
     [fetchAsyncLogin.pending]: () => {
       console.log("로그인중");
     },
     [fetchAsyncLogin.fulfilled]: (state, { payload }) => {
       console.log("로그인 Successfully!");
+      return { ...state, userInfo: payload };
     },
     [fetchAsyncLogin.rejected]: () => {
       console.log("로그인 Rejected!");
@@ -114,7 +94,7 @@ const userSlice = createSlice({
     [fetchAsyncUserDetail.fulfilled]: (state, { payload }) => {
       console.log("정보조회 Successfully!");
       console.log(payload);
-      return { ...state, user: payload };
+      return { ...state, userInfo: payload };
     },
     [fetchAsyncUserDetail.rejected]: () => {
       console.log("정보조회 Rejected!");
@@ -143,7 +123,6 @@ const userSlice = createSlice({
   },
 });
 
-// export const {} = userSlice.actions;
-export const getUser = (state) => state.user.user;
 export const { logout } = userSlice.actions;
+export const getUser = (state) => state.user.userInfo;
 export default userSlice.reducer;

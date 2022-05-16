@@ -10,6 +10,10 @@ import Community from "./pages/Community";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyPage from "./pages/MyPage";
 
+import BoardDetail from "./components/community/BoardDetail";
+import BoardUpdate from "./components/community/BoardUpdate";
+import CommunityWrite from "./pages/CommunityWrite";
+
 function Main() {
   return (
     <BrowserRouter>
@@ -26,7 +30,16 @@ function Main() {
           <Route path="signup" element={<SignUpPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="mypage" element={<MyPage />} />
-          <Route path="community" element={<Community />} />
+          <Route path="community">
+            <Route index element={<Community />} />
+            <Route path="write" element={<CommunityWrite />} />
+            <Route
+              path="battle/:id"
+              element={<BoardDetail category="battle" />}
+            />
+            <Route path=":communityId" element={<BoardDetail />} />
+            <Route path="update/:communityId" element={<BoardUpdate />} />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

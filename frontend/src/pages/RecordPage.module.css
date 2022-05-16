@@ -1,4 +1,4 @@
-.questionList {
+.matchList {
   margin-top: 20px;
 }
 
@@ -8,48 +8,82 @@
   font-weight: 300;
   color: #878787;
 }
-
+.answers {
+  margin-bottom: 10px;
+}
 .emptyList {
   margin: 40px auto;
 }
 
-.questionItem {
+.matchItem {
   display: flex;
   align-items: center;
   padding: 19px 30px 20px;
 }
 
-.questionItem:not(:last-child) {
-  margin-bottom: 11px;
+.matchheader {
+  border: #ffffff;
+  border-top: #000000;
+
+  border-style: solid;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  /* justify-content: space-around; */
+}
+.matchdetail {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  /* justify-content: space-around; */
 }
 
-.questionItem .info {
+.rank {
+  width: 200px;
+}
+.nick {
+  width: 300px;
+}
+.nick2 {
+  width: 300px;
+}
+.nick2:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.rec {
+  width: 300px;
+}
+.kart {
+  width: 200px;
+}
+.matchItem .info {
   flex: 1 1;
 }
 
-.questionItem .title {
+.matchItem .title {
   margin: 0 auto 10px;
   font-size: 14px;
   font-weight: 500;
   color: #494949;
 }
 
-.questionItem .title a {
+.matchItem .title a {
   font-family: var(--notosans);
 }
 
-.questionItem .title .count {
+.matchItem .title .count {
   margin-left: 5px;
   color: #fe92ab;
 }
 
-.questionItem .date {
+.matchItem .date {
   margin: 0;
   font-size: 12px;
   color: #c4c4c4;
 }
 
-.questionItem .writer {
+.matchItem .writer {
   flex: none;
   margin-left: 30px;
 }
