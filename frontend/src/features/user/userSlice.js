@@ -1,17 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/api/serverApi";
-<<<<<<< HEAD
-export const fetchAsyncUsers = createAsyncThunk(
-  "user/fetchAsyncUsers",
-  async () => {
-    const response = await serverApi.get(`/users`);
-    return response.data;
-  }
-);
-
-//로그인
-=======
->>>>>>> 8e59d8b893f064af997c39810d14d0da626cb8d1
 export const fetchAsyncLogin = createAsyncThunk(
   "user/fetchAsyncLogin",
   async ({ username, password }) => {
