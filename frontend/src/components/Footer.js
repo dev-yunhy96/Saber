@@ -10,19 +10,19 @@ function Footer() {
     <div className={styles.footer}>
       <Container>
         <ul className={styles.links}>
-          <li>코드댓 소개</li>
+          <li>Saber 소개</li>
           <li>개인정보 취급방침</li>
           <li>사용자 이용약관</li>
           <li>자주 묻는 질문</li>
         </ul>
         <ul className={styles.info}>
-          <li>(주)코드댓</li>
-          <li>대표 | 강영훈 </li>
-          <li>개인정보보호책임자 | 강영훈 </li>
+          <li>(주)Saber</li>
+          <li>대표 | 윤희영 </li>
+          <li>개인정보보호책임자 | 윤희영 </li>
           <li>대표 번호 | 02-****-**** </li>
           <li>사업자번호 | ***-**-****</li>
           <li>통신판매업 | 제****-서울**-****호 </li>
-          <li>주소 | 서울특별시 중구 청계천로 100 코드댓 </li>
+          <li>주소 | 서울특별시 강남구 역삼동 테헤란로 212 Saber </li>
         </ul>
         <div className={styles.icons}>
           <img src={logo} alt="codethat" />
