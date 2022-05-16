@@ -8,7 +8,7 @@ import {
   getCommunityDetail,
 } from "../../features/community/communitySlice";
 import Swal from "sweetalert2";
-import { Button, Container, Grid, Link, TextField } from "@mui/material";
+import { Button, Container, Grid, TextField } from "@mui/material";
 import Comment from "./Comment";
 import { fetchAsyncCommentList } from "../../features/comment/commentSlice";
 const BoardDetail = () => {

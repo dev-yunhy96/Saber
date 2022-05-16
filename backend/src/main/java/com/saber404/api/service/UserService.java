@@ -3,6 +3,7 @@ package com.saber404.api.service;
 
 import com.saber404.api.config.JwtTokenProvider;
 import com.saber404.api.dto.request.LoginReq;
+import com.saber404.api.dto.request.UpdatePasswordReq;
 import com.saber404.api.dto.request.UserDTO;
 import com.saber404.api.entity.User;
 import com.saber404.api.repository.UserRepository;
@@ -69,11 +70,10 @@ public class UserService {
 	//Login 데이터를 받고, JWT를 반환하는 메소드
 	@Transactional
 	public String login(LoginReq data) {
-		System.out.println(data.getEmail()+"!!!!!!!!!!!!!로그인서비스까지는온다!!!!!!!!");
 		User user = userRepository.findByEmail(data.getEmail()).orElseThrow(()->new UsernameNotFoundException("사용자를 찾을 수 없습니다.") );
-		System.out.println(data.getPassword()+"!!!!!!!!!!!!!받은 데이터의 패스워드!!!!!!!!");
-		System.out.println(user.getPassword()+"!!!!!!!!!!!!!디비에 들어가있는 회원의 패스워드!!!!!!!!");
+		System.out.println(user.getEmail());
 		if(comparePassword(data.getPassword(), user.getPassword())) {
+
 			return jwtTokenProvider.createToken(user,user.getRoles());
 			//return jwtTokenProvider.createToken(user);
 		}
@@ -90,6 +90,36 @@ public class UserService {
 			return null;
 		}
 
+	}
+
+	@Transactional
+	public boolean updatePassword(UpdatePasswordReq updatePasswordReq, String email) {
+		Optional<User> user = userRepository.findByEmail(email);
+
+
+		if(user.isPresent()){
+				log.info(updatePasswordReq.getNewPassword());
+				log.info(passwordEncoder.encode(updatePasswordReq.getNewPassword()));
+				user.get().setPassword(passwordEncoder.encode(updatePasswordReq.getNewPassword()));
+				log.info("passwordEncoder : "+ passwordEncoder.encode(updatePasswordReq.getNewPassword()));
+				userRepository.save(user.get());
+				return true;
+
+		}
+		return false;
+
+	}
+
+	@Transactional
+	public boolean delete(String id) {
+		Optional<User> user = userRepository.findById(id);
+		if(user.isPresent() && user.get().isDelYn() ==false){
+			user.get().setDelYn(true);
+			userRepository.save(user.get());
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 

@@ -9,8 +9,10 @@ import LoginPage from "./pages/LoginPage";
 import Community from "./pages/Community";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyPage from "./pages/MyPage";
+
 import BoardDetail from "./components/community/BoardDetail";
 import BoardUpdate from "./components/community/BoardUpdate";
+import CommunityWrite from "./pages/CommunityWrite";
 
 function Main() {
   return (
@@ -30,6 +32,7 @@ function Main() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="community">
             <Route index element={<Community />} />
+            <Route path="write" element={<CommunityWrite />} />
             <Route
               path="battle/:id"
               element={<BoardDetail category="battle" />}
