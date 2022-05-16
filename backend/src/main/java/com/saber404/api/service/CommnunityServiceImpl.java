@@ -54,6 +54,7 @@ public class CommnunityServiceImpl implements CommunityService{
                     .title(community.getTitle())
                     .hit(community.getHit())
                     .regTime(community.getRegTime().format(dateTimeFormatter))
+                    .content(community.getContent())
                     .build();
 
             communityGetResponselist.add(communityGetResponseDto);
