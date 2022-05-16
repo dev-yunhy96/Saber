@@ -4,13 +4,14 @@ import styles from "./RecordPage.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
-import { getMatch, trackById, gameTypeById } from "../api";
+import { getMatch, trackById, gameTypeById, kartById } from "../api";
 import { useDispatch } from "react-redux";
 import {
   fetchAsyncPlayer,
   getMatches,
   removeSelectedPlayer,
 } from "../features/player/playerSlice";
+import serverApi from "../common/api/serverApi";
 
 function sectomin(record) {
   const zeroPad = (num, places) => String(num).padStart(places, "0");
@@ -19,33 +20,86 @@ function sectomin(record) {
   const msec = zeroPad(record % 1000, 3);
   return `${min}:${sec}:${msec}`;
 }
+function timeForToday(value) {
+  const today = new Date();
+  const timeValue = new Date(value);
 
+  const betweenTime = Math.floor(
+    (today.getTime() - timeValue.getTime()) / 1000 / 60
+  );
+  if (betweenTime < 1) return "방금전";
+  if (betweenTime < 60) {
+    return `${betweenTime}분전`;
+  }
+
+  const betweenTimeHour = Math.floor(betweenTime / 60);
+  if (betweenTimeHour < 24) {
+    return `${betweenTimeHour}시간전`;
+  }
+
+  const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+  if (betweenTimeDay < 365) {
+    return `${betweenTimeDay}일전`;
+  }
+
+  return `${Math.floor(betweenTimeDay / 365)}년전`;
+}
 function MatchItem({ match }) {
   const [open, setOpen] = useState(false);
-  const matchinfo = getMatch();
+  const [matchDetail, setmatchDetail] = useState([]);
+  //const matchinfo = getMatch();
   const navigate = useNavigate();
+  const matchId = match.match.matchId;
+  // const matchId = match.match.matchId;
+  // console.log(matchId);
+  // const dispatch = useDispatch();
+  // const matchDetail = serverApi.get(`match/detail/${matchId}`);
+  // //console.log(matchID);
+  // console.log(matchDetail);
+  // useEffect(() => {
+  //   dispatch(fetchAsyncMatch(matchId));
+  //   return () => {
+  //     dispatch(removeSelectedMatch());
+  //   };
+  // }, [dispatch, matchId]);
 
   return (
     <div>
       <Card className={styles.matchItem} key={match.title}>
-        <div className={styles.info}>
+        <div className={styles.minfo}>
           {" "}
-          <div className={styles.info}>{match.matchWin ? "승리" : "패배"}</div>
-          <div className={styles.info}>
-            {gameTypeById(match.match.matchType)}
-          </div>
+          <div>{match.matchWin ? "승리" : "패배"}</div>
+          <div>{gameTypeById(match.match.matchType)}</div>
         </div>
 
-        <div className={styles.info}>
+        <div className={styles.mrank}>
           {match.matchRank === "99" ? "리타이어" : `${match.matchRank}위`}
         </div>
-        <div className={styles.info}>{trackById(match.match.trackId)}</div>
+        <div className={styles.mtrack}>{trackById(match.match.trackId)}</div>
         {/* <div className={styles.info}>{match.matchTime}</div> */}
-        <div className={styles.info}>{sectomin(match.matchTime)}</div>
+        <div className={styles.mrec}>
+          {match.matchRank === "99" ? "-" : sectomin(match.matchTime)}
+        </div>
+        <div className={styles.mdate}>
+          {timeForToday(match.match.startTime)}
+        </div>
 
         <button
-          onClick={() => {
+          onClick={async () => {
             setOpen((state) => !state);
+            if (matchDetail.length === 0) {
+              await serverApi
+                .get(`match/detail/${matchId}`)
+                .then((e) => {
+                  const sorteds = e.data.slice().sort(function (a, b) {
+                    if (a.matchRank > b.matchRank) return 1;
+                    else return -1;
+                  });
+                  setmatchDetail(sorteds);
+                })
+                .catch();
+            }
+            console.log(matchDetail);
           }}
         >
           {open ? "∧" : "∨"}
@@ -59,19 +113,28 @@ function MatchItem({ match }) {
             <div className={styles.rec}>기록</div>
             <div className={styles.kart}>카트</div>
           </div>
-          {matchinfo.map((e, i) => (
+          {matchDetail.map((e, i) => (
             <div key={i} className={styles.matchdetail}>
-              <div className={styles.rank}>{i + 1}</div>
+              <div className={styles.rank}>
+                {e.matchRank === "99" ? "-" : e.matchRank}
+              </div>
               <div
                 onClick={() => {
-                  navigate(`/record/${e.nick}`);
+                  // navigate(`/record/${e.player.characterName}`, {
+                  //   replace: false,
+                  // });
+                  window.open(`${e.player.characterName}`, "_blank");
                 }}
                 className={styles.nick2}
               >
-                {e.nick}
+                {e.player.characterName}
               </div>{" "}
-              <div className={styles.rec}>{e.record}</div>
-              <div className={styles.kart}>{e.kart}</div>
+              <div className={styles.rec}>
+                {e.matchRank === "99" ? "-" : sectomin(e.matchTime)}
+              </div>
+              <div className={styles.kart}>
+                {e.kart ? kartById(e.kart) : null}
+              </div>
             </div>
           ))}
         </Card>
