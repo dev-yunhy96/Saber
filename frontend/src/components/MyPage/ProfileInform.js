@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { getUser } from "../../features/user/userSlice";
 const ProfileInform = () => {
-  const user = useSelector(getUser).user;
+  const user = useSelector(getUser);
   return (
     <Grid item xs={12} md={6}>
       <Card sx={{ display: "flex" }}>

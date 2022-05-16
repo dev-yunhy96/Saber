@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/api/serverApi";
+<<<<<<< HEAD
 export const fetchAsyncUsers = createAsyncThunk(
   "user/fetchAsyncUsers",
   async () => {
@@ -9,12 +10,14 @@ export const fetchAsyncUsers = createAsyncThunk(
 );
 
 //로그인
+=======
+>>>>>>> 8e59d8b893f064af997c39810d14d0da626cb8d1
 export const fetchAsyncLogin = createAsyncThunk(
   "user/fetchAsyncLogin",
   async ({ username, password }) => {
-    const url = `/login`;
+    const url = `/users/login`;
     const data = {
-      username,
+      email: username,
       password,
     };
     const headers = {
@@ -29,12 +32,11 @@ export const fetchAsyncLogin = createAsyncThunk(
 export const fetchAsyncUserDetail = createAsyncThunk(
   "user/fetchAsyncUserDetail",
   async (token) => {
-    const url = `/auth/user`;
+    const url = `/users/`;
     const headers = {
       "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    console.log("회원정보 조회 ", token);
     const response = await serverApi.get(url, { headers });
     return response.data;
   }

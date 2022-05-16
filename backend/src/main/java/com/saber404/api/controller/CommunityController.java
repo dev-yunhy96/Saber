@@ -8,11 +8,13 @@ import com.saber404.api.dto.response.CommunityGetResponseDto;
 import com.saber404.api.service.CommunityService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+@Slf4j
 @Api(value = "커뮤니티 API", tags = { "Community" })
 @RestController
 @CrossOrigin("*")
@@ -30,6 +32,8 @@ public class CommunityController {
     public ResponseEntity<? extends BaseResponseDto> regist(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @RequestBody @ApiParam(value = "등록할 커뮤니티", required = true) CommunityRegisterRequestDto communityRegisterRequestDto){
+
+        log.info(communityRegisterRequestDto.getContent());
         if(communityService.registerCommunity(accessToken, communityRegisterRequestDto) != null)
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseDto.of(HttpStatus.CREATED.value(), "Success"));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BaseResponseDto.of(HttpStatus.BAD_REQUEST.value(), "Fail"));
