@@ -63,7 +63,7 @@ export default function SignUp() {
               borderColor: "primary.main",
             }}
           />
-          <Typography component="div" variant="h5">
+          <Typography sx={{ fontWeight: 600 }} component="div" variant="h5">
             회원가입
           </Typography>
           <Box
@@ -119,9 +119,9 @@ export default function SignUp() {
             <Button
               type="submit"
               fullWidth
-              style={{ height: 50 }}
+              style={{ height: 45 }}
               variant="contained"
-              sx={{ mt: 2, mb: 2, fontSize: 20, fontWeight: 600 }}
+              sx={{ mt: 3, mb: 2, fontSize: 20, fontWeight: 600 }}
             >
               회원가입
             </Button>
