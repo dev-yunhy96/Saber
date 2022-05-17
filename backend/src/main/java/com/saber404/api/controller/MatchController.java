@@ -104,6 +104,7 @@ public class MatchController {
                 matchPlayer.setMatchWin(jsonObj5.get("matchWin").toString());
                 matchPlayer.setMatchTime(jsonObj5.get("matchTime").toString());
                 matchPlayer.setKart(jsonObj5.get("kart").toString());
+                matchPlayer.setTeamId(jsonObj4.get("teamId").toString());
                 matchPlayerService.save(matchPlayer);
             }
         }
