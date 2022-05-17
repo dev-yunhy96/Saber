@@ -18,6 +18,9 @@ import {
   fetchAsyncCommentPost,
 } from "../../features/comment/commentSlice";
 import { Box } from "@mui/system";
+import { getUser } from "../../features/user/userSlice";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const modalStyle = {
   position: "absolute",
@@ -33,8 +36,10 @@ const modalStyle = {
 const Comment = (props) => {
   const [value, setValue] = useState();
   //   const [commentList, setCommentList] = useState([]);
+  const user = useSelector(getUser);
   const commentList = useSelector((state) => state.comment.comment);
-  console.log("commentList", commentList);
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   //댓글에 커뮤니티 아이디 전달
@@ -47,7 +52,12 @@ const Comment = (props) => {
   //모달 변수
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleModalClose = () => setModalOpen(false);
-
+  const isEmptyObj = (obj) => {
+    if (obj.constructor === Object && Object.keys(obj).length === 0) {
+      return true;
+    }
+    return false;
+  };
   //리스트 열기
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -71,6 +81,11 @@ const Comment = (props) => {
   };
   const addComment = (e) => {
     e.preventDefault();
+    if (isEmptyObj(user)) {
+      Swal.fire("비회원!!", "로그인시 가능한 기능입니다.", "error");
+      navigate("/login");
+      return;
+    }
     const data = {
       communityId,
       content: value,
@@ -120,7 +135,7 @@ const Comment = (props) => {
         {commentList.commentGetListResponseDto &&
           commentList.commentGetListResponseDto.map((comm, idx) => {
             return (
-              <Card key={idx} sx={{ m: 1 }}>
+              <Card key={idx} sx={{ m: 2 }} style={{ marginLeft: "60px" }}>
                 <div style={{ float: "left", width: "600px" }}>
                   <Button
                     style={{ marginLeft: "10px", marginBottom: "0px" }}
@@ -143,15 +158,19 @@ const Comment = (props) => {
                   </p>
                 </div>
                 <div style={{ float: "right", marginTop: "10px" }}>
-                  <Tooltip title="Delete" placement="right">
-                    <IconButton
-                      onClick={(e) => {
-                        deleteHandler(comm.commentId, e);
-                      }}
-                    >
-                      <DeleteIcon sx={{ fontSize: 40 }} />
-                    </IconButton>
-                  </Tooltip>
+                  {comm.userId !== user.id ? (
+                    <></>
+                  ) : (
+                    <Tooltip title="Delete" placement="right">
+                      <IconButton
+                        onClick={(e) => {
+                          deleteHandler(comm.commentId, e);
+                        }}
+                      >
+                        <DeleteIcon sx={{ fontSize: 40 }} />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </div>
               </Card>
             );

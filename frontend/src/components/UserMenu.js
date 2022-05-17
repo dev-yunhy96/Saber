@@ -55,7 +55,7 @@ function UserMenu() {
             <>
               <li onClick={() => navigate("/wishlist")}>위시리스트</li>
               <li onClick={() => navigate("/mypage")}>마이페이지</li>
-              <li onClick={() => handleMenuClick()}>로그아웃</li>
+              <li onClick={handleMenuClick}>로그아웃</li>
             </>
           )}
         </ul>

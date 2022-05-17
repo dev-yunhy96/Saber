@@ -12,7 +12,6 @@ export default function SamplePage() {
       }}
     >
       <Board title={"1대1 배틀"} />
-      <Board title={"자유게시판"} />
     </Box>
   );
 }
