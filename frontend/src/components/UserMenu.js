@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import personIcon from "../assets/person.png";
 import styles from "./UserMenu.module.css";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getUser } from "../features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser, logout } from "../features/user/userSlice";
 
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(getUser);
 
@@ -15,6 +16,11 @@ function UserMenu() {
       return true;
     }
     return false;
+  };
+
+  const handleMenuClick = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
   };
 
   const handleButtonClick = useCallback((e) => {
@@ -40,8 +46,6 @@ function UserMenu() {
       </button>
       {isOpen && (
         <ul className={styles.popup}>
-          <li onClick={() => navigate("/wishlist")}>위시리스트</li>
-
           {isEmptyObj(user) ? (
             <>
               <li onClick={() => navigate("/signup")}>회원가입</li>
@@ -49,7 +53,9 @@ function UserMenu() {
             </>
           ) : (
             <>
+              <li onClick={() => navigate("/wishlist")}>위시리스트</li>
               <li onClick={() => navigate("/mypage")}>마이페이지</li>
+              <li onClick={() => handleMenuClick()}>로그아웃</li>
             </>
           )}
         </ul>
