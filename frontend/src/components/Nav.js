@@ -27,7 +27,9 @@ function Nav() {
   const [userNick, setUserNick] = useState("");
 
   useEffect(() => {
-    dispatch(fetchAsyncUserDetail(token));
+    if (token) {
+      dispatch(fetchAsyncUserDetail(token));
+    }
   }, [dispatch, location.pathname, token]);
 
   const handleSubmit = (e) => {
