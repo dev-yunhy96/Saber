@@ -125,7 +125,7 @@ function MatchItem({ match }) {
               }
             >
               <div className={styles.rank}>
-                {e.matchRank === "99" ? "-" : e.matchRank}
+                {e.matchTime === "" ? "-" : e.matchRank}
               </div>
               <div
                 onClick={() => {
@@ -139,7 +139,7 @@ function MatchItem({ match }) {
                 {e.player.characterName}
               </div>{" "}
               <div className={styles.rec}>
-                {e.matchRank === "99" ? "-" : sectomin(e.matchTime)}
+                {e.matchTime === "" ? "-" : sectomin(e.matchTime)}
               </div>
               <div className={styles.kart}>
                 {e.kart ? kartById(e.kart) : null}
