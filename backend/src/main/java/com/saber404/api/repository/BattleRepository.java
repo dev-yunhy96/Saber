@@ -23,7 +23,15 @@ public interface BattleRepository extends JpaRepository<Battle, String> {
     List<Battle> getReceiveList(String receiverId, String status);
 
     @Modifying
-    @Query(value = "update battle b set b.status = :status where battle_id = :battleId", nativeQuery = true )
-    void startBattle(String battleId, String status);
+    @Query(value = "update battle b set b.status = :status where id = :battleId", nativeQuery = true )
+    void changeStatus(String battleId, String status);
 
+    Optional<Battle> findById(String battleId);
+    @Modifying
+    @Query(value = "update battle b set b.winner = :winner where id = :battleId", nativeQuery = true )
+    void changeWinner(String battleId, String winner);
+
+    @Modifying
+    @Query(value = "update battle b set b.start_time = :startTime where id = :battleId", nativeQuery = true )
+    void setStartTime(String battleId, String startTime);
 }
