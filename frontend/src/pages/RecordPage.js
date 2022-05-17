@@ -48,7 +48,7 @@ function MatchItem({ match }) {
   const [open, setOpen] = useState(false);
   const [matchDetail, setmatchDetail] = useState([]);
   //const matchinfo = getMatch();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const matchId = match.match.matchId;
   // const matchId = match.match.matchId;
   // console.log(matchId);
@@ -114,7 +114,16 @@ function MatchItem({ match }) {
             <div className={styles.kart}>카트</div>
           </div>
           {matchDetail.map((e, i) => (
-            <div key={i} className={styles.matchdetail}>
+            <div
+              key={i}
+              className={
+                e.teamId === "2"
+                  ? styles.matchdetailb
+                  : e.teamId === "1"
+                  ? styles.matchdetailr
+                  : styles.matchdetail
+              }
+            >
               <div className={styles.rank}>
                 {e.matchRank === "99" ? "-" : e.matchRank}
               </div>
