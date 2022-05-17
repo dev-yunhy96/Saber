@@ -6,7 +6,8 @@ import styles from "./Nav.module.css";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
-
+import { Badge, IconButton } from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 function getLinkStyle({ isActive }) {
   return {
     fontSize: "1.2em",
@@ -55,6 +56,17 @@ function Nav() {
             <NavLink to="/community" style={getLinkStyle}>
               커뮤니티
             </NavLink>
+          </li>
+          <li>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
           </li>
           <li>
             <UserMenu />
