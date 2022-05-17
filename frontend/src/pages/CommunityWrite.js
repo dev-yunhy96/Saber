@@ -3,13 +3,52 @@ import Container from "../components/Container";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchAsyncCommunityPost } from "../features/community/communitySlice";
+import Swal from "sweetalert2";
 
 const CommunityWrite = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const handlePost = (e) => {
+    e.preventDefault();
+    if (title !== "" && content !== "") {
+      let data = {
+        title: title,
+        content: content,
+      }; // const reponse = await fetch();
+      dispatch(fetchAsyncCommunityPost(data))
+        .unwrap()
+        .then((res) => {
+          navigate("/community");
+        })
+        .catch((error) => {
+          console.log(error);
+          Swal.fire(
+            "글 등록 실패",
+            "글을 등록하는데 실패했습니다. 나중에 다시 시도해주세요",
+            "error"
+          );
+        });
+    } else {
+      Swal.fire(
+        "필수 항목 미기입",
+        "제목, 내용을 작성하셨는지 확인해주세요.",
+        "error"
+      );
+    }
+  };
+
+  const handleBack = (e) => {
+    e.preventDefault();
+    navigate("/community");
   };
   return (
     <Container>
@@ -98,22 +137,10 @@ const CommunityWrite = () => {
               justifyContent: "center",
             }}
           >
-            <Button
-              onClick={() => {
-                alert("clicked");
-              }}
-              variant="outlined"
-              color="success"
-            >
+            <Button onClick={handlePost} variant="outlined" color="success">
               작성
             </Button>
-            <Button
-              onClick={() => {
-                alert("clicked");
-              }}
-              variant="outlined"
-              color="error"
-            >
+            <Button onClick={handleBack} variant="outlined" color="error">
               취소
             </Button>
           </Box>
