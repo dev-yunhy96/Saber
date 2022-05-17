@@ -34,12 +34,15 @@ public class MatchPlayer extends BaseEntity {
     @Column
     private String matchTime;
 
+    @Column
+    private String teamId;
+
     @JoinColumn(name = "matches_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Match match;
 
     @JoinColumn(name = "player_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Player player;
 
 }

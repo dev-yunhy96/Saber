@@ -8,10 +8,14 @@ import {
   getCommunityDetail,
 } from "../../features/community/communitySlice";
 import Swal from "sweetalert2";
-import { Button, Container, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import Comment from "./Comment";
 import { fetchAsyncCommentList } from "../../features/comment/commentSlice";
+import Container from "../Container";
+import { getUser } from "../../features/user/userSlice";
 const BoardDetail = () => {
+  const user = useSelector(getUser);
+  console.log("user", user);
   const { communityId } = useParams();
   const dispatch = useDispatch();
   const data = useSelector(getCommunityDetail);
@@ -105,20 +109,26 @@ const BoardDetail = () => {
                 <Button variant="outlined" onClick={backHandler}>
                   뒤로
                 </Button>
-                <Button
-                  className="Button"
-                  variant="outlined"
-                  onClick={deleteHandler}
-                >
-                  삭제
-                </Button>
-                <Button
-                  className="Button"
-                  variant="outlined"
-                  onClick={updateHandler}
-                >
-                  수정
-                </Button>
+                {data.userId !== user.id ? (
+                  <></>
+                ) : (
+                  <>
+                    <Button
+                      className="Button"
+                      variant="outlined"
+                      onClick={deleteHandler}
+                    >
+                      삭제
+                    </Button>
+                    <Button
+                      className="Button"
+                      variant="outlined"
+                      onClick={updateHandler}
+                    >
+                      수정
+                    </Button>
+                  </>
+                )}
               </Grid>
             </Grid>
 

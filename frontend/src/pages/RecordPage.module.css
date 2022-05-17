@@ -57,8 +57,30 @@
 .kart {
   width: 200px;
 }
-.matchItem .info {
-  flex: 1 1;
+.matchItem .minfo {
+  flex: 0 1 100px;
+  width: 200px;
+  text-align: center;
+}
+
+.matchItem .mrank {
+  flex: 0 1 130px;
+  text-align: center;
+}
+
+.matchItem .mtrack {
+  flex: 0 1 280px;
+  text-align: center;
+}
+
+.matchItem .mrec {
+  flex: 0 1 150px;
+  text-align: center;
+}
+
+.matchItem .mdate {
+  flex: 0 1 100px;
+  text-align: center;
 }
 
 .matchItem .title {
