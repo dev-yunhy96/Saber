@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,6 +18,7 @@ import Swal from "sweetalert2";
 const theme = createTheme();
 
 export default function SignUp() {
+  const [userCheck, setUserCheck] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,6 +40,23 @@ export default function SignUp() {
           console.error(error);
         });
     }
+  };
+
+  const nickCheck = (event) => {
+    const data1 = new FormData(event);
+    console.log(event);
+    // serverApi
+    //   .post("users/check", {
+    //     //true 또는 false 값을 백엔드에서 리턴받음
+    //     nickname: data1.get("userNick"),
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     setUserCheck(true);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   };
 
   return (
@@ -83,7 +102,7 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <TextField
                   required
                   fullWidth
@@ -92,6 +111,9 @@ export default function SignUp() {
                   id="userNick"
                   autoComplete="new-userNick"
                 />
+              </Grid>
+              <Grid item xs={4}>
+                <Button onClick={() => nickCheck()}>체크 버튼</Button>
               </Grid>
               <Grid item xs={12}>
                 <TextField
