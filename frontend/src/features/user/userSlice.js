@@ -73,6 +73,9 @@ const userSlice = createSlice({
     logout: (state) => {
       state.userInfo = {};
     },
+    savePath: (state, { payload }) => {
+      state.path = payload;
+    },
   },
   extraReducers: {
     //로그인
@@ -81,7 +84,7 @@ const userSlice = createSlice({
     },
     [fetchAsyncLogin.fulfilled]: (state, { payload }) => {
       console.log("로그인 Successfully!");
-      return { ...state, userInfo: payload };
+      // return { ...state, userInfo: payload };
     },
     [fetchAsyncLogin.rejected]: () => {
       console.log("로그인 Rejected!");
@@ -93,7 +96,6 @@ const userSlice = createSlice({
     },
     [fetchAsyncUserDetail.fulfilled]: (state, { payload }) => {
       console.log("정보조회 Successfully!");
-      console.log(payload);
       return { ...state, userInfo: payload };
     },
     [fetchAsyncUserDetail.rejected]: () => {
