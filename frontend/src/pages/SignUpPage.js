@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 const theme = createTheme();
 
 export default function SignUp() {
+  const [userNick, setUserNick] = useState("");
   const [userCheck, setUserCheck] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -42,6 +43,24 @@ export default function SignUp() {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const nickCheck = () => {
+    console.log(userNick);
+    // serverApi
+    //   .post("users/check", {
+    //     //true 또는 false 값을 백엔드에서 리턴받음
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     setUserCheck(true);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+  };
+
+>>>>>>> 3343354c4e707103272bb995d2aa1781df97388a
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -74,7 +93,7 @@ export default function SignUp() {
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
-            <Grid container spacing={2}>
+            <Grid container spacing={2} alignItems="center">
               <Grid item xs={12}>
                 <TextField
                   required
@@ -93,10 +112,20 @@ export default function SignUp() {
                   label="닉네임"
                   id="userNick"
                   autoComplete="new-userNick"
+                  onChange={(e) => setUserNick(e.target.value)}
                 />
               </Grid>
               <Grid item xs={4}>
-                <Button onClick={() => nickCheck()}>체크 버튼</Button>
+                <Button
+                  fullWidth
+                  color="secondary"
+                  style={{ height: 45 }}
+                  variant="contained"
+                  sx={{ fontSize: 20, fontWeight: 600 }}
+                  onClick={nickCheck}
+                >
+                  체크
+                </Button>
               </Grid>
               <Grid item xs={12}>
                 <TextField
