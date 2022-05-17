@@ -8,9 +8,10 @@ import {
   getCommunityDetail,
 } from "../../features/community/communitySlice";
 import Swal from "sweetalert2";
-import { Button, Container, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import Comment from "./Comment";
 import { fetchAsyncCommentList } from "../../features/comment/commentSlice";
+import Container from "../Container";
 const BoardDetail = () => {
   const { communityId } = useParams();
   const dispatch = useDispatch();
