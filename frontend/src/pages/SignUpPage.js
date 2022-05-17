@@ -42,23 +42,6 @@ export default function SignUp() {
     }
   };
 
-  const nickCheck = (event) => {
-    const data1 = new FormData(event);
-    console.log(event);
-    // serverApi
-    //   .post("users/check", {
-    //     //true 또는 false 값을 백엔드에서 리턴받음
-    //     nickname: data1.get("userNick"),
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setUserCheck(true);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
