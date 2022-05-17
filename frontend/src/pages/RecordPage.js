@@ -4,7 +4,8 @@ import styles from "./RecordPage.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
-import { getMatch, trackById, gameTypeById, kartById } from "../api";
+
+import { trackById, gameTypeById, kartById, characterById } from "../api";
 import { useDispatch } from "react-redux";
 import {
   fetchAsyncPlayer,
@@ -156,7 +157,7 @@ function RecordPage() {
   const { userNick } = useParams();
   const dispatch = useDispatch();
   const matches = useSelector(getMatches);
-  console.log(matches);
+  //console.log(matches);
   useEffect(() => {
     dispatch(fetchAsyncPlayer(userNick));
     return () => {
@@ -167,10 +168,39 @@ function RecordPage() {
     if (a.match.startTime < b.match.startTime) return 1;
     else return -1;
   });
+  console.log(sortedMatches[0]);
   return (
     <Container>
-      {sortedMatches.map((e) => (
-        <MatchItem match={e} />
+      <div className={styles.profileheader}>
+        <div className={styles.profileImg}>
+          <img
+            src={
+              sortedMatches[0]
+                ? `${process.env.PUBLIC_URL}/images/character/${sortedMatches[0].characterType}.png`
+                : ""
+            }
+            alt=""
+            width="100"
+            height="75"
+          />
+          <img
+            src={
+              sortedMatches[0]
+                ? `${process.env.PUBLIC_URL}/images/kart/${sortedMatches[0].kart}.png`
+                : ""
+            }
+            alt=""
+            width="100"
+            height="75"
+          />{" "}
+          <div>{userNick}</div>
+        </div>
+      </div>
+
+      {sortedMatches.map((e, i) => (
+        <div>
+          <MatchItem match={e} />
+        </div>
       ))}
 
       {/* <div>{playerInfo.fname}</div> */}
