@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "./Container";
 import UserMenu from "./UserMenu";
 import logoImg from "../assets/logo.png";
@@ -6,8 +6,11 @@ import styles from "./Nav.module.css";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
+import { useDispatch } from "react-redux";
+import { fetchAsyncUserDetail } from "../features/user/userSlice";
 import { Badge, IconButton } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+
 function getLinkStyle({ isActive }) {
   return {
     fontSize: "1.2em",
@@ -17,8 +20,17 @@ function getLinkStyle({ isActive }) {
 
 function Nav() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
   const [userNick, setUserNick] = useState("");
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchAsyncUserDetail(token));
+    }
+  }, [dispatch, location.pathname, token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
