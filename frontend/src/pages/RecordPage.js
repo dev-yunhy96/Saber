@@ -4,7 +4,8 @@ import styles from "./RecordPage.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "../components/Container";
-import { getMatch, trackById, gameTypeById, kartById } from "../api";
+
+import { trackById, gameTypeById, kartById, characterById } from "../api";
 import { useDispatch } from "react-redux";
 import {
   fetchAsyncPlayer,
@@ -48,7 +49,7 @@ function MatchItem({ match }) {
   const [open, setOpen] = useState(false);
   const [matchDetail, setmatchDetail] = useState([]);
   //const matchinfo = getMatch();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const matchId = match.match.matchId;
   // const matchId = match.match.matchId;
   // console.log(matchId);
@@ -114,9 +115,18 @@ function MatchItem({ match }) {
             <div className={styles.kart}>카트</div>
           </div>
           {matchDetail.map((e, i) => (
-            <div key={i} className={styles.matchdetail}>
+            <div
+              key={i}
+              className={
+                e.teamId === "2"
+                  ? styles.matchdetailb
+                  : e.teamId === "1"
+                  ? styles.matchdetailr
+                  : styles.matchdetail
+              }
+            >
               <div className={styles.rank}>
-                {e.matchRank === "99" ? "-" : e.matchRank}
+                {e.matchTime === "" ? "-" : e.matchRank}
               </div>
               <div
                 onClick={() => {
@@ -130,7 +140,7 @@ function MatchItem({ match }) {
                 {e.player.characterName}
               </div>{" "}
               <div className={styles.rec}>
-                {e.matchRank === "99" ? "-" : sectomin(e.matchTime)}
+                {e.matchTime === "" ? "-" : sectomin(e.matchTime)}
               </div>
               <div className={styles.kart}>
                 {e.kart ? kartById(e.kart) : null}
@@ -147,7 +157,7 @@ function RecordPage() {
   const { userNick } = useParams();
   const dispatch = useDispatch();
   const matches = useSelector(getMatches);
-  console.log(matches);
+  //console.log(matches);
   useEffect(() => {
     dispatch(fetchAsyncPlayer(userNick));
     return () => {
@@ -158,10 +168,39 @@ function RecordPage() {
     if (a.match.startTime < b.match.startTime) return 1;
     else return -1;
   });
-  return (
+  console.log(sortedMatches[0]);
+  return sortedMatches[0] ? (
     <Container>
-      {sortedMatches.map((e) => (
-        <MatchItem match={e} />
+      <div className={styles.profileheader}>
+        <div className={styles.profileImg}>
+          <img
+            src={
+              sortedMatches[0]
+                ? `${process.env.PUBLIC_URL}/images/character/${sortedMatches[0].characterType}.png`
+                : ""
+            }
+            alt=""
+            width="100"
+            height="75"
+          />
+          <img
+            src={
+              sortedMatches[0]
+                ? `${process.env.PUBLIC_URL}/images/kart/${sortedMatches[0].kart}.png`
+                : ""
+            }
+            alt=""
+            width="100"
+            height="75"
+          />{" "}
+          <div>{userNick}</div>
+        </div>
+      </div>
+
+      {sortedMatches.map((e, i) => (
+        <div>
+          <MatchItem match={e} />
+        </div>
       ))}
 
       {/* <div>{playerInfo.fname}</div> */}
@@ -180,6 +219,12 @@ function RecordPage() {
           ))}
         </div>
       )} */}
+    </Container>
+  ) : (
+    <Container>
+      <div className={styles.profileheader}>
+        <div className={styles.profileImg}>{"유저가 없습니다"}</div>
+      </div>
     </Container>
   );
 }
