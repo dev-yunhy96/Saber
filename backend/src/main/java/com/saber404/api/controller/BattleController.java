@@ -2,6 +2,7 @@ package com.saber404.api.controller;
 
 import com.saber404.api.dto.request.BattleSendDto;
 import com.saber404.api.dto.request.BattleIdDto;
+import com.saber404.api.dto.response.BattleRecordDto;
 import com.saber404.api.entity.Battle;
 import com.saber404.api.entity.Match;
 import com.saber404.api.entity.MatchPlayer;
@@ -57,6 +58,23 @@ public class BattleController {
     public ResponseEntity<List<Battle>> getReceiveList (@PathVariable("receiver_id") String receiverId) {
         Optional<Player> player = playerService.findPlayer(receiverId);
         return new ResponseEntity<List<Battle>>(battleService.getReceiveList(player.get().getAccountNo()), HttpStatus.OK);
+    }
+
+    @GetMapping("/navCount/{player_id}")
+    public ResponseEntity<Integer> navCount (@PathVariable("player_id") String playerId) {
+        int result = battleService.receiveCount(playerId) + battleService.startCount(playerId);
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/battleRecord/{player_id}")
+    public ResponseEntity<BattleRecordDto> battleRecord (@PathVariable("player_id") String playerId) {
+        BattleRecordDto brDto = new BattleRecordDto();
+        int win = battleService.winCount(playerId);
+        int total = battleService.totalCount(playerId);
+        brDto.setWin(win);
+        brDto.setTotal(total);
+        brDto.setLose(total - win);
+        return new ResponseEntity<BattleRecordDto>(brDto, HttpStatus.OK);
     }
 
     @PutMapping("/start")
