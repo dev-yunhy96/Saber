@@ -48,12 +48,11 @@ export default function LoginPage() {
       .then((response) => {
         console.log(response);
         // Vue store도 localstore ->
-        localStorage.setItem("token", response.token);
         // axios.defaults.headers.common["Authorization"] =
         //   "Bearer " + response.jwt_token;
         // setData(response);
-
         dispatch(fetchAsyncUserDetail(response.token));
+        localStorage.setItem("token", response.token);
       })
       .then((response) => {
         navigate("/");
