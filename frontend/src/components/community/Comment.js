@@ -21,6 +21,7 @@ import { Box } from "@mui/system";
 import { getUser } from "../../features/user/userSlice";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import serverApi from "../../common/api/serverApi";
 
 const modalStyle = {
   position: "absolute",
@@ -35,6 +36,7 @@ const modalStyle = {
 };
 const Comment = (props) => {
   const [value, setValue] = useState();
+  const [battleValue, setBattleValue] = useState();
   //   const [commentList, setCommentList] = useState([]);
   const user = useSelector(getUser);
   const commentList = useSelector((state) => state.comment.comment);
@@ -59,13 +61,58 @@ const Comment = (props) => {
     return false;
   };
   //리스트 열기
-  const handleClick = (event) => {
+  const handleClick = (event, param) => {
+    // setBattleValue()
+    console.log(param);
+    setBattleValue(param.userNickname);
     setAnchorEl(event.currentTarget);
   };
+
+  //배틀 신청 모달
   const handleSendBattle = (event) => {
     console.log("배틀 신청");
     setModalOpen(true);
     setAnchorEl(null);
+  };
+  //배틀 신청 데이터 전송
+  const handleSendBattle2 = (event) => {
+    console.log(user);
+    if (isEmptyObj(user)) {
+      Swal.fire("비회원!!", "로그인시 가능한 기능입니다.", "error");
+      navigate("/login");
+      return;
+    }
+    console.log("배틀 데이터 전송");
+    const url = `/battle/send`;
+    const headers = {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    const data = {
+      receiver: battleValue,
+      sender: user.nickname,
+    };
+    console.log(data);
+    serverApi
+      .post(url, data, { headers })
+      .then((res) => {
+        if (res.data === 200) {
+          setModalOpen(false);
+          Swal.fire(
+            "배틀 신청!",
+            `${battleValue}님에게 대결을 신청하셨습니다.`,
+            "success"
+          );
+        } else if (res.data === 500) {
+          setModalOpen(false);
+          Swal.fire("배틀 중복 신청!", "이미 배틀을 신청하셨습니다!", "error");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setModalOpen(false);
+        Swal.fire("배틀 중복 신청!", "이미 배틀을 신청하셨습니다!", "error");
+      });
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -143,7 +190,9 @@ const Comment = (props) => {
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
+                    onClick={(e) => {
+                      handleClick(e, comm);
+                    }}
                   >
                     <p>{comm.userNickname}</p>
                   </Button>
@@ -216,7 +265,7 @@ const Comment = (props) => {
             <Button
               variant="contained"
               style={{ float: "right" }}
-              onClick={(event) => {}}
+              onClick={handleSendBattle2}
             >
               신청
             </Button>
