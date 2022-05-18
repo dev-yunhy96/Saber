@@ -67,23 +67,12 @@
 |            |                 | Spring Boot        | 2.4.5       |
 |            | IDE             | Eclipse            | JEE 2020-06 |
 |            |                 | IntelliJ           | 2021.3.1    |
-|            | Cloud Storage   | AWS S3             | \-          |
 |            | Build           | Maven              | 4.0.0       |
-|            | Elastic         | ElasticSearch      | 7.15.1      |
 |            | API Docs        | Swagger2           | 3.0.0       |
 | FrontEnd   | HTML5           |                    | \-          |
 |            | CSS3            |                    | \-          |
 |            | JavaScript(ES6) |                    | \-          |
-|            | Vue             | Vue.js             | 2.6.14      |
-|            |                 | vuex               | 3.6.2       |
-|            |                 | vuex-persist       | 4.1.0       |
-|            | Firebase        |                    | 8.10.0      |
 |            | IDE             | Visual Studio Code | 1.63.2      |
-| BlockChain | Web3            | Solidity           | 0.8.12      |
-|            |                 | Web3.js            | 1.5.3       |
-|            |                 | truffle            | 5.5.5       |
-|            |                 | Ganache            | 7.0.3       |
-|            |                 | openzeppelin       | 4.5.0       |
 | Server     | 서버            | AWS EC2            | \-          |
 |            | 플랫폼          | Ubuntu             | 20.04.3 LTS |
 |            | 배포            | Docker             | 20.10.12    |
@@ -217,13 +206,13 @@
         <td height="140px" align="center"> <a href="https://github.com/sahngrhee">
             <img src="https://avatars.githubusercontent.com/sahngrhee" width="140px" /> <br><br> 이상훈 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/wjdtjq1121">
-            <img src="https://avatars.githubusercontent.com/sangwooYi" width="140px" /> <br><br> 한정섭 <br>(Back-End) </a> <br></td>
+            <img src="https://avatars.githubusercontent.com/wjdtjq1121" width="140px" /> <br><br> 한정섭 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/KwonDoHyuk">
             <img src="https://avatars.githubusercontent.com/KwonDoHyuk" width="140px" /> <br><br> 권도혁 <br>(Full-stack) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/namhoon21">
-            <img src="https://avatars.githubusercontent.com/dayaeLee777" width="140px" /> <br><br> 김남훈 <br>(Back-End) </a> <br></td>
+            <img src="https://avatars.githubusercontent.com/namhoon21" width="140px" /> <br><br> 김남훈 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/kdyddd">
-            <img src="https://avatars.githubusercontent.com/dayaeLee777" width="140px" /> <br><br> 김동영 <br>(Back-End) </a> <br></td>
+            <img src="https://avatars.githubusercontent.com/kdyddd" width="140px" /> <br><br> 김동영 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
         <td align="center">REST API<br/>DataBase</br></td>
