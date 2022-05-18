@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import ChangePassword from "../components/MyPage/ChangePassword";
 import Quit from "../components/MyPage/Quit";
 import Profile from "../components/MyPage/Profile";
+import BattleManagement from "../components/MyPage/BattleManagement/BattleManagement";
 import { useSelector } from "react-redux";
 import { getUser } from "../features/user/userSlice";
 
@@ -53,7 +54,6 @@ const MyPage = () => {
     setValue(newValue);
   };
   const user = useSelector(getUser);
-  console.log(user);
   return (
     <>
       <Container>
@@ -65,18 +65,22 @@ const MyPage = () => {
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label="개인정보 관리" {...a11yProps(0)} />
-                <Tab label="비밀번호 변경" {...a11yProps(1)} />
-                <Tab label="회원 탈퇴" {...a11yProps(2)} />
+                <Tab label="배틀 관리" {...a11yProps(0)} />
+                <Tab label="개인정보 관리" {...a11yProps(1)} />
+                <Tab label="비밀번호 변경" {...a11yProps(2)} />
+                <Tab label="회원 탈퇴" {...a11yProps(3)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Profile></Profile>
+              <BattleManagement user={user}></BattleManagement>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <ChangePassword></ChangePassword>
+              <Profile></Profile>
             </TabPanel>
             <TabPanel value={value} index={2}>
+              <ChangePassword></ChangePassword>
+            </TabPanel>
+            <TabPanel value={value} index={3}>
               <Quit></Quit>
             </TabPanel>
           </Box>

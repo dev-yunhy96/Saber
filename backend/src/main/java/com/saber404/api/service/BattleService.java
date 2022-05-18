@@ -51,6 +51,30 @@ public class BattleService {
     }
 
     @Transactional
+    public int receiveCount(String playerId) {
+        Optional<Player> player = playerRepository.findByCharacterName(playerId);
+        return battleRepository.receiveCount(player.get().getAccountNo(), "0");
+    }
+
+    @Transactional
+    public int startCount(String playerId) {
+        Optional<Player> player = playerRepository.findByCharacterName(playerId);
+        return battleRepository.startCount(player.get().getAccountNo(), "1");
+    }
+
+    @Transactional
+    public int winCount(String playerId) {
+        Optional<Player> player = playerRepository.findByCharacterName(playerId);
+        return battleRepository.winCount(player.get().getAccountNo(), "3");
+    }
+
+    @Transactional
+    public int totalCount(String playerId) {
+        Optional<Player> player = playerRepository.findByCharacterName(playerId);
+        return battleRepository.totalCount(player.get().getAccountNo(), "3");
+    }
+
+    @Transactional
     public boolean startBattle (String battleId) {
         battleRepository.changeStatus(battleId, "1");
         battleRepository.setStartTime(battleId, Instant.now().toString().substring(0, 19));

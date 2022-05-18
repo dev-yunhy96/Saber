@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import serverApi from "../common/api/serverApi";
 import { useDispatch } from "react-redux";
 import { fetchAsyncUserDetail } from "../features/user/userSlice";
+import Swal from "sweetalert2";
 
 const NaverLoginCallBack = () => {
   const location = useLocation();
@@ -20,6 +21,10 @@ const NaverLoginCallBack = () => {
         })
         .then(() => {
           navigate("/");
+          Swal.fire("로그인 성공", {
+            buttons: false,
+            timer: 2000,
+          });
         })
         .catch((error) => {
           console.error(error);

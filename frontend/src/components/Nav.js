@@ -6,10 +6,11 @@ import styles from "./Nav.module.css";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import searchBarStyles from "../components/SearchBar.module.css";
 import searchIcon from "../assets/search.svg";
-import { useDispatch } from "react-redux";
-import { fetchAsyncUserDetail } from "../features/user/userSlice";
+import { useSelector } from "react-redux";
 import { Badge, IconButton } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import serverApi from "../common/api/serverApi";
+import { getUser } from "../features/user/userSlice";
 
 function getLinkStyle({ isActive }) {
   return {
@@ -19,18 +20,29 @@ function getLinkStyle({ isActive }) {
 }
 
 function Nav() {
+  const user = useSelector(getUser);
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-
   const [userNick, setUserNick] = useState("");
+  const [count, setCount] = useState(0);
 
+  const getCount = (player) => {
+    serverApi
+      .get(`battle/navCount/${player}`)
+      .then((response) => {
+        setCount(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
-    if (token) {
-      dispatch(fetchAsyncUserDetail(token));
+    if (user.nickname) {
+      getCount(user.nickname);
+    } else {
+      setCount(0);
     }
-  }, [dispatch, location.pathname, token]);
+  }, [location.pathname, user.nickname]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,9 +87,15 @@ function Nav() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              {count ? (
+                <Badge badgeContent={count} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              ) : (
+                <Badge>
+                  <NotificationsIcon />
+                </Badge>
+              )}
             </IconButton>
           </li>
           <li>
