@@ -25,7 +25,7 @@ function Nav() {
   const navigate = useNavigate();
   const [userNick, setUserNick] = useState("");
   const [count, setCount] = useState(0);
-  console.log(count);
+
   const getCount = (player) => {
     serverApi
       .get(`battle/navCount/${player}`)
