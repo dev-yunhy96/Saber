@@ -213,22 +213,25 @@
 <table>
     <tr>
         <td height="140px" align="center"> <a href="https://github.com/dev-yunhy96">
-            <img src="https://avatars.githubusercontent.com/dev-yunhy96" width="140px" /> <br><br> 윤희영 <br>(Front-End) </a> <br></td>
+            <img src="https://avatars.githubusercontent.com/dev-yunhy96" width="140px" /> <br><br> 윤희영 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/sahngrhee">
             <img src="https://avatars.githubusercontent.com/sahngrhee" width="140px" /> <br><br> 이상훈 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/sangwooYi">
-            <img src="https://avatars.githubusercontent.com/sangwooYi" width="140px" /> <br><br> 이상우 <br>(Full-stack) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/wjdtjq1121">
+            <img src="https://avatars.githubusercontent.com/sangwooYi" width="140px" /> <br><br> 한정섭 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/KwonDoHyuk">
             <img src="https://avatars.githubusercontent.com/KwonDoHyuk" width="140px" /> <br><br> 권도혁 <br>(Full-stack) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/dayaeLee777">
-            <img src="https://avatars.githubusercontent.com/dayaeLee777" width="140px" /> <br><br> 이다예 <br>(Full-stack) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/namhoon21">
+            <img src="https://avatars.githubusercontent.com/dayaeLee777" width="140px" /> <br><br> 김남훈 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/kdyddd">
+            <img src="https://avatars.githubusercontent.com/dayaeLee777" width="140px" /> <br><br> 김동영 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
-        <td align="center">UI/UX<br/>Vue<br/></td>
-        <td align="center">UI/UX<br/>Vue<br/>Firebase</td>
-        <td align="center">UI/UX<br/>Vue<br/>Blockchain<br/>REST API</td>
-        <td align="center">REST API<br/>UI/UX<br/>Vue<br/></td>
-        <td align="center">REST API<br/>Server<br/>ElasticSearch<br/>UI/UX</td>
+        <td align="center">REST API<br/>DataBase</br></td>
+        <td align="center">UI/UX<br/>React</td>
+        <td align="center">Docker<br/>CI/CD<br/>NginX</td>
+        <td align="center">REST API<br/>UI/UX<br/>React<br/></td>
+        <td align="center">UI/UX<br/>React<br/></td>
+        <td align="center">REST API<br/>Server</td>
     </tr>
 </table>
 <br />
