@@ -25,8 +25,6 @@ const BoardList = ({ title }) => {
     if (!!board.communityGetResponselist) {
       setAll(board.communityGetResponselist.length);
       setCount(Math.ceil(all / PER_PAGE));
-      console.log("all : " + all);
-      console.log("count :" + count);
     } else {
       return;
     }
