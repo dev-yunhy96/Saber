@@ -24,7 +24,6 @@ function Ranking() {
     //   });
   });
 
-  console.log(ranking);
   return (
     <div className={classNames(styles.bg)}>
       <div className={classNames(styles.title)}>
@@ -34,6 +33,7 @@ function Ranking() {
           <a
             href="https://kart.nexon.com/Kart/Ranking/RP/List.aspx"
             target="_blank"
+            rel="noreferrer"
           >
             더보기
           </a>
