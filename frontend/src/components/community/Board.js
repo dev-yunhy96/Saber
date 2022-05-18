@@ -8,5 +8,5 @@ export default function Board({ title }) {
   useEffect(() => {
     dispatch(fetchAsyncCommunityList());
   }, [dispatch]);
-  return <BoardList title={title}></BoardList>;
+  return <BoardList></BoardList>;
 }
