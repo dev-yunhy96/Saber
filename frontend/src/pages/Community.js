@@ -12,7 +12,7 @@ export default function Community() {
         minHeight: "75vh",
       }}
     >
-      <Board title={"1대1 배틀"} />
+      <Board />
     </Box>
   );
 }

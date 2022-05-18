@@ -75,7 +75,8 @@ const BoardList = ({ title }) => {
     <List
       sx={{
         width: "100%",
-        maxWidth: 400,
+        maxWidth: 780,
+        minHeight: 780,
         bgcolor: "background.paper",
         borderRadius: 5,
         boxShadow: 1,
