@@ -204,4 +204,23 @@ public class MatchController {
 
         return new ResponseEntity<List<MatchPlayer>>(matchPlayerService.findByMatchId(matchId), HttpStatus.OK);
     }
+
+    @GetMapping("/checkNick/{nickname}")
+    public ResponseEntity<String> checkNick(@PathVariable("nickname") String nickname) throws Exception {
+        Optional<Player> findPlayer = playerService.findPlayer(nickname);
+        if(findPlayer.isEmpty()) {
+            String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + nickname;
+            String result = client.sendAsync(
+                    HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
+            ).thenApply(HttpResponse::body).get();
+            Object obj = jsonParser.parse(result);
+            JSONObject jsonObj = (JSONObject) obj;
+            if(jsonObj.containsKey("message")) {
+                return new ResponseEntity<String>("404", HttpStatus.OK);
+            }
+            return new ResponseEntity<String>("200", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>("500", HttpStatus.OK);
+        }
+    }
 }
