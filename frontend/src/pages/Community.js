@@ -1,7 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Board from "../components/community/Board";
-export default function SamplePage() {
+
+export default function Community() {
   return (
     <Box
       sx={{
@@ -12,7 +13,6 @@ export default function SamplePage() {
       }}
     >
       <Board title={"1대1 배틀"} />
-      <Board title={"자유게시판"} />
     </Box>
   );
 }
