@@ -1,6 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import serverApi from "../../common/api/serverApi";
 
+//게시판 등록
+export const fetchAsyncCommunityPost = createAsyncThunk(
+  "community/fetchAsyncCommunityPost",
+  async (data) => {
+    const url = `/community`;
+    const headers = {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    const response = await serverApi.post(url, data, { headers });
+    return response.data;
+  }
+);
 //게시판 리스트 조회
 export const fetchAsyncCommunityList = createAsyncThunk(
   "community/fetchAsyncCommunityList",
