@@ -169,7 +169,7 @@ function RecordPage() {
     else return -1;
   });
   console.log(sortedMatches[0]);
-  return (
+  return sortedMatches[0] ? (
     <Container>
       <div className={styles.profileheader}>
         <div className={styles.profileImg}>
@@ -219,6 +219,12 @@ function RecordPage() {
           ))}
         </div>
       )} */}
+    </Container>
+  ) : (
+    <Container>
+      <div className={styles.profileheader}>
+        <div className={styles.profileImg}>{"유저가 없습니다"}</div>
+      </div>
     </Container>
   );
 }
