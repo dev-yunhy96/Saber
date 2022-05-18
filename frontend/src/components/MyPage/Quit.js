@@ -8,29 +8,33 @@ import { fetchAsyncQuit, logout } from "../../features/user/userSlice";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
-function Quit({ values = [] }) {
+import { useSelector } from "react-redux";
+import { getUser } from "../../features/user/userSlice";
+function Quit() {
   const [checked, setChecked] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector(getUser);
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
   const eventHandler = (event) => {
     event.preventDefault();
-    dispatch(fetchAsyncQuit())
+    dispatch(fetchAsyncQuit(user.id))
       .unwrap()
       .then((response) => {
         Swal.fire("삭제 성공", {
           buttons: false,
           timer: 2000,
         });
+        console.log("삭제", response);
+        dispatch(logout());
         return response;
       })
       .then((response) => {
         console.log("데이터삭제");
-        dispatch(logout());
+
         navigate("/");
       })
       .catch((err) => {
