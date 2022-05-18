@@ -43,8 +43,6 @@ export default function SignUp() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const nickCheck = () => {
     console.log(userNick);
     // serverApi
@@ -60,7 +58,6 @@ export default function SignUp() {
     //   });
   };
 
->>>>>>> 3343354c4e707103272bb995d2aa1781df97388a
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
