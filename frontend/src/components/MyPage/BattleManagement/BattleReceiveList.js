@@ -101,7 +101,6 @@ const BattleReceiveList = () => {
     { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
   ];
   const [rows, setRows] = useState(data);
-  const [deletedRows, setDeletedRows] = useState([]);
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid
@@ -110,16 +109,8 @@ const BattleReceiveList = () => {
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
-        // disableSelectionOnClick
-        onSelectionModelChange={(selectionModel) => {
-          const rowIds = selectionModel.map((rowId) =>
-            parseInt(String(rowId), 10)
-          );
-          const rowsToDelete = rows.filter((row) => !rowIds.includes(row.id));
-          setDeletedRows(rowsToDelete);
-        }}
+        disableSelectionOnClick
       />
-      <Button onClick={() => setRows(deletedRows)}>delete</Button>
     </div>
   );
 };

@@ -21,6 +21,7 @@ function UserMenu() {
   const handleMenuClick = () => {
     localStorage.removeItem("token");
     dispatch(logout());
+    navigate("/");
   };
 
   const handleButtonClick = useCallback((e) => {
