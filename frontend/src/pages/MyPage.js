@@ -73,7 +73,7 @@ const MyPage = () => {
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <BattleManagement></BattleManagement>
+              <BattleManagement user={user}></BattleManagement>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Profile></Profile>

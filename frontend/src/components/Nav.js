@@ -26,11 +26,11 @@ function Nav() {
 
   const [userNick, setUserNick] = useState("");
 
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchAsyncUserDetail(token));
-    }
-  }, [dispatch, location.pathname, token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(fetchAsyncUserDetail(token));
+  //   }
+  // }, [dispatch, location.pathname, token]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
