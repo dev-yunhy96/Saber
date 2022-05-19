@@ -191,7 +191,7 @@
 
 |                        Notion                         |
 | :---------------------------------------------------: |
-| <img src="./readme_assets/notion.PNG" alt="Notion" /> |
+| <img src="/uploads/55392260a11c85dc4a12510b8a795fee/화면_캡처_2022-05-19_152959.jpg" alt="Notion" /> |
 
 <br />
 
