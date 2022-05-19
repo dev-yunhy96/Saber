@@ -123,16 +123,16 @@
 
 |                       1:1 배틀                        |
 | :---------------------------------------------------: |
-| <img src="./readme_assets/chatting.gif" alt="채팅" /> |
+| <img src="/uploads/f2daba969ca5fdfed0212bcc07b24c2a/Hnet.com-image__5_.gif" alt="채팅" /> |
 
 ### [Battle] 배틀 신청 확인
 
 - 본인에게 신청된 배틀 신청들을 확인할 수 있습니다.
 - 배틀을 수락 후 게임 내에서 경기를 한 뒤 자동으로 전적이 추가 됩니다.
 
-|                       상품 등록하기                       |
+|                       배틀 신청하기                       |
 | :-------------------------------------------------------: |
-| <img src="./readme_assets/register.gif" alt="상품등록" /> |
+| <img src="/uploads/1f5a835723b1a5d89e60930680af664c/Hnet.com-image__4_.gif" alt="상품등록" /> |
 
 ### 메인페이지
 
@@ -141,7 +141,7 @@
 
 |                          메인페이지                          |
 | :----------------------------------------------------------: |
-| <img src="./readme_assets/maingpage.gif" alt="메인페이지" /> |
+| <img src="/uploads/f8dd1ef30c5922fa81927076ee0525f7/Saber_-_Chrome_2022-05-19_오후_6_14_30.png" alt="메인페이지" /> |
 
 ### 커뮤니티
 
@@ -150,7 +150,7 @@
 
 |                          커뮤니티                          |
 | :--------------------------------------------------------: |
-| <img src="./readme_assets/community.gif" alt="커뮤니티" /> |
+| <img src="/uploads/a92767d12eea34bf9220b221aac75f4e/Hnet.com-image__3_.gif" alt="커뮤니티" /> |
 
 <br/>
 
