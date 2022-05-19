@@ -33,14 +33,14 @@ export const fetchAsyncUserDetail = createAsyncThunk(
 //회원탈퇴
 export const fetchAsyncQuit = createAsyncThunk(
   "user/fetchAsyncQuit",
-  async () => {
+  async (id) => {
     const headers = {
       "Content-type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
-    const data = { id: 13 };
-    const url = `/auth/attractions/delete`;
-    const response = await serverApi.delete(url, { headers, data });
+    const data = {};
+    const url = `/users/delete/${id}`;
+    const response = await serverApi.put(url, data, { headers });
     return response.data;
   }
 );
@@ -48,16 +48,13 @@ export const fetchAsyncQuit = createAsyncThunk(
 //비밀번호 변경
 export const fetchAsyncPasswordChange = createAsyncThunk(
   "user/fetchAsyncPasswordChange",
-  async () => {
+  async (data) => {
     const headers = {
       "Content-type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
-    const url = `/auth/attractions/update`;
-    const data = {
-      id: 13,
-      name: "Rangsit University",
-    };
+    const url = `/users/update`;
+
     const response = await serverApi.put(url, data, { headers });
     return response.data;
   }
@@ -72,6 +69,7 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.userInfo = {};
+      localStorage.removeItem("token");
     },
     savePath: (state, { payload }) => {
       state.path = payload;
