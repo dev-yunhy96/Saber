@@ -126,6 +126,7 @@ public class BattleController {
 
     @PutMapping("/start")
     public ResponseEntity<String> startBattle (@RequestBody BattleIdDto battleIdDto) {
+        System.out.println(battleIdDto);    	
         if(battleService.startBattle(battleIdDto.getBattleId())) {
             return new ResponseEntity<String>("200", HttpStatus.OK);
         }else {
