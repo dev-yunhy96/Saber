@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <img src="./readme_assets/milkmarket_logo.png" alt="milkmarket_logo" />
+  <img src="/uploads/a019ce9609c884045d389159a10610fa/KakaoTalk_20220519_143430177.png" alt="milkmarket_logo" />
   <br />
   <h1>카트라이더 1대1 매칭과 전적검색을 위한 사이트 SABER</h1>
   <br />
