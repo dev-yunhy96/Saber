@@ -114,7 +114,7 @@
 
 |                        상품 상세조회                         |
 | :----------------------------------------------------------: |
-| <img src="./readme_assets/detail.gif" alt="상품 상세조회" /> |
+| <img src="/uploads/02b80c80f80f5e3c6cb251f586d83597/Hnet.com-image__1_.gif" alt="상품 상세조회" /> |
 
 ### [Battle] 1:1 배틀
 
