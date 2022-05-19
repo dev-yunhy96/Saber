@@ -7,6 +7,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import serverApi from "../../../common/api/serverApi";
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { getCheck } from "../../../features/battle/battleSlice";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -80,6 +82,7 @@ function CustomNoRowsOverlay() {
 }
 const BattleCheckedList = ({ userNick }) => {
   const [rows, setRows] = useState([]);
+  const check = useSelector(getCheck);
   const getEndList = () => {
     serverApi
       .get(`battle/endList/${userNick}`)
@@ -90,35 +93,11 @@ const BattleCheckedList = ({ userNick }) => {
         console.log(error);
       });
   };
-  const startBattle = (battleId) => {
-    const data = {
-      battleId,
-    };
-    serverApi
-      .put(`battle/start`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const cancelBattle = (battleId) => {
-    const data = {
-      battleId,
-    };
-    serverApi
-      .put(`battle/cancel`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
   useEffect(() => {
     getEndList();
-  }, []);
+  }, [check]);
+
   const columns = [
     {
       field: "sender",
@@ -141,84 +120,13 @@ const BattleCheckedList = ({ userNick }) => {
       valueFormatter: ({ value }) => value.characterName,
     },
     {
-      field: "button",
-      headerName: "수락",
+      field: "winner",
+      headerName: "승자",
+      width: 100,
+      sortable: false,
+      editable: true,
       headerAlign: "center",
       align: "center",
-      width: 50,
-      renderCell: (params) => {
-        const onClick = () => {
-          const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
-          setRows(rowsToDelete);
-          startBattle(params.row.id);
-        };
-        return (
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              sx={{
-                maxWidth: "40px",
-                maxHeight: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-              }}
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={onClick}
-            >
-              수락
-            </Button>
-          </Box>
-        );
-      },
-    },
-    {
-      field: "button2",
-      headerName: "거절",
-      headerAlign: "center",
-      align: "center",
-      width: 50,
-      renderCell: (params) => {
-        const onClick = () => {
-          const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
-          setRows(rowsToDelete);
-          cancelBattle(params.row.id);
-        };
-        return (
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              sx={{
-                maxWidth: "40px",
-                maxHeight: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-              }}
-              variant="contained"
-              color="error"
-              size="small"
-              onClick={onClick}
-            >
-              거절
-            </Button>
-          </Box>
-        );
-      },
     },
   ];
 
