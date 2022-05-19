@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class Battle extends BaseEntity{
 
     @JoinColumn(name = "sender_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Player sender;
 
     @JoinColumn(name = "receiver_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Player receiver;
 
     @Column
@@ -34,5 +34,11 @@ public class Battle extends BaseEntity{
 
     @Column
     private String startTime;
+
+    @Column
+    private String title;
+
+    @Column
+    private Integer password;
 
 }

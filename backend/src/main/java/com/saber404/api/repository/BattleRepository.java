@@ -22,6 +22,9 @@ public interface BattleRepository extends JpaRepository<Battle, String> {
     @Query(value = "select * from battle b where receiver_id = :receiverId and status = :status", nativeQuery = true )
     List<Battle> getReceiveList(String receiverId, String status);
 
+    @Query(value = "select * from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status", nativeQuery = true )
+    List<Battle> getOtherList(String playerId, String status);
+
     @Query(value = "select count(*) from battle b where receiver_id = :playerId and status = :status", nativeQuery = true )
     int receiveCount(String playerId, String status);
 

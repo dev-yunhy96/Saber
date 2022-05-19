@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 
 @Service
@@ -36,6 +37,9 @@ public class BattleService {
         battle.setReceiver(receiver.get());
         battle.setStatus("0");
         battle.setSendTime(Instant.now().toString().substring(0, 19));
+        Random ran = new Random();
+        battle.setTitle("battle" + (ran.nextInt(900000) + 100000));
+        battle.setPassword(ran.nextInt(9000) + 1000);
         battleRepository.save(battle);
         return true;
     }
@@ -48,6 +52,16 @@ public class BattleService {
     @Transactional
     public List<Battle> getReceiveList (String receiverId) {
         return battleRepository.getReceiveList(receiverId, "0");
+    }
+
+    @Transactional
+    public List<Battle> getStartList (String playerId) {
+        return battleRepository.getOtherList(playerId, "1");
+    }
+
+    @Transactional
+    public List<Battle> getEndList (String playerId) {
+        return battleRepository.getOtherList(playerId, "3");
     }
 
     @Transactional

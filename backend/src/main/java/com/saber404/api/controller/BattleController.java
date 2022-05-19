@@ -38,9 +38,44 @@ public class BattleController {
 
     private final PlayerService playerService;
 
+    private String[] headers = {"Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNDAzNDU1MDA2IiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExMzkzIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1MTAzOTM3NiwiZXhwIjoxNjY2NTkxMzc2LCJpYXQiOjE2NTEwMzkzNzZ9.2NOzZOpckBq_81Ikj3Jk8Wat-WJtYzyN7j_bqHlBYVs"};
+
+    private HttpClient client = HttpClient.newBuilder().build();
+
+    private JSONParser jsonParser = new JSONParser();
+
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendBettle (@RequestBody BattleSendDto battleSendDto) {
+    public ResponseEntity<String> sendBettle (@RequestBody BattleSendDto battleSendDto) throws Exception{
+        Optional<Player> sender = playerService.findPlayer(battleSendDto.getSender());
+        Optional<Player> receiver = playerService.findPlayer(battleSendDto.getReceiver());
+
+        if(sender.isEmpty()) {
+            String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + battleSendDto.getSender();
+            String result = client.sendAsync(
+                    HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
+            ).thenApply(HttpResponse::body).get();
+            Object obj = jsonParser.parse(result);
+            JSONObject jsonObj = (JSONObject) obj;
+            Player player = new Player();
+            player.setAccountNo(jsonObj.get("accessId").toString());
+            player.setCharacterName(jsonObj.get("name").toString());
+            playerService.savePlayer(player);
+        }
+
+        if(receiver.isEmpty()) {
+            String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + battleSendDto.getReceiver();
+            String result = client.sendAsync(
+                    HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
+            ).thenApply(HttpResponse::body).get();
+            Object obj = jsonParser.parse(result);
+            JSONObject jsonObj = (JSONObject) obj;
+            Player player = new Player();
+            player.setAccountNo(jsonObj.get("accessId").toString());
+            player.setCharacterName(jsonObj.get("name").toString());
+            playerService.savePlayer(player);
+        }
+
         if(battleService.sendBattle(battleSendDto)) {
             return new ResponseEntity<String>("200", HttpStatus.OK);
         }else {
@@ -58,6 +93,18 @@ public class BattleController {
     public ResponseEntity<List<Battle>> getReceiveList (@PathVariable("receiver_id") String receiverId) {
         Optional<Player> player = playerService.findPlayer(receiverId);
         return new ResponseEntity<List<Battle>>(battleService.getReceiveList(player.get().getAccountNo()), HttpStatus.OK);
+    }
+
+    @GetMapping("/startList/{player_id}")
+    public ResponseEntity<List<Battle>> getStartList (@PathVariable("player_id") String playerId) {
+        Optional<Player> player = playerService.findPlayer(playerId);
+        return new ResponseEntity<List<Battle>>(battleService.getStartList(player.get().getAccountNo()), HttpStatus.OK);
+    }
+
+    @GetMapping("/endList/{player_id}")
+    public ResponseEntity<List<Battle>> getEndList (@PathVariable("player_id") String playerId) {
+        Optional<Player> player = playerService.findPlayer(playerId);
+        return new ResponseEntity<List<Battle>>(battleService.getEndList(player.get().getAccountNo()), HttpStatus.OK);
     }
 
     @GetMapping("/navCount/{player_id}")
