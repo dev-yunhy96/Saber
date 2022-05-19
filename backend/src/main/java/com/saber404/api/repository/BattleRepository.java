@@ -31,7 +31,7 @@ public interface BattleRepository extends JpaRepository<Battle, String> {
     @Query(value = "select count(*) from battle b where sender_id = :playerId and status = :status", nativeQuery = true )
     int startCount(String playerId, String status);
 
-    @Query(value = "select count(*) from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status and winner = :playerId", nativeQuery = true )
+    @Query(value = "select count(*) from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status and winner_id = :playerId", nativeQuery = true )
     int winCount(String playerId, String status);
 
     @Query(value = "select count(*) from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status", nativeQuery = true )
@@ -42,9 +42,6 @@ public interface BattleRepository extends JpaRepository<Battle, String> {
     void changeStatus(String battleId, String status);
 
     Optional<Battle> findById(String battleId);
-    @Modifying
-    @Query(value = "update battle b set b.winner = :winner where id = :battleId", nativeQuery = true )
-    void changeWinner(String battleId, String winner);
 
     @Modifying
     @Query(value = "update battle b set b.start_time = :startTime where id = :battleId", nativeQuery = true )

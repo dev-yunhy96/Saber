@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import serverApi from "../../../common/api/serverApi";
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { getCount, checkFinished } from "../../../features/battle/battleSlice";
+import Swal from "sweetalert2";
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: 3,
+  boxShadow: 48,
+  p: 3,
+};
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -80,9 +96,15 @@ function CustomNoRowsOverlay() {
 }
 const BattleStartedList = ({ userNick }) => {
   const [rows, setRows] = useState([]);
-  const getReciveList = () => {
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [password, setPassword] = useState(0);
+  const dispatch = useDispatch();
+  const count = useSelector(getCount);
+  const handleClose = () => setOpen(false);
+  const getStartList = () => {
     serverApi
-      .get(`battle/receiveList/${userNick}`)
+      .get(`battle/startList/${userNick}`)
       .then((response) => {
         setRows(response.data.reverse());
       })
@@ -90,35 +112,35 @@ const BattleStartedList = ({ userNick }) => {
         console.log(error);
       });
   };
-  const startBattle = (battleId) => {
+  const checkBattle = (battleId) => {
     const data = {
       battleId,
     };
     serverApi
-      .put(`battle/start`, data)
+      .put(`battle/check`, data)
       .then((response) => {
-        console.log(response);
+        if (response.data === 200) {
+          dispatch(checkFinished());
+          const rowsToDelete = rows.filter((row) => battleId !== row.id);
+          setRows(rowsToDelete);
+        } else if (response.data === 500) {
+          Swal.fire("배틀을 진행해 주세요");
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const cancelBattle = (battleId) => {
-    const data = {
-      battleId,
-    };
-    serverApi
-      .put(`battle/cancel`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleOnCellClick = (params) => {
+    console.log(params);
+    setTitle(params.row.title);
+    setPassword(params.row.password);
+    setOpen(true);
   };
+
   useEffect(() => {
-    getReciveList();
-  }, []);
+    getStartList();
+  }, [count]);
   const columns = [
     {
       field: "sender",
@@ -141,16 +163,15 @@ const BattleStartedList = ({ userNick }) => {
       valueFormatter: ({ value }) => value.characterName,
     },
     {
-      field: "button",
-      headerName: "수락",
+      field: "actions",
+      headerName: "체크",
       headerAlign: "center",
-      align: "center",
-      width: 50,
+      width: 100,
+      sortable: false,
+      disableColumnMenu: true,
       renderCell: (params) => {
         const onClick = () => {
-          const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
-          setRows(rowsToDelete);
-          startBattle(params.row.id);
+          checkBattle(params.row.id);
         };
         return (
           <Box
@@ -162,60 +183,9 @@ const BattleStartedList = ({ userNick }) => {
               alignItems: "center",
             }}
           >
-            <Button
-              sx={{
-                maxWidth: "40px",
-                maxHeight: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-              }}
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={onClick}
-            >
-              수락
-            </Button>
-          </Box>
-        );
-      },
-    },
-    {
-      field: "button2",
-      headerName: "거절",
-      headerAlign: "center",
-      align: "center",
-      width: 50,
-      renderCell: (params) => {
-        const onClick = () => {
-          const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
-          setRows(rowsToDelete);
-          cancelBattle(params.row.id);
-        };
-        return (
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              sx={{
-                maxWidth: "40px",
-                maxHeight: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-              }}
-              variant="contained"
-              color="error"
-              size="small"
-              onClick={onClick}
-            >
-              거절
-            </Button>
+            <IconButton onClick={onClick}>
+              <CheckCircleOutlineOutlinedIcon color="secondary" />
+            </IconButton>
           </Box>
         );
       },
@@ -240,7 +210,32 @@ const BattleStartedList = ({ userNick }) => {
         checkboxSelection
         disableSelectionOnClick
         components={{ NoRowsOverlay: CustomNoRowsOverlay }}
+        onCellDoubleClick={handleOnCellClick}
       />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box sx={{ borderRadius: 3, boxShadow: 1, p: 2 }}>
+            <Typography sx={{ fontWeight: 600 }} variant="h5" component="div">
+              방제 : {title}
+            </Typography>
+          </Box>
+          <Box sx={{ borderRadius: 3, boxShadow: 1, mt: 2, p: 2 }}>
+            <Typography sx={{ fontWeight: 600 }} variant="h5" component="div">
+              비밀번호 : {password}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+            <Button variant="contained" onClick={handleClose}>
+              닫기
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 };

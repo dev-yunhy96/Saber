@@ -22,6 +22,7 @@ public class UserDTO {
 	private String profileImage;
 	private String profileDescription;
 	private List<String> roles;
+	private String character;
 	
 	public UserDTO(SignUpReq data) {
 		setPassword(data.getPassword());

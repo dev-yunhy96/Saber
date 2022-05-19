@@ -71,9 +71,6 @@ const userSlice = createSlice({
       state.userInfo = {};
       localStorage.removeItem("token");
     },
-    savePath: (state, { payload }) => {
-      state.path = payload;
-    },
   },
   extraReducers: {
     //로그인

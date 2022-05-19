@@ -63,26 +63,22 @@ const Comment = (props) => {
   //리스트 열기
   const handleClick = (event, param) => {
     // setBattleValue()
-    console.log(param);
     setBattleValue(param.userNickname);
     setAnchorEl(event.currentTarget);
   };
 
   //배틀 신청 모달
   const handleSendBattle = (event) => {
-    console.log("배틀 신청");
     setModalOpen(true);
     setAnchorEl(null);
   };
   //배틀 신청 데이터 전송
   const handleSendBattle2 = (event) => {
-    console.log(user);
     if (isEmptyObj(user)) {
       Swal.fire("비회원!!", "로그인시 가능한 기능입니다.", "error");
       navigate("/login");
       return;
     }
-    console.log("배틀 데이터 전송");
     const url = `/battle/send`;
     const headers = {
       "Content-type": "application/json",
@@ -92,7 +88,6 @@ const Comment = (props) => {
       receiver: battleValue,
       sender: user.nickname,
     };
-    console.log(data);
     serverApi
       .post(url, data, { headers })
       .then((res) => {
@@ -123,7 +118,6 @@ const Comment = (props) => {
   }, [dispatch, communityId]);
   const getValue = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     setValue(e.target.value);
   };
   const addComment = (e) => {
@@ -143,7 +137,6 @@ const Comment = (props) => {
         dispatch(fetchAsyncCommentList(communityId));
       })
       .catch();
-    console.log(e.target.value);
     // setCommentList([...commentList, value]);
     setValue("");
   };
@@ -154,8 +147,6 @@ const Comment = (props) => {
   };
 
   const deleteHandler = (param, e) => {
-    console.log(param);
-    console.log("삭제");
     dispatch(fetchAsyncCommentDelete(param))
       .unwrap()
       .then((res) => {
@@ -168,7 +159,7 @@ const Comment = (props) => {
       <TextField
         style={{ marginTop: "30px", marginLeft: "100px", width: "600px" }}
         type="text"
-        value={value}
+        value={value || ""}
         onChange={getValue}
         onKeyPress={addCommEnter}
       />
@@ -235,8 +226,6 @@ const Comment = (props) => {
         }}
       >
         <MenuItem onClick={handleSendBattle}>배틀신청</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
       <Modal
         open={modalOpen}

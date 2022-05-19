@@ -10,20 +10,30 @@ import com.saber404.api.dto.response.GetUserByProfileRes;
 import com.saber404.api.dto.response.BaseResponseDto;
 
 import com.saber404.api.dto.response.MessageRes;
+import com.saber404.api.entity.Player;
 import com.saber404.api.entity.User;
 import com.saber404.api.service.JwtTokenService;
+import com.saber404.api.service.PlayerService;
 import com.saber404.api.service.UserService;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,14 +46,31 @@ public class UserController {
 
 	private final JwtTokenService jwtTokenService;
 
+	private final PlayerService playerService;
+
 	@PostMapping("/signup")
-	public ResponseEntity<MessageRes> signUp(@Valid @RequestBody SignUpReq signUpReq)  {
+	public ResponseEntity<MessageRes> signUp(@Valid @RequestBody SignUpReq signUpReq) throws Exception{
 		MessageRes messageRes = new MessageRes();
 		UserDTO userDto = new UserDTO(signUpReq);
 
 		if (userService.createUser(userDto)) {
 			messageRes.setMessage("유저생성 성공");
 			messageRes.setData("user email : " + userDto.getEmail());
+			String[] headers = {"Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNDAzNDU1MDA2IiwiYXV0aF9pZCI6IjQiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExMzkzIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjIwMDAwOjEwIiwibmJmIjoxNjUyOTIzNzgxLCJleHAiOjE3MTU5OTU3ODEsImlhdCI6MTY1MjkyMzc4MX0.xK8KzSm6X6PzqDIx-QTvX-DbHEHIuJrM2KaX8Ev68W4"};
+			HttpClient client = HttpClient.newBuilder().build();
+			JSONParser jsonParser = new JSONParser();
+			if(playerService.findPlayer(signUpReq.getNickname()).isEmpty()) {
+				String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + signUpReq.getNickname();
+				String result = client.sendAsync(
+						HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
+				).thenApply(HttpResponse::body).get();
+				Object obj = jsonParser.parse(result);
+				JSONObject jsonObj = (JSONObject) obj;
+				Player player = new Player();
+				player.setAccountNo(jsonObj.get("accessId").toString());
+				player.setCharacterName(jsonObj.get("name").toString());
+				playerService.savePlayer(player);
+			}
 			return new ResponseEntity<MessageRes>(messageRes, HttpStatus.CREATED);
 		}
 

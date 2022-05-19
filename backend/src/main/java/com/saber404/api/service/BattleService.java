@@ -101,10 +101,8 @@ public class BattleService {
         return true;
     }
     @Transactional
-    public boolean winner (String battleId, String winner) {
-        battleRepository.changeStatus(battleId, "3");
-        battleRepository.changeWinner(battleId, winner);
-        return true;
+    public void save (Battle battle) {
+        battleRepository.save(battle);
     }
 
     @Transactional

@@ -37,7 +37,6 @@ export const fetchAsyncCommunityDetail = createAsyncThunk(
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
     const url = `/community/${id}`;
-    console.log("url :", url);
     const response = await serverApi.get(url, { headers });
     return response.data;
   }
