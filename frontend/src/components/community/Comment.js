@@ -235,8 +235,6 @@ const Comment = (props) => {
         }}
       >
         <MenuItem onClick={handleSendBattle}>배틀신청</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
       <Modal
         open={modalOpen}
