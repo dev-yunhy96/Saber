@@ -38,7 +38,7 @@ public class BattleController {
 
     private final PlayerService playerService;
 
-    private String[] headers = {"Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNDAzNDU1MDA2IiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExMzkzIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1MTAzOTM3NiwiZXhwIjoxNjY2NTkxMzc2LCJpYXQiOjE2NTEwMzkzNzZ9.2NOzZOpckBq_81Ikj3Jk8Wat-WJtYzyN7j_bqHlBYVs"};
+    private String[] headers = {"Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNDAzNDU1MDA2IiwiYXV0aF9pZCI6IjQiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExMzkzIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjIwMDAwOjEwIiwibmJmIjoxNjUyOTIzNzgxLCJleHAiOjE3MTU5OTU3ODEsImlhdCI6MTY1MjkyMzc4MX0.xK8KzSm6X6PzqDIx-QTvX-DbHEHIuJrM2KaX8Ev68W4"};
 
     private HttpClient client = HttpClient.newBuilder().build();
 
@@ -47,35 +47,6 @@ public class BattleController {
 
     @PostMapping("/send")
     public ResponseEntity<String> sendBettle (@RequestBody BattleSendDto battleSendDto) throws Exception{
-        Optional<Player> sender = playerService.findPlayer(battleSendDto.getSender());
-        Optional<Player> receiver = playerService.findPlayer(battleSendDto.getReceiver());
-
-        if(sender.isEmpty()) {
-            String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + battleSendDto.getSender();
-            String result = client.sendAsync(
-                    HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
-            ).thenApply(HttpResponse::body).get();
-            Object obj = jsonParser.parse(result);
-            JSONObject jsonObj = (JSONObject) obj;
-            Player player = new Player();
-            player.setAccountNo(jsonObj.get("accessId").toString());
-            player.setCharacterName(jsonObj.get("name").toString());
-            playerService.savePlayer(player);
-        }
-
-        if(receiver.isEmpty()) {
-            String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + battleSendDto.getReceiver();
-            String result = client.sendAsync(
-                    HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
-            ).thenApply(HttpResponse::body).get();
-            Object obj = jsonParser.parse(result);
-            JSONObject jsonObj = (JSONObject) obj;
-            Player player = new Player();
-            player.setAccountNo(jsonObj.get("accessId").toString());
-            player.setCharacterName(jsonObj.get("name").toString());
-            playerService.savePlayer(player);
-        }
-
         if(battleService.sendBattle(battleSendDto)) {
             return new ResponseEntity<String>("200", HttpStatus.OK);
         }else {
@@ -158,9 +129,9 @@ public class BattleController {
         Object obj2 = jsonParser.parse(result2);
         JSONObject jsonObj2 = (JSONObject) obj2;
         JSONArray jsonAry1 = (JSONArray) jsonObj2.get("matches");
+
         for (int i = 0; i < jsonAry1.size(); i++) {
             JSONObject jsonObj3 = (JSONObject) jsonAry1.get(i);
-            System.out.println(jsonObj3);
             JSONArray jsonAry2 = (JSONArray) jsonObj3.get("matches");
             for (int j = 0; j < jsonAry2.size(); j++) {
                 JSONObject jsonObj4 = (JSONObject) jsonAry2.get(j);
@@ -174,27 +145,33 @@ public class BattleController {
                 if(jsonObj.containsKey("teams")){
                     continue;
                 }
-                String winnerId = "";
+
                 int count = 2;
                 JSONArray jsonAry = (JSONArray) jsonObj.get("players");
+                if(jsonAry.size() != 2) {
+                    continue;
+                }
                 for(int k=0; k<jsonAry.size(); k++) {
-                    JSONObject jsonObj0 = (JSONObject) jsonAry.get(j);
+                    JSONObject jsonObj0 = (JSONObject) jsonAry.get(k);
                     if (jsonObj0.get("accountNo").toString().equals(receiver.getAccountNo())) {
                         count--;
-                        if (jsonObj0.get("matchWin").toString().equals("1")) {
-                            winnerId = jsonObj0.get("accountNo").toString();
-                        }
+                    }
+                    if (jsonObj0.get("accountNo").toString().equals(sender.getAccountNo())) {
+                        count--;
+                    }
+                    if (jsonObj0.get("matchWin").toString().equals("1") && (jsonObj0.get("accountNo").toString().equals(receiver.getAccountNo()) || jsonObj0.get("accountNo").toString().equals(sender.getAccountNo()))) {
+                        battle.setWinner(playerService.findPlayer(jsonObj0.get("characterName").toString()).get());
+                        battle.setStatus("3");
                     }
                 }
-
                 if(count == 0) {
-                    battleService.winner(battleIdDto.getBattleId(), winnerId);
+                    battleService.save(battle);
+                    return new ResponseEntity<String>("200", HttpStatus.OK);
                 }
-
             }
-
         }
-        return new ResponseEntity<String>("200", HttpStatus.OK);
+        return new ResponseEntity<String>("500", HttpStatus.OK);
+
     }
 
 }

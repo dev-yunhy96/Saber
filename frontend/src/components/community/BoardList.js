@@ -13,7 +13,7 @@ const BoardList = ({ title }) => {
   const board = useSelector(getAllCommunity);
   const user = useSelector(getUser);
   const navigate = useNavigate();
-  const PER_PAGE = 5;
+  const PER_PAGE = 7;
   let [page, setPage] = useState(1);
   const [all, setAll] = useState(1);
   const [count, setCount] = useState(1);
@@ -76,7 +76,6 @@ const BoardList = ({ title }) => {
       sx={{
         width: "100%",
         maxWidth: 780,
-        minHeight: 780,
         bgcolor: "background.paper",
         borderRadius: 5,
         boxShadow: 1,
@@ -89,12 +88,13 @@ const BoardList = ({ title }) => {
 
       {/* {lenderBoard} */}
       {lenderBoard2}
-      <Box m={1} display="flex" justifyContent="flex-end" alignItems="flex-end">
+      <Box m={3} display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Button variant="contained" onClick={handlePost}>
           글등록
         </Button>
       </Box>
       <Pagination
+        sx={{ display: "flex", justifyContent: "center" }}
         count={count}
         size="large"
         page={page}

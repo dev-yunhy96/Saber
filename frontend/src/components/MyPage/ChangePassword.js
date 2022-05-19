@@ -163,16 +163,13 @@ function ChangePassword() {
   };
   const validation = () => {
     if (!changePassword) {
-      console.log("1번");
       setPasswordError(true);
     }
     if (!confirmPassword) {
-      console.log("2번");
       setConfirmPasswordError(true);
     }
 
     if (changePassword && confirmPassword) {
-      console.log("3번");
       return false;
     } else return true;
   };
@@ -201,10 +198,8 @@ function ChangePassword() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("버튼클릭");
     if (validation()) return;
     const data = new FormData(event.currentTarget);
-    console.log("data", data);
     const password_data = {
       oldPassword: data.get("currnetPassword"),
       newPassword: data.get("changePassword"),
