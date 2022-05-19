@@ -6,33 +6,22 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAsyncPlayer,
-  getMatches,
-  removeSelectedPlayer,
-} from "../../features/player/playerSlice";
+import { useDispatch } from "react-redux";
+
 import serverApi from "../../common/api/serverApi";
 const Article = (prpos) => {
   const { data } = prpos;
   const userNickname = data.userNickname;
-  console.log(userNickname);
   const dispatch = useDispatch();
   const defaultImg = `${process.env.PUBLIC_URL}/images/character/00b6ba1b9d74bd6e9d8dc8f75288ed2419c68b466953b87ce4c22430f761bbcb.png`;
   const [img, setImg] = useState(defaultImg);
   useEffect(() => {
-    // dispatch(fetchAsyncPlayer(userNickname));
-    // return ()
-    //   dispatch(removeSelectedPlayer());
-    // };
     async function a() {
       const response = await serverApi.get(`match/list/${userNickname}`);
-      console.log("response", response);
       const sortedMatches = response.data.slice().sort(function (a, b) {
         if (a.match.startTime < b.match.startTime) return 1;
         else return -1;
       });
-      console.log("data : ", sortedMatches);
       if (sortedMatches.length > 0) {
         setImg(
           `${process.env.PUBLIC_URL}/images/character/${sortedMatches[0].characterType}.png`
@@ -41,11 +30,6 @@ const Article = (prpos) => {
     }
     a();
   }, [dispatch, userNickname]);
-
-  // let image = "";
-  // image = sortedMatches[0]
-  //   ? `${process.env.PUBLIC_URL}/images/character/${sortedMatches[0].characterType}.png`
-  //   : `${defaultImg}`;
   return (
     <Link to={`${data.communityId}`}>
       <Box

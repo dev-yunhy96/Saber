@@ -28,13 +28,10 @@ function Quit() {
           buttons: false,
           timer: 2000,
         });
-        console.log("삭제", response);
         dispatch(logout());
         return response;
       })
       .then((response) => {
-        console.log("데이터삭제");
-
         navigate("/");
       })
       .catch((err) => {

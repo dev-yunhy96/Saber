@@ -35,7 +35,6 @@ export default function SignUp() {
             password: data.get("password"),
           })
           .then((res) => {
-            console.log(res);
             navigate("/login");
           })
           .catch((error) => {

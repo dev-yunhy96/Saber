@@ -58,7 +58,6 @@ const BoardDetail = () => {
   //리스트 열기
   const handleClick = (event, param) => {
     // setBattleValue()
-    console.log(param);
     setBattleValue(param);
     setAnchorEl(event.currentTarget);
   };
@@ -68,19 +67,16 @@ const BoardDetail = () => {
 
   //배틀 신청 모달
   const handleSendBattle = (event) => {
-    console.log("배틀 신청");
     setModalOpen(true);
     setAnchorEl(null);
   };
   //배틀 신청 데이터 전송
   const handleSendBattle2 = (event) => {
-    console.log(user);
     if (isEmptyObj(user)) {
       Swal.fire("비회원!!", "로그인시 가능한 기능입니다.", "error");
       navigate("/login");
       return;
     }
-    console.log("배틀 데이터 전송");
     const url = `/battle/send`;
     const headers = {
       "Content-type": "application/json",
@@ -90,7 +86,6 @@ const BoardDetail = () => {
       receiver: battleValue,
       sender: user.nickname,
     };
-    console.log(data);
     serverApi
       .post(url, data, { headers })
       .then((res) => {
@@ -169,16 +164,6 @@ const BoardDetail = () => {
                 />
               </Grid>
               <Grid item xs={10}>
-                {/* <Button
-                  style={{ marginLeft: "10px", marginBottom: "0px" }}
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={(e) => {
-                    handleClick(e, data.userNickname);
-                  }}
-                > */}
                 <TextField
                   className="textField"
                   id="author"
@@ -193,7 +178,6 @@ const BoardDetail = () => {
                     readOnly: true,
                   }}
                 />
-                {/* </Button> */}
               </Grid>
               <Grid item xs={10}>
                 <TextField
