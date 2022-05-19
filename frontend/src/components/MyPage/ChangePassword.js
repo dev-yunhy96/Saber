@@ -204,13 +204,13 @@ function ChangePassword() {
     console.log("버튼클릭");
     if (validation()) return;
     const data = new FormData(event.currentTarget);
-
+    console.log("data", data);
     const password_data = {
-      currnetPassword: data.get("currnetPassword"),
-      changePassword: data.get("changePassword"),
+      oldPassword: data.get("currnetPassword"),
+      newPassword: data.get("changePassword"),
     };
 
-    dispatch(fetchAsyncPasswordChange())
+    dispatch(fetchAsyncPasswordChange(password_data))
       .unwrap()
       .then((response) => {
         Swal.fire(
@@ -255,6 +255,7 @@ function ChangePassword() {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="start"
+                  name="currnetPassword"
                 >
                   {values.showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
@@ -267,6 +268,7 @@ function ChangePassword() {
             type={changePassword.showPassword ? "text" : "password"}
             value={changePassword.password}
             onChange={handleChange2("password")}
+            name="changePassword"
             endAdornment={
               <InputAdornment>
                 <IconButton

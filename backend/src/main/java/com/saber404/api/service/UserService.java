@@ -72,6 +72,8 @@ public class UserService {
 	public String login(LoginReq data) {
 		User user = userRepository.findByEmail(data.getEmail()).orElseThrow(()->new UsernameNotFoundException("사용자를 찾을 수 없습니다.") );
 		System.out.println(user.getEmail());
+		if(user.isDelYn()==true)
+			return"";
 		if(comparePassword(data.getPassword(), user.getPassword())) {
 
 			return jwtTokenProvider.createToken(user,user.getRoles());
@@ -115,15 +117,13 @@ public class UserService {
 		Optional<User> user = userRepository.findById(id);
 		if(user.isPresent() && user.get().isDelYn() ==false){
 			user.get().setDelYn(true);
+
 			userRepository.save(user.get());
 			return true;
 		}else{
 			return false;
 		}
 	}
-
-
-
 
 
 }
