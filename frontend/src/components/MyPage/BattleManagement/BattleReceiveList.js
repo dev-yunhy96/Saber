@@ -99,7 +99,7 @@ const BattleReceiveList = ({ userNick }) => {
     serverApi
       .put(`battle/start`, data)
       .then((response) => {
-        console.log(response);
+        dispatch(countBattle());
       })
       .catch((error) => {
         console.log(error);
@@ -153,7 +153,6 @@ const BattleReceiveList = ({ userNick }) => {
           const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
           setRows(rowsToDelete);
           startBattle(params.row.id);
-          dispatch(countBattle());
         };
         return (
           <Box

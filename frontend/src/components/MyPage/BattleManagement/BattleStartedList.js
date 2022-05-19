@@ -7,8 +7,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import serverApi from "../../../common/api/serverApi";
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
-import { useSelector } from "react-redux";
-import { getCount } from "../../../features/battle/battleSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { getCount, checkFinished } from "../../../features/battle/battleSlice";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -82,12 +82,12 @@ function CustomNoRowsOverlay() {
 }
 const BattleStartedList = ({ userNick }) => {
   const [rows, setRows] = useState([]);
+  const dispatch = useDispatch();
   const count = useSelector(getCount);
   const getStartList = () => {
     serverApi
       .get(`battle/startList/${userNick}`)
       .then((response) => {
-        console.log(response);
         setRows(response.data.reverse());
       })
       .catch((error) => {
@@ -101,7 +101,7 @@ const BattleStartedList = ({ userNick }) => {
     serverApi
       .put(`battle/check`, data)
       .then((response) => {
-        console.log(response);
+        dispatch(checkFinished());
       })
       .catch((error) => {
         console.log(error);

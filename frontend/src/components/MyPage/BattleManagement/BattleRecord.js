@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Skeleton from "@mui/material/Skeleton";
 import serverApi from "../../../common/api/serverApi";
+import { useSelector } from "react-redux";
+import { getCheck } from "../../../features/battle/battleSlice";
 
 const BattleRecord = ({ userNick }) => {
   const [record, setRecord] = useState({});
+  const check = useSelector(getCheck);
   const getRecord = () => {
     serverApi
       .get(`battle/battleRecord/${userNick}`)
@@ -16,7 +19,7 @@ const BattleRecord = ({ userNick }) => {
   };
   useEffect(() => {
     getRecord();
-  }, []);
+  }, [check]);
 
   return (
     <Skeleton
