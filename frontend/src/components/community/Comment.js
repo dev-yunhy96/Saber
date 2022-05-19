@@ -168,7 +168,7 @@ const Comment = (props) => {
       <TextField
         style={{ marginTop: "30px", marginLeft: "100px", width: "600px" }}
         type="text"
-        value={value}
+        value={value || ""}
         onChange={getValue}
         onKeyPress={addCommEnter}
       />
@@ -235,8 +235,6 @@ const Comment = (props) => {
         }}
       >
         <MenuItem onClick={handleSendBattle}>배틀신청</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
       <Modal
         open={modalOpen}

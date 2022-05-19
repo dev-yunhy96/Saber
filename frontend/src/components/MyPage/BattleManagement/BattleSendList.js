@@ -151,7 +151,7 @@ const BattleSendList = ({ userNick }) => {
             }}
           >
             <IconButton onClick={onClick}>
-              <DeleteIcon />
+              <DeleteIcon color="warning" />
             </IconButton>
           </Box>
         );

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import serverApi from "../../../common/api/serverApi";
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { countBattle } from "../../../features/battle/battleSlice";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -80,6 +80,7 @@ function CustomNoRowsOverlay() {
 }
 
 const BattleReceiveList = ({ userNick }) => {
+  const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
   const getReciveList = () => {
     serverApi
@@ -152,6 +153,7 @@ const BattleReceiveList = ({ userNick }) => {
           const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
           setRows(rowsToDelete);
           startBattle(params.row.id);
+          dispatch(countBattle());
         };
         return (
           <Box

@@ -80,9 +80,9 @@ function CustomNoRowsOverlay() {
 }
 const BattleCheckedList = ({ userNick }) => {
   const [rows, setRows] = useState([]);
-  const getReciveList = () => {
+  const getEndList = () => {
     serverApi
-      .get(`battle/receiveList/${userNick}`)
+      .get(`battle/endList/${userNick}`)
       .then((response) => {
         setRows(response.data.reverse());
       })
@@ -117,7 +117,7 @@ const BattleCheckedList = ({ userNick }) => {
       });
   };
   useEffect(() => {
-    getReciveList();
+    getEndList();
   }, []);
   const columns = [
     {

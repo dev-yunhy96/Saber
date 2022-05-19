@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import serverApi from "../../../common/api/serverApi";
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { getCount } from "../../../features/battle/battleSlice";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -80,22 +82,24 @@ function CustomNoRowsOverlay() {
 }
 const BattleStartedList = ({ userNick }) => {
   const [rows, setRows] = useState([]);
-  const getReciveList = () => {
+  const count = useSelector(getCount);
+  const getStartList = () => {
     serverApi
-      .get(`battle/receiveList/${userNick}`)
+      .get(`battle/startList/${userNick}`)
       .then((response) => {
+        console.log(response);
         setRows(response.data.reverse());
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const startBattle = (battleId) => {
+  const checkBattle = (battleId) => {
     const data = {
       battleId,
     };
     serverApi
-      .put(`battle/start`, data)
+      .put(`battle/check`, data)
       .then((response) => {
         console.log(response);
       })
@@ -103,22 +107,10 @@ const BattleStartedList = ({ userNick }) => {
         console.log(error);
       });
   };
-  const cancelBattle = (battleId) => {
-    const data = {
-      battleId,
-    };
-    serverApi
-      .put(`battle/cancel`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
   useEffect(() => {
-    getReciveList();
-  }, []);
+    getStartList();
+  }, [count]);
   const columns = [
     {
       field: "sender",
@@ -141,16 +133,17 @@ const BattleStartedList = ({ userNick }) => {
       valueFormatter: ({ value }) => value.characterName,
     },
     {
-      field: "button",
-      headerName: "수락",
+      field: "actions",
+      headerName: "체크",
       headerAlign: "center",
-      align: "center",
-      width: 50,
+      width: 100,
+      sortable: false,
+      disableColumnMenu: true,
       renderCell: (params) => {
         const onClick = () => {
           const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
           setRows(rowsToDelete);
-          startBattle(params.row.id);
+          checkBattle(params.row.id);
         };
         return (
           <Box
@@ -162,60 +155,9 @@ const BattleStartedList = ({ userNick }) => {
               alignItems: "center",
             }}
           >
-            <Button
-              sx={{
-                maxWidth: "40px",
-                maxHeight: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-              }}
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={onClick}
-            >
-              수락
-            </Button>
-          </Box>
-        );
-      },
-    },
-    {
-      field: "button2",
-      headerName: "거절",
-      headerAlign: "center",
-      align: "center",
-      width: 50,
-      renderCell: (params) => {
-        const onClick = () => {
-          const rowsToDelete = rows.filter((row) => params.row.id !== row.id);
-          setRows(rowsToDelete);
-          cancelBattle(params.row.id);
-        };
-        return (
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              sx={{
-                maxWidth: "40px",
-                maxHeight: "40px",
-                minWidth: "40px",
-                minHeight: "40px",
-              }}
-              variant="contained"
-              color="error"
-              size="small"
-              onClick={onClick}
-            >
-              거절
-            </Button>
+            <IconButton onClick={onClick}>
+              <CheckCircleOutlineOutlinedIcon color="secondary" />
+            </IconButton>
           </Box>
         );
       },
