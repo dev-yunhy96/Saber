@@ -24,38 +24,47 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if (data.get("password") !== data.get("passwordConfirm")) {
-      Swal.fire("비밀번호를 확인해주세요");
+    if (userCheck) {
+      if (data.get("password") !== data.get("passwordConfirm")) {
+        Swal.fire("비밀번호를 확인해주세요");
+      } else {
+        serverApi
+          .post(`users/signup`, {
+            email: data.get("email"),
+            nickname: data.get("userNick"),
+            password: data.get("password"),
+          })
+          .then((res) => {
+            console.log(res);
+            navigate("/login");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     } else {
-      serverApi
-        .post(`users/signup`, {
-          email: data.get("email"),
-          nickname: data.get("userNick"),
-          password: data.get("password"),
-        })
-        .then((res) => {
-          console.log(res);
-          navigate("/login");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      Swal.fire("닉네임을 체크해주세요");
     }
   };
 
   const nickCheck = () => {
-    console.log(userNick);
-    // serverApi
-    //   .post("users/check", {
-    //     //true 또는 false 값을 백엔드에서 리턴받음
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setUserCheck(true);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    serverApi
+      .get(`match/checkNick/${userNick}`)
+      .then((response) => {
+        if (response.data === 200) {
+          setUserCheck(true);
+          Swal.fire("사용가능한 닉네임입니다");
+        } else if (response.data === 404) {
+          setUserCheck(false);
+          Swal.fire("닉네임이 존재하지 않습니다");
+        } else if (response.data === 500) {
+          setUserCheck(false);
+          Swal.fire("중복된 닉네임입니다");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
