@@ -37,7 +37,6 @@ export const fetchAsyncCommentDetail = createAsyncThunk(
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
     const url = `/comment/${id}`;
-    console.log("url :", url);
     const response = await serverApi.get(url, { headers });
     return response.data;
   }
