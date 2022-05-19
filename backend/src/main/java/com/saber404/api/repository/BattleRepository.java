@@ -42,9 +42,6 @@ public interface BattleRepository extends JpaRepository<Battle, String> {
     void changeStatus(String battleId, String status);
 
     Optional<Battle> findById(String battleId);
-    @Modifying
-    @Query(value = "update battle b set b.winner = :winner where id = :battleId", nativeQuery = true )
-    void changeWinner(String battleId, String winner);
 
     @Modifying
     @Query(value = "update battle b set b.start_time = :startTime where id = :battleId", nativeQuery = true )
