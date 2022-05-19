@@ -53,7 +53,7 @@ const MyPage = () => {
     setValue(newValue);
   };
   const user = useSelector(getUser);
-  console.log(user);
+
   return (
     <>
       <Container>
