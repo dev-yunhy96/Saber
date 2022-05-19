@@ -1,4 +1,4 @@
-import logo from "../assets/grayLogo.svg";
+import logo from "../assets/grayLogo.png";
 import facebookIcon from "../assets/facebook.svg";
 import twitterIcon from "../assets/twitter.svg";
 import instagramIcon from "../assets/instagram.svg";
@@ -25,7 +25,7 @@ function Footer() {
           <li>주소 | 서울특별시 강남구 역삼동 테헤란로 212 Saber </li>
         </ul>
         <div className={styles.icons}>
-          <img src={logo} alt="codethat" />
+          <img src={logo} style={{ height: 35 }} alt="codethat" />
           <div className={styles.sns}>
             <img src={facebookIcon} alt="facebook icon" />
             <img src={twitterIcon} alt="twitter icon" />
