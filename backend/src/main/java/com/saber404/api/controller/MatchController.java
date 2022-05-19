@@ -114,7 +114,7 @@ public class MatchController {
 
     @GetMapping("/detail/{match_id}")
     public ResponseEntity<List<MatchPlayer>> matchDetail(@PathVariable("match_id") String matchId) throws Exception {
-
+        log.info("controller : " + matchId);
         String address1 = "https://api.nexon.co.kr/kart/v1.0/matches/" + matchId;
         String result1 = client.sendAsync(
                 HttpRequest.newBuilder(new URI(address1)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
