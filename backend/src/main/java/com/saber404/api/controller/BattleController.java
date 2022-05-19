@@ -147,7 +147,6 @@ public class BattleController {
                 }
 
                 int count = 2;
-                String winnerId = "";
                 JSONArray jsonAry = (JSONArray) jsonObj.get("players");
                 if(jsonAry.size() != 2) {
                     continue;
@@ -161,15 +160,18 @@ public class BattleController {
                         count--;
                     }
                     if (jsonObj0.get("matchWin").toString().equals("1") && (jsonObj0.get("accountNo").toString().equals(receiver.getAccountNo()) || jsonObj0.get("accountNo").toString().equals(sender.getAccountNo()))) {
-                        winnerId = jsonObj0.get("accountNo").toString();
+                        battle.setWinner(playerService.findPlayer(jsonObj0.get("characterName").toString()).get());
+                        battle.setStatus("3");
                     }
                 }
                 if(count == 0) {
-                    battleService.winner(battleIdDto.getBattleId(), winnerId);
+                    battleService.save(battle);
+                    return new ResponseEntity<String>("200", HttpStatus.OK);
                 }
             }
         }
-        return new ResponseEntity<String>("200", HttpStatus.OK);
+        return new ResponseEntity<String>("500", HttpStatus.OK);
+
     }
 
 }

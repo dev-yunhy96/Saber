@@ -23,11 +23,12 @@ public class Battle extends BaseEntity{
     @ManyToOne
     private Player receiver;
 
-    @Column
-    private String status;
+    @JoinColumn(name = "winner_id")
+    @ManyToOne
+    private Player winner;
 
     @Column
-    private String winner;
+    private String status;
 
     @Column
     private String sendTime;
