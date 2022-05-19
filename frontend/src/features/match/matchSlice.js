@@ -5,6 +5,7 @@ export const fetchAsyncMatch = createAsyncThunk(
   "user/fetchAsyncMatch",
   async (keyword) => {
     const response = await serverApi.get(`match/detail/${keyword}`);
+    console.log(response);
     return response.data;
   }
 );

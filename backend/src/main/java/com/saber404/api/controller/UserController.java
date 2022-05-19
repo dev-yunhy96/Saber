@@ -10,20 +10,26 @@ import com.saber404.api.dto.response.GetUserByProfileRes;
 import com.saber404.api.dto.response.BaseResponseDto;
 
 import com.saber404.api.dto.response.MessageRes;
+import com.saber404.api.entity.Player;
 import com.saber404.api.entity.User;
 import com.saber404.api.service.JwtTokenService;
 import com.saber404.api.service.UserService;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,6 +50,22 @@ public class UserController {
 		if (userService.createUser(userDto)) {
 			messageRes.setMessage("유저생성 성공");
 			messageRes.setData("user email : " + userDto.getEmail());
+//			Optional<Player> sender = playerService.findPlayer(battleSendDto.getSender());
+//			Optional<Player> receiver = playerService.findPlayer(battleSendDto.getReceiver());
+//
+//			if(sender.isEmpty()) {
+//				String address = "https://api.nexon.co.kr/kart/v1.0/users/nickname/" + battleSendDto.getSender();
+//				String result = client.sendAsync(
+//						HttpRequest.newBuilder(new URI(address)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
+//				).thenApply(HttpResponse::body).get();
+//				Object obj = jsonParser.parse(result);
+//				JSONObject jsonObj = (JSONObject) obj;
+//				Player player = new Player();
+//				player.setAccountNo(jsonObj.get("accessId").toString());
+//				player.setCharacterName(jsonObj.get("name").toString());
+//				playerService.savePlayer(player);
+//			}
+
 			return new ResponseEntity<MessageRes>(messageRes, HttpStatus.CREATED);
 		}
 
