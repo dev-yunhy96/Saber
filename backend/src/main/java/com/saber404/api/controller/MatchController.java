@@ -40,7 +40,7 @@ public class MatchController {
 
     private final MatchPlayerService matchPlayerService;
 
-    private String[] headers = {"Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNDAzNDU1MDA2IiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExMzkzIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1MTAzOTM3NiwiZXhwIjoxNjY2NTkxMzc2LCJpYXQiOjE2NTEwMzkzNzZ9.2NOzZOpckBq_81Ikj3Jk8Wat-WJtYzyN7j_bqHlBYVs"};
+    private String[] headers = {"Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNDAzNDU1MDA2IiwiYXV0aF9pZCI6IjQiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExMzkzIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjIwMDAwOjEwIiwibmJmIjoxNjUyOTIzNzgxLCJleHAiOjE3MTU5OTU3ODEsImlhdCI6MTY1MjkyMzc4MX0.xK8KzSm6X6PzqDIx-QTvX-DbHEHIuJrM2KaX8Ev68W4"};
 
     private HttpClient client = HttpClient.newBuilder().build();
 
@@ -70,7 +70,7 @@ public class MatchController {
             accessId = player.getAccountNo();
         }
 
-        String address2 = "https://api.nexon.co.kr/kart/v1.0/users/" + accessId +"/matches?start_date=&end_date=&offset=&limit=200&match_types=";
+        String address2 = "https://api.nexon.co.kr/kart/v1.0/users/" + accessId +"/matches?start_date=&end_date=&offset=&limit=50&match_types=";
         String result2 = client.sendAsync(
                 HttpRequest.newBuilder(new URI(address2)).GET().headers(headers).build(), HttpResponse.BodyHandlers.ofString()
         ).thenApply(HttpResponse::body).get();
