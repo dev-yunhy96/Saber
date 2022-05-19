@@ -17,7 +17,7 @@ const BattleRecord = ({ userNick }) => {
   useEffect(() => {
     getRecord();
   }, []);
-  console.log(record);
+
   return (
     <Skeleton
       sx={{
@@ -30,7 +30,6 @@ const BattleRecord = ({ userNick }) => {
         textAlign: "center",
       }}
       variant="rectangular"
-      width={780}
       height={60}
     >
       {userNick} 배틀 전적 {record.total}전 {record.win}승 {record.lose}패
