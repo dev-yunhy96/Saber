@@ -187,7 +187,7 @@
 
 |                         Jira BurnDown Chart                          |
 | :------------------------------------------------------------------: |
-| <img src="./readme_assets/burndown.png" alt="Jira BurnDown Chart" /> |
+| <img src="/uploads/f19e2e0a28f0ccb6650a1a147e0d5a8d/화면_캡처_2022-05-19_153203.jpg" alt="Jira BurnDown Chart" /> |
 
 |                        Notion                         |
 | :---------------------------------------------------: |
