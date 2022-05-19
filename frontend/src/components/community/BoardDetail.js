@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,19 +8,105 @@ import {
   getCommunityDetail,
 } from "../../features/community/communitySlice";
 import Swal from "sweetalert2";
-import { Button, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Menu,
+  MenuItem,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Comment from "./Comment";
 import { fetchAsyncCommentList } from "../../features/comment/commentSlice";
 import Container from "../Container";
 import { getUser } from "../../features/user/userSlice";
+import serverApi from "../../common/api/serverApi";
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "white",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 const BoardDetail = () => {
-  const user = useSelector(getUser);
-  console.log("user", user);
-  const { communityId } = useParams();
   const dispatch = useDispatch();
-  const data = useSelector(getCommunityDetail);
   const navigate = useNavigate();
-  console.log("commnuity detail : ", communityId);
+  const { communityId } = useParams();
+  const user = useSelector(getUser);
+  const data = useSelector(getCommunityDetail);
+  const [battleValue, setBattleValue] = useState();
+  //리스트 열기 변수
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  //모달 변수
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const handleModalClose = () => setModalOpen(false);
+  const isEmptyObj = (obj) => {
+    if (obj.constructor === Object && Object.keys(obj).length === 0) {
+      return true;
+    }
+    return false;
+  };
+
+  //리스트 열기
+  const handleClick = (event, param) => {
+    // setBattleValue()
+    setBattleValue(param);
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  //배틀 신청 모달
+  const handleSendBattle = (event) => {
+    setModalOpen(true);
+    setAnchorEl(null);
+  };
+  //배틀 신청 데이터 전송
+  const handleSendBattle2 = (event) => {
+    if (isEmptyObj(user)) {
+      Swal.fire("비회원!!", "로그인시 가능한 기능입니다.", "error");
+      navigate("/login");
+      return;
+    }
+    const url = `/battle/send`;
+    const headers = {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    const data = {
+      receiver: battleValue,
+      sender: user.nickname,
+    };
+    serverApi
+      .post(url, data, { headers })
+      .then((res) => {
+        if (res.data === 200) {
+          setModalOpen(false);
+          Swal.fire(
+            "배틀 신청!",
+            `${battleValue}님에게 대결을 신청하셨습니다.`,
+            "success"
+          );
+        } else if (res.data === 500) {
+          setModalOpen(false);
+          Swal.fire("배틀 중복 신청!", "이미 배틀을 신청하셨습니다!", "error");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setModalOpen(false);
+        Swal.fire("배틀 중복 신청!", "이미 배틀을 신청하셨습니다!", "error");
+      });
+  };
   useEffect(() => {
     dispatch(fetchAsyncCommunityDetail(communityId));
     dispatch(fetchAsyncCommentList(communityId));
@@ -85,6 +171,9 @@ const BoardDetail = () => {
                   label="Author"
                   variant="outlined"
                   value={data.userNickname}
+                  onClick={(e) => {
+                    handleClick(e, data.userNickname);
+                  }}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -136,6 +225,51 @@ const BoardDetail = () => {
           </Container>
         </>
       )}
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem onClick={handleSendBattle}>배틀신청</MenuItem>
+      </Menu>
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h1"
+            align="center"
+          >
+            배틀신청
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              color="error"
+              style={{ float: "left" }}
+              onClick={handleModalClose}
+            >
+              취소
+            </Button>
+            <Button
+              variant="contained"
+              style={{ float: "right" }}
+              onClick={handleSendBattle2}
+            >
+              신청
+            </Button>
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 };
