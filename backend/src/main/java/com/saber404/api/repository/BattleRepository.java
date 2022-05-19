@@ -31,7 +31,7 @@ public interface BattleRepository extends JpaRepository<Battle, String> {
     @Query(value = "select count(*) from battle b where sender_id = :playerId and status = :status", nativeQuery = true )
     int startCount(String playerId, String status);
 
-    @Query(value = "select count(*) from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status and winner = :playerId", nativeQuery = true )
+    @Query(value = "select count(*) from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status and winner_id = :playerId", nativeQuery = true )
     int winCount(String playerId, String status);
 
     @Query(value = "select count(*) from battle b where (sender_id = :playerId or receiver_id = :playerId) and status = :status", nativeQuery = true )

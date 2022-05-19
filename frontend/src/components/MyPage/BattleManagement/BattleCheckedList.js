@@ -127,6 +127,7 @@ const BattleCheckedList = ({ userNick }) => {
       editable: true,
       headerAlign: "center",
       align: "center",
+      valueFormatter: ({ value }) => value.characterName,
     },
   ];
 
