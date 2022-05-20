@@ -185,9 +185,9 @@ function RecordPage() {
           />
           <img
             src={
-              sortedMatches[0]
-                ? `${process.env.PUBLIC_URL}/images/kart/${sortedMatches[0].kart}.png`
-                : ""
+              kartById(sortedMatches[0].kart) === "알 수 없음"
+                ? `${process.env.PUBLIC_URL}/images/defaultkart.png`
+                : `${process.env.PUBLIC_URL}/images/kart/${sortedMatches[0].kart}.png`
             }
             alt=""
             width="100"
